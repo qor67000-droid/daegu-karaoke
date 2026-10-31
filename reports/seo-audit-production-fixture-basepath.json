@@ -1,0 +1,54 @@
+{
+  "generatedAt": "2026-10-31T10:10:02.570Z",
+  "mode": "production",
+  "fixture": true,
+  "base": "https://verify-owner.github.io/daegu-karaoke",
+  "urlKind": "test",
+  "basePath": "/daegu-karaoke",
+  "businessReady": true,
+  "pages": [
+    "/about/",
+    "/contact/",
+    "/guide/daegu-areas/",
+    "/guide/first-visit/",
+    "/guide/",
+    "/",
+    "/location/",
+    "/price/",
+    "/rooms/"
+  ],
+  "indexable": [
+    "/about/",
+    "/contact/",
+    "/guide/daegu-areas/",
+    "/guide/first-visit/",
+    "/guide/",
+    "/",
+    "/location/",
+    "/price/",
+    "/rooms/"
+  ],
+  "noindex": [],
+  "sitemap": [
+    "https://verify-owner.github.io/daegu-karaoke/",
+    "https://verify-owner.github.io/daegu-karaoke/guide/",
+    "https://verify-owner.github.io/daegu-karaoke/guide/first-visit/",
+    "https://verify-owner.github.io/daegu-karaoke/guide/daegu-areas/",
+    "https://verify-owner.github.io/daegu-karaoke/about/",
+    "https://verify-owner.github.io/daegu-karaoke/rooms/",
+    "https://verify-owner.github.io/daegu-karaoke/price/",
+    "https://verify-owner.github.io/daegu-karaoke/location/",
+    "https://verify-owner.github.io/daegu-karaoke/contact/"
+  ],
+  "errors": 0,
+  "warnings": 0,
+  "infos": 1,
+  "issues": [
+    {
+      "level": "info",
+      "page": "/robots.txt",
+      "rule": "robots-scope",
+      "msg": "프로젝트 사이트의 /daegu-karaoke/robots.txt는 크롤러가 읽지 않음 → 색인 제어는 meta robots로 수행 (정상)"
+    }
+  ]
+}

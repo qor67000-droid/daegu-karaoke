@@ -1,0 +1,51 @@
+name: CI
+
+# PR·main 이외 브랜치 검사 + 매주 회귀 점검. 배포는 deploy.yml이 담당.
+on:
+  pull_request:
+  push:
+    branches-ignore: [main]
+  schedule:
+    - cron: "17 0 * * 1" # 매주 월 09:17 KST
+  workflow_dispatch:
+
+env:
+  NEXT_TELEMETRY_DISABLED: "1"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # GitHub Pages 프로젝트 사이트와 같은 basePath로 프로덕션 빌드 (실제 config)
+          # ci-check.github.io/ci-repo 는 검증용 임시 URL이며 실제 운영 URL이 아님
+          - name: pages-basepath
+            env: { SITE_ENV: production, SITE_URL: "https://ci-check.github.io/ci-repo", NEXT_PUBLIC_BASE_PATH: /ci-repo }
+          # 업체 정보가 모두 채워진 상태의 경로 (테스트 fixture)
+          - name: pages-basepath-fixture
+            env: { SITE_ENV: production, SITE_URL: "https://ci-check.github.io/ci-repo", NEXT_PUBLIC_BASE_PATH: /ci-repo, SITE_CONFIG_FIXTURE: "1" }
+          # 미리보기: 전체 noindex·robots 차단
+          - name: preview
+            env: { SITE_ENV: preview }
+    name: ${{ matrix.name }}
+    env: ${{ matrix.env }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - run: if [ -f package-lock.json ]; then npm ci --no-audit --no-fund; else npm install --no-audit --no-fund; fi
+      - run: npx playwright install --with-deps chromium
+      - run: npm run typecheck
+      - run: npm run build
+      - run: npm run seo
+      - run: npm run test:routes
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: reports-${{ matrix.name }}
+          path: |
+            reports/*.json
+            reports/screenshots/

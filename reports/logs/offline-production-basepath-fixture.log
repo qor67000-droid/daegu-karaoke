@@ -1,0 +1,164 @@
+── guard (production +fixture)
+[guard] mode=production (TEST FIXTURE) basePath="/daegu-karaoke" domain=(GitHub Pages 기본 주소)
+[guard] base URL = https://verify-owner.github.io/daegu-karaoke
+[guard] ✓ 업체 필수 정보 확인 → 업체 모드
+[guard] 색인 대상: / /guide/ /guide/first-visit/ /guide/daegu-areas/ /about/ /rooms/ /price/ /location/ /contact/
+[guard] noindex: (없음)
+── render
+[offline-render] out-fixture/ basePath="/daegu-karaoke" : 10 html + sitemap.xml + robots.txt (Allow: /)
+[offline-css] 39.2 KB from 2905 tokens
+[postbuild] .nojekyll → out-fixture/
+── seo:audit
+
+[seo] mode=production +fixture base=https://verify-owner.github.io/daegu-karaoke (검증용 임시 URL) basePath="/daegu-karaoke" business=ready
+[seo] pages=9 색인=9 [/about/ /contact/ /guide/daegu-areas/ /guide/first-visit/ /guide/ / /location/ /price/ /rooms/]
+[seo] noindex=0 [] sitemap=9
+  ℹ robots-scope (1)
+      /robots.txt: 프로젝트 사이트의 /daegu-karaoke/robots.txt는 크롤러가 읽지 않음 → 색인 제어는 meta robots로 수행 (정상)
+[seo] errors=0 warnings=0 info=1
+
+── test:routes
+[test:routes] serving out-fixture/ at http://127.0.0.1:43559/daegu-karaoke/ (GitHub Pages 규칙)
+  ✓ GET / → 200 — 200
+  ✓ / 초기 HTML에 H1 — 대구 가라오케·노래방,테스트용 가라오케
+  ✓ / robots=index — index, follow
+  ✓ GET /guide/ → 200 — 200
+  ✓ /guide/ 초기 HTML에 H1 — 노래방과 가라오케, 무엇이 다른가요
+  ✓ /guide/ robots=index — index, follow
+  ✓ /guide → 301 /guide/ — 301 /daegu-karaoke/guide/
+  ✓ GET /guide/first-visit/ → 200 — 200
+  ✓ /guide/first-visit/ 초기 HTML에 H1 — 가라오케 처음 이용 가이드
+  ✓ /guide/first-visit/ robots=index — index, follow
+  ✓ /guide/first-visit → 301 /guide/first-visit/ — 301 /daegu-karaoke/guide/first-visit/
+  ✓ GET /guide/daegu-areas/ → 200 — 200
+  ✓ /guide/daegu-areas/ 초기 HTML에 H1 — 대구 지역별 안내
+  ✓ /guide/daegu-areas/ robots=index — index, follow
+  ✓ /guide/daegu-areas → 301 /guide/daegu-areas/ — 301 /daegu-karaoke/guide/daegu-areas/
+  ✓ GET /about/ → 200 — 200
+  ✓ /about/ 초기 HTML에 H1 — 테스트용 가라오케 소개
+  ✓ /about/ robots=index — index, follow
+  ✓ /about → 301 /about/ — 301 /daegu-karaoke/about/
+  ✓ GET /rooms/ → 200 — 200
+  ✓ /rooms/ 초기 HTML에 H1 — 룸과 시설 안내
+  ✓ /rooms/ robots=index — index, follow
+  ✓ /rooms → 301 /rooms/ — 301 /daegu-karaoke/rooms/
+  ✓ GET /price/ → 200 — 200
+  ✓ /price/ 초기 HTML에 H1 — 이용 요금
+  ✓ /price/ robots=index — index, follow
+  ✓ /price → 301 /price/ — 301 /daegu-karaoke/price/
+  ✓ GET /location/ → 200 — 200
+  ✓ /location/ 초기 HTML에 H1 — 오시는 길·영업시간
+  ✓ /location/ robots=index — index, follow
+  ✓ /location → 301 /location/ — 301 /daegu-karaoke/location/
+  ✓ GET /contact/ → 200 — 200
+  ✓ /contact/ 초기 HTML에 H1 — 예약·문의
+  ✓ /contact/ robots=index — index, follow
+  ✓ /contact → 301 /contact/ — 301 /daegu-karaoke/contact/
+  ✓ GET /no-such-page/ → 404 — 404
+  ✓ GET /rooms/x/ → 404 — 404
+  ✓ GET /대구가라오케/ → 404 — 404
+  ✓ GET /robots.txt → 200 — 200
+  ✓ GET /sitemap.xml → 200 — 200
+  ✓ GET /icon.svg → 200 — 200
+  ✓ GET /og-default.png → 200 — 200
+  ✓ GET /.nojekyll → 200 — 200
+  ✓ basePath 밖 /guide/ → 404 — 404
+[test:routes] browser mobile
+  ✓ mobile / CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ mobile / 하위 리소스 4xx 없음
+  ✓ mobile / 깨진 이미지 없음
+  ✓ mobile / 가로 넘침 없음 — 0px
+  ✓ mobile / CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ mobile /guide/ CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ mobile /guide/ 하위 리소스 4xx 없음
+  ✓ mobile /guide/ 깨진 이미지 없음
+  ✓ mobile /guide/ 가로 넘침 없음 — 0px
+  ✓ mobile /guide/ CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ mobile /guide/first-visit/ CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ mobile /guide/first-visit/ 하위 리소스 4xx 없음
+  ✓ mobile /guide/first-visit/ 깨진 이미지 없음
+  ✓ mobile /guide/first-visit/ 가로 넘침 없음 — 0px
+  ✓ mobile /guide/first-visit/ CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ mobile /guide/daegu-areas/ CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ mobile /guide/daegu-areas/ 하위 리소스 4xx 없음
+  ✓ mobile /guide/daegu-areas/ 깨진 이미지 없음
+  ✓ mobile /guide/daegu-areas/ 가로 넘침 없음 — 0px
+  ✓ mobile /guide/daegu-areas/ CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ mobile /about/ CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ mobile /about/ 하위 리소스 4xx 없음
+  ✓ mobile /about/ 깨진 이미지 없음
+  ✓ mobile /about/ 가로 넘침 없음 — 0px
+  ✓ mobile /about/ CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ mobile /rooms/ CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ mobile /rooms/ 하위 리소스 4xx 없음
+  ✓ mobile /rooms/ 깨진 이미지 없음
+  ✓ mobile /rooms/ 가로 넘침 없음 — 0px
+  ✓ mobile /rooms/ CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ mobile /price/ CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ mobile /price/ 하위 리소스 4xx 없음
+  ✓ mobile /price/ 깨진 이미지 없음
+  ✓ mobile /price/ 가로 넘침 없음 — 0px
+  ✓ mobile /price/ CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ mobile /location/ CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ mobile /location/ 하위 리소스 4xx 없음
+  ✓ mobile /location/ 깨진 이미지 없음
+  ✓ mobile /location/ 가로 넘침 없음 — 0px
+  ✓ mobile /location/ CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ mobile /contact/ CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ mobile /contact/ 하위 리소스 4xx 없음
+  ✓ mobile /contact/ 깨진 이미지 없음
+  ✓ mobile /contact/ 가로 넘침 없음 — 0px
+  ✓ mobile /contact/ CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ mobile 푸터 링크 클릭 이동 — /daegu-karaoke/guide/ → /daegu-karaoke/guide/
+  ✓ mobile 전화 클릭 → dataLayer click_call — ["click_call"]
+[test:routes] browser desktop
+  ✓ desktop / CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ desktop / 하위 리소스 4xx 없음
+  ✓ desktop / 깨진 이미지 없음
+  ✓ desktop / 가로 넘침 없음 — 0px
+  ✓ desktop / CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ desktop /guide/ CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ desktop /guide/ 하위 리소스 4xx 없음
+  ✓ desktop /guide/ 깨진 이미지 없음
+  ✓ desktop /guide/ 가로 넘침 없음 — 0px
+  ✓ desktop /guide/ CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ desktop /guide/first-visit/ CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ desktop /guide/first-visit/ 하위 리소스 4xx 없음
+  ✓ desktop /guide/first-visit/ 깨진 이미지 없음
+  ✓ desktop /guide/first-visit/ 가로 넘침 없음 — 0px
+  ✓ desktop /guide/first-visit/ CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ desktop /guide/daegu-areas/ CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ desktop /guide/daegu-areas/ 하위 리소스 4xx 없음
+  ✓ desktop /guide/daegu-areas/ 깨진 이미지 없음
+  ✓ desktop /guide/daegu-areas/ 가로 넘침 없음 — 0px
+  ✓ desktop /guide/daegu-areas/ CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ desktop /about/ CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ desktop /about/ 하위 리소스 4xx 없음
+  ✓ desktop /about/ 깨진 이미지 없음
+  ✓ desktop /about/ 가로 넘침 없음 — 0px
+  ✓ desktop /about/ CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ desktop /rooms/ CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ desktop /rooms/ 하위 리소스 4xx 없음
+  ✓ desktop /rooms/ 깨진 이미지 없음
+  ✓ desktop /rooms/ 가로 넘침 없음 — 0px
+  ✓ desktop /rooms/ CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ desktop /price/ CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ desktop /price/ 하위 리소스 4xx 없음
+  ✓ desktop /price/ 깨진 이미지 없음
+  ✓ desktop /price/ 가로 넘침 없음 — 0px
+  ✓ desktop /price/ CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ desktop /location/ CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ desktop /location/ 하위 리소스 4xx 없음
+  ✓ desktop /location/ 깨진 이미지 없음
+  ✓ desktop /location/ 가로 넘침 없음 — 0px
+  ✓ desktop /location/ CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ desktop /contact/ CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ desktop /contact/ 하위 리소스 4xx 없음
+  ✓ desktop /contact/ 깨진 이미지 없음
+  ✓ desktop /contact/ 가로 넘침 없음 — 0px
+  ✓ desktop /contact/ CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ desktop 푸터 링크 클릭 이동 — /daegu-karaoke/guide/ → /daegu-karaoke/guide/
+  ✓ desktop 전화 클릭 → dataLayer click_call — ["click_call"]
+[test:routes] lab: max LCP 176ms, max CLS 0 (로컬, 네트워크 지연 없음)
+[test:routes] 138/138 passed
+── result: audit=0 routes=0

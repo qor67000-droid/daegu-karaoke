@@ -1,0 +1,39 @@
+{
+  "name": "daegu-karaoke",
+  "version": "0.1.0",
+  "private": true,
+  "description": "대구 가라오케·노래방 사이트 (Next.js App Router 정적 export, GitHub Pages)",
+  "engines": {
+    "node": ">=20.9"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "guard": "tsx scripts/guard.ts",
+    "build": "tsx scripts/guard.ts && next build && tsx scripts/postbuild-pages.ts",
+    "typecheck": "tsc --noEmit",
+    "seo": "tsx scripts/seo-audit.ts",
+    "seo:audit": "tsx scripts/seo-audit.ts",
+    "test:routes": "tsx scripts/route-test.ts",
+    "verify:live": "tsx scripts/verify-live.ts",
+    "check": "npm run typecheck && npm run build && npm run seo && npm run test:routes",
+    "images": "tsx scripts/optimize-images.ts",
+    "verify:offline": "bash tools/offline/run.sh",
+    "publish:github": "bash scripts/publish-github.sh"
+  },
+  "dependencies": {
+    "next": "^16.0.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.0",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "playwright": "^1.50.0",
+    "sharp": "^0.34.0",
+    "tailwindcss": "^4.1.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}

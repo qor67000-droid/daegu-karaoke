@@ -1,0 +1,39 @@
+
+[seo] mode=production base=https://verify-owner.github.io/daegu-karaoke (검증용 임시 URL) basePath="/daegu-karaoke" business=pending
+[seo] pages=9 색인=4 [/guide/daegu-areas/ /guide/first-visit/ / /rooms/]
+[seo] noindex=5 [/about/ /contact/ /guide/ /location/ /price/] sitemap=5
+  ✖ canonical (2)
+      /guide/: 자기참조 불일치: https://verify-owner.github.io/guide ≠ https://verify-owner.github.io/daegu-karaoke/guide/
+      /guide/: 끝 슬래시 없음 (GitHub Pages가 301 처리하는 비정규 URL)
+  ✖ og (1)
+      /guide/: og:url ≠ canonical (https://verify-owner.github.io/daegu-karaoke/guide/)
+  ✖ index-policy (2)
+      /guide/: 색인 대상인데 noindex (info)
+      /rooms/: noindex 대상인데 색인 허용 (business, 업체 정보 미확인/콘텐츠 없음)
+  ✖ basepath (1)
+      /: link basePath 누락: /guide/
+  ✖ broken-asset (2)
+      /: asset 깨짐: /daegu-karaoke/daegu-karaoke/icon.svg
+      /: asset 깨짐: /daegu-karaoke/_next/static/css/missing.css
+  ✖ jsonld (5)
+      /: 업체 정보 미확인 상태에서 업체 JSON-LD 출력
+      /: 업체 JSON-LD address 누락
+      /: 업체 JSON-LD telephone 누락
+      /: 업체 url이 정규 홈과 다름: https://verify-owner.github.io/x
+      /: JSON-LD URL에 basePath 누락: https://verify-owner.github.io/x
+  ✖ sitemap (2)
+      /sitemap.xml: 사이트맵 ≠ 색인 대상
+        기대: https://verify-owner.github.io/daegu-karaoke/ https://verify-owner.github.io/daegu-karaoke/guide/ https://verify-owner.github.io/daegu-karaoke/guide/daegu-areas/ https://verify-owner.github.io/daegu-karaoke/guide/first-visit/
+        실제: https://verify-owner.github.io/daegu-karaoke/ https://verify-owner.github.io/daegu-karaoke/guide/ https://verify-owner.github.io/daegu-karaoke/guide/daegu-areas/ https://verify-owner.github.io/daegu-karaoke/guide/first-visit/ https://verify-owner.github.io/daegu-karaoke/rooms/
+      /sitemap.xml: canonical과 다른 URL: https://verify-owner.github.io/daegu-karaoke/guide/
+  ✖ sitemap-noindex (1)
+      /sitemap.xml: noindex 페이지가 사이트맵에 있음: https://verify-owner.github.io/daegu-karaoke/guide/
+  ✖ robots (1)
+      /robots.txt: /rooms/를 Disallow하면 noindex를 읽지 못함 — meta noindex만 사용
+  ℹ robots-scope (1)
+      /robots.txt: 프로젝트 사이트의 /daegu-karaoke/robots.txt는 크롤러가 읽지 않음 → 색인 제어는 meta robots로 수행 (정상)
+  ✖ pages (2)
+      /.nojekyll: .nojekyll 없음 (_next 폴더가 무시될 수 있음)
+      /_redirects: GitHub Pages에서 동작하지 않는 Netlify 파일: _redirects
+[seo] errors=19 warnings=0 info=1
+

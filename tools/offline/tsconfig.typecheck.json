@@ -1,0 +1,31 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "incremental": false,
+    "plugins": [],
+    "jsx": "preserve",
+    "types": [
+      "node"
+    ],
+    "typeRoots": [
+      "../../node_modules/@types"
+    ],
+    "paths": {
+      "@/*": [
+        "../../*"
+      ]
+    }
+  },
+  "include": [
+    "../../config/**/*.ts",
+    "../../lib/**/*.ts",
+    "../../scripts/**/*.ts",
+    "../../tests/**/*.ts",
+    "../../app/sitemap.ts",
+    "../../app/robots.ts",
+    "../../next.config.ts",
+    "types/next.d.ts"
+  ],
+  "exclude": []
+}

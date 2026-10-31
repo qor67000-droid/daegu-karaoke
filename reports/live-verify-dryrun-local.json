@@ -1,0 +1,295 @@
+{
+  "checkedAt": "2026-10-31T10:12:03.191Z",
+  "live": "http://127.0.0.1:4173/daegu-karaoke",
+  "urlKind": "local-emulation",
+  "canonicalBase": "https://verify-owner.github.io/daegu-karaoke",
+  "results": [
+    {
+      "name": "공개 URL 응답",
+      "ok": true
+    },
+    {
+      "name": "/ 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "/ text/html",
+      "ok": true
+    },
+    {
+      "name": "/ canonical",
+      "ok": true,
+      "detail": "https://verify-owner.github.io/daegu-karaoke/"
+    },
+    {
+      "name": "/ og:url = canonical",
+      "ok": true
+    },
+    {
+      "name": "/ robots index",
+      "ok": true,
+      "detail": "index, follow"
+    },
+    {
+      "name": "/guide/ 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "/guide/ text/html",
+      "ok": true
+    },
+    {
+      "name": "/guide/ canonical",
+      "ok": true,
+      "detail": "https://verify-owner.github.io/daegu-karaoke/guide/"
+    },
+    {
+      "name": "/guide/ og:url = canonical",
+      "ok": true
+    },
+    {
+      "name": "/guide/ robots index",
+      "ok": true,
+      "detail": "index, follow"
+    },
+    {
+      "name": "/guide/ 슬래시 없는 주소 301",
+      "ok": true,
+      "detail": "301 → /daegu-karaoke/guide/"
+    },
+    {
+      "name": "/guide/first-visit/ 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "/guide/first-visit/ text/html",
+      "ok": true
+    },
+    {
+      "name": "/guide/first-visit/ canonical",
+      "ok": true,
+      "detail": "https://verify-owner.github.io/daegu-karaoke/guide/first-visit/"
+    },
+    {
+      "name": "/guide/first-visit/ og:url = canonical",
+      "ok": true
+    },
+    {
+      "name": "/guide/first-visit/ robots index",
+      "ok": true,
+      "detail": "index, follow"
+    },
+    {
+      "name": "/guide/first-visit/ 슬래시 없는 주소 301",
+      "ok": true,
+      "detail": "301 → /daegu-karaoke/guide/first-visit/"
+    },
+    {
+      "name": "/guide/daegu-areas/ 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "/guide/daegu-areas/ text/html",
+      "ok": true
+    },
+    {
+      "name": "/guide/daegu-areas/ canonical",
+      "ok": true,
+      "detail": "https://verify-owner.github.io/daegu-karaoke/guide/daegu-areas/"
+    },
+    {
+      "name": "/guide/daegu-areas/ og:url = canonical",
+      "ok": true
+    },
+    {
+      "name": "/guide/daegu-areas/ robots index",
+      "ok": true,
+      "detail": "index, follow"
+    },
+    {
+      "name": "/guide/daegu-areas/ 슬래시 없는 주소 301",
+      "ok": true,
+      "detail": "301 → /daegu-karaoke/guide/daegu-areas/"
+    },
+    {
+      "name": "/about/ 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "/about/ text/html",
+      "ok": true
+    },
+    {
+      "name": "/about/ canonical",
+      "ok": true,
+      "detail": "https://verify-owner.github.io/daegu-karaoke/about/"
+    },
+    {
+      "name": "/about/ og:url = canonical",
+      "ok": true
+    },
+    {
+      "name": "/about/ robots noindex",
+      "ok": true,
+      "detail": "noindex, follow"
+    },
+    {
+      "name": "/about/ 슬래시 없는 주소 301",
+      "ok": true,
+      "detail": "301 → /daegu-karaoke/about/"
+    },
+    {
+      "name": "/rooms/ 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "/rooms/ text/html",
+      "ok": true
+    },
+    {
+      "name": "/rooms/ canonical",
+      "ok": true,
+      "detail": "https://verify-owner.github.io/daegu-karaoke/rooms/"
+    },
+    {
+      "name": "/rooms/ og:url = canonical",
+      "ok": true
+    },
+    {
+      "name": "/rooms/ robots noindex",
+      "ok": true,
+      "detail": "noindex, follow"
+    },
+    {
+      "name": "/rooms/ 슬래시 없는 주소 301",
+      "ok": true,
+      "detail": "301 → /daegu-karaoke/rooms/"
+    },
+    {
+      "name": "/price/ 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "/price/ text/html",
+      "ok": true
+    },
+    {
+      "name": "/price/ canonical",
+      "ok": true,
+      "detail": "https://verify-owner.github.io/daegu-karaoke/price/"
+    },
+    {
+      "name": "/price/ og:url = canonical",
+      "ok": true
+    },
+    {
+      "name": "/price/ robots noindex",
+      "ok": true,
+      "detail": "noindex, follow"
+    },
+    {
+      "name": "/price/ 슬래시 없는 주소 301",
+      "ok": true,
+      "detail": "301 → /daegu-karaoke/price/"
+    },
+    {
+      "name": "/location/ 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "/location/ text/html",
+      "ok": true
+    },
+    {
+      "name": "/location/ canonical",
+      "ok": true,
+      "detail": "https://verify-owner.github.io/daegu-karaoke/location/"
+    },
+    {
+      "name": "/location/ og:url = canonical",
+      "ok": true
+    },
+    {
+      "name": "/location/ robots noindex",
+      "ok": true,
+      "detail": "noindex, follow"
+    },
+    {
+      "name": "/location/ 슬래시 없는 주소 301",
+      "ok": true,
+      "detail": "301 → /daegu-karaoke/location/"
+    },
+    {
+      "name": "/contact/ 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "/contact/ text/html",
+      "ok": true
+    },
+    {
+      "name": "/contact/ canonical",
+      "ok": true,
+      "detail": "https://verify-owner.github.io/daegu-karaoke/contact/"
+    },
+    {
+      "name": "/contact/ og:url = canonical",
+      "ok": true
+    },
+    {
+      "name": "/contact/ robots noindex",
+      "ok": true,
+      "detail": "noindex, follow"
+    },
+    {
+      "name": "/contact/ 슬래시 없는 주소 301",
+      "ok": true,
+      "detail": "301 → /daegu-karaoke/contact/"
+    },
+    {
+      "name": "CSS·JS·이미지·아이콘 3개 200",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "내부 링크 4개 200",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "sitemap.xml 200",
+      "ok": true
+    },
+    {
+      "name": "sitemap = 색인 페이지",
+      "ok": true,
+      "detail": "4/4"
+    },
+    {
+      "name": "robots.txt 200",
+      "ok": true
+    },
+    {
+      "name": "robots.txt Sitemap 선언",
+      "ok": true
+    },
+    {
+      "name": "robots.txt 전체 차단 아님",
+      "ok": true
+    },
+    {
+      "name": "없는 경로 404",
+      "ok": true,
+      "detail": "404"
+    }
+  ]
+}

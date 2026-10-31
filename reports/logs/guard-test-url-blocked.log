@@ -1,0 +1,3 @@
+[guard] mode=production basePath="/daegu-karaoke" domain=(GitHub Pages 기본 주소)
+[guard] ✖ 빌드 중단:
+         - 실제 배포에 테스트용 URL 사용: https://verify-owner.github.io/daegu-karaoke

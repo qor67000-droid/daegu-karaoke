@@ -1,0 +1,761 @@
+{
+  "generatedAt": "2026-10-31T10:11:07.315Z",
+  "basePath": "/daegu-karaoke",
+  "note": "로컬 실험실 측정. 실사용자(CrUX) 지표 아님",
+  "results": [
+    {
+      "name": "GET / → 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "/ 초기 HTML에 H1",
+      "ok": true,
+      "detail": "대구 가라오케·노래방[미정: 상호]"
+    },
+    {
+      "name": "/ robots=noindex",
+      "ok": true,
+      "detail": "noindex, follow"
+    },
+    {
+      "name": "GET /guide/ → 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "/guide/ 초기 HTML에 H1",
+      "ok": true,
+      "detail": "노래방과 가라오케, 무엇이 다른가요"
+    },
+    {
+      "name": "/guide/ robots=noindex",
+      "ok": true,
+      "detail": "noindex, follow"
+    },
+    {
+      "name": "/guide → 301 /guide/",
+      "ok": true,
+      "detail": "301 /daegu-karaoke/guide/"
+    },
+    {
+      "name": "GET /guide/first-visit/ → 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "/guide/first-visit/ 초기 HTML에 H1",
+      "ok": true,
+      "detail": "가라오케 처음 이용 가이드"
+    },
+    {
+      "name": "/guide/first-visit/ robots=noindex",
+      "ok": true,
+      "detail": "noindex, follow"
+    },
+    {
+      "name": "/guide/first-visit → 301 /guide/first-visit/",
+      "ok": true,
+      "detail": "301 /daegu-karaoke/guide/first-visit/"
+    },
+    {
+      "name": "GET /guide/daegu-areas/ → 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "/guide/daegu-areas/ 초기 HTML에 H1",
+      "ok": true,
+      "detail": "대구 지역별 안내"
+    },
+    {
+      "name": "/guide/daegu-areas/ robots=noindex",
+      "ok": true,
+      "detail": "noindex, follow"
+    },
+    {
+      "name": "/guide/daegu-areas → 301 /guide/daegu-areas/",
+      "ok": true,
+      "detail": "301 /daegu-karaoke/guide/daegu-areas/"
+    },
+    {
+      "name": "GET /about/ → 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "/about/ 초기 HTML에 H1",
+      "ok": true,
+      "detail": "업체 소개"
+    },
+    {
+      "name": "/about/ robots=noindex",
+      "ok": true,
+      "detail": "noindex, follow"
+    },
+    {
+      "name": "/about → 301 /about/",
+      "ok": true,
+      "detail": "301 /daegu-karaoke/about/"
+    },
+    {
+      "name": "GET /rooms/ → 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "/rooms/ 초기 HTML에 H1",
+      "ok": true,
+      "detail": "룸과 시설 안내"
+    },
+    {
+      "name": "/rooms/ robots=noindex",
+      "ok": true,
+      "detail": "noindex, follow"
+    },
+    {
+      "name": "/rooms → 301 /rooms/",
+      "ok": true,
+      "detail": "301 /daegu-karaoke/rooms/"
+    },
+    {
+      "name": "GET /price/ → 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "/price/ 초기 HTML에 H1",
+      "ok": true,
+      "detail": "이용 요금"
+    },
+    {
+      "name": "/price/ robots=noindex",
+      "ok": true,
+      "detail": "noindex, follow"
+    },
+    {
+      "name": "/price → 301 /price/",
+      "ok": true,
+      "detail": "301 /daegu-karaoke/price/"
+    },
+    {
+      "name": "GET /location/ → 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "/location/ 초기 HTML에 H1",
+      "ok": true,
+      "detail": "오시는 길·영업시간"
+    },
+    {
+      "name": "/location/ robots=noindex",
+      "ok": true,
+      "detail": "noindex, follow"
+    },
+    {
+      "name": "/location → 301 /location/",
+      "ok": true,
+      "detail": "301 /daegu-karaoke/location/"
+    },
+    {
+      "name": "GET /contact/ → 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "/contact/ 초기 HTML에 H1",
+      "ok": true,
+      "detail": "예약·문의"
+    },
+    {
+      "name": "/contact/ robots=noindex",
+      "ok": true,
+      "detail": "noindex, follow"
+    },
+    {
+      "name": "/contact → 301 /contact/",
+      "ok": true,
+      "detail": "301 /daegu-karaoke/contact/"
+    },
+    {
+      "name": "GET /no-such-page/ → 404",
+      "ok": true,
+      "detail": "404"
+    },
+    {
+      "name": "GET /rooms/x/ → 404",
+      "ok": true,
+      "detail": "404"
+    },
+    {
+      "name": "GET /대구가라오케/ → 404",
+      "ok": true,
+      "detail": "404"
+    },
+    {
+      "name": "GET /robots.txt → 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "GET /sitemap.xml → 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "GET /icon.svg → 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "GET /og-default.png → 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "GET /.nojekyll → 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "basePath 밖 /guide/ → 404",
+      "ok": true,
+      "detail": "404"
+    },
+    {
+      "name": "mobile / CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "mobile / 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile / 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile / 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "mobile / CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "mobile /guide/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "mobile /guide/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /guide/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /guide/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "mobile /guide/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "mobile /guide/first-visit/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "mobile /guide/first-visit/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /guide/first-visit/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /guide/first-visit/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "mobile /guide/first-visit/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "mobile /guide/daegu-areas/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "mobile /guide/daegu-areas/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /guide/daegu-areas/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /guide/daegu-areas/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "mobile /guide/daegu-areas/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "mobile /about/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "mobile /about/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /about/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /about/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "mobile /about/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "mobile /rooms/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "mobile /rooms/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /rooms/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /rooms/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "mobile /rooms/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "mobile /price/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "mobile /price/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /price/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /price/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "mobile /price/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "mobile /location/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "mobile /location/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /location/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /location/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "mobile /location/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "mobile /contact/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "mobile /contact/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /contact/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /contact/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "mobile /contact/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "mobile 푸터 링크 클릭 이동",
+      "ok": true,
+      "detail": "/daegu-karaoke/guide/ → /daegu-karaoke/guide/"
+    },
+    {
+      "name": "desktop / CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "desktop / 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop / 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop / 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "desktop / CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "desktop /guide/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "desktop /guide/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /guide/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /guide/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "desktop /guide/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "desktop /guide/first-visit/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "desktop /guide/first-visit/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /guide/first-visit/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /guide/first-visit/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "desktop /guide/first-visit/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "desktop /guide/daegu-areas/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "desktop /guide/daegu-areas/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /guide/daegu-areas/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /guide/daegu-areas/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "desktop /guide/daegu-areas/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "desktop /about/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "desktop /about/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /about/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /about/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "desktop /about/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "desktop /rooms/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "desktop /rooms/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /rooms/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /rooms/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "desktop /rooms/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "desktop /price/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "desktop /price/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /price/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /price/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "desktop /price/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "desktop /location/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "desktop /location/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /location/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /location/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "desktop /location/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "desktop /contact/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "desktop /contact/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /contact/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /contact/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "desktop /contact/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "desktop 푸터 링크 클릭 이동",
+      "ok": true,
+      "detail": "/daegu-karaoke/guide/ → /daegu-karaoke/guide/"
+    }
+  ],
+  "perf": {
+    "mobile /": {
+      "lcp": 164,
+      "cls": 0
+    },
+    "mobile /guide/": {
+      "lcp": 176,
+      "cls": 0
+    },
+    "mobile /guide/first-visit/": {
+      "lcp": 112,
+      "cls": 0
+    },
+    "mobile /guide/daegu-areas/": {
+      "lcp": 144,
+      "cls": 0
+    },
+    "mobile /about/": {
+      "lcp": 148,
+      "cls": 0
+    },
+    "mobile /rooms/": {
+      "lcp": 140,
+      "cls": 0
+    },
+    "mobile /price/": {
+      "lcp": 192,
+      "cls": 0
+    },
+    "mobile /location/": {
+      "lcp": 144,
+      "cls": 0
+    },
+    "mobile /contact/": {
+      "lcp": 92,
+      "cls": 0
+    },
+    "desktop /": {
+      "lcp": 160,
+      "cls": 0
+    },
+    "desktop /guide/": {
+      "lcp": 156,
+      "cls": 0
+    },
+    "desktop /guide/first-visit/": {
+      "lcp": 140,
+      "cls": 0
+    },
+    "desktop /guide/daegu-areas/": {
+      "lcp": 120,
+      "cls": 0
+    },
+    "desktop /about/": {
+      "lcp": 156,
+      "cls": 0
+    },
+    "desktop /rooms/": {
+      "lcp": 112,
+      "cls": 0
+    },
+    "desktop /price/": {
+      "lcp": 140,
+      "cls": 0
+    },
+    "desktop /location/": {
+      "lcp": 140,
+      "cls": 0
+    },
+    "desktop /contact/": {
+      "lcp": 136,
+      "cls": 0
+    }
+  }
+}

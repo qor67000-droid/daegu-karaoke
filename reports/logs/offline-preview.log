@@ -1,0 +1,175 @@
+── guard (preview)
+[guard] mode=preview basePath="" domain=(GitHub Pages 기본 주소)
+[guard] base URL = http://localhost:3000
+[guard] ⚠ 업체 정보 미정 6개 → 홈은 정보 가이드 모드, 업체 페이지는 noindex·사이트맵 제외:
+         - name (상호)
+         - licenseType + licenseVerified (영업신고 업종 확인)
+         - phone (대표 전화)
+         - address.district (구)
+         - address.street (도로명 주소)
+         - hours (영업시간)
+[guard] 색인 대상: (없음 — 미리보기)
+[guard] noindex: / /guide/ /guide/first-visit/ /guide/daegu-areas/ /about/ /rooms/ /price/ /location/ /contact/
+── render
+[offline-render] out-preview/ basePath="" : 10 html + sitemap.xml + robots.txt (Disallow: /)
+[offline-css] 39.2 KB from 2905 tokens
+[postbuild] .nojekyll → out-preview/
+── seo:audit
+
+[seo] mode=preview base=http://localhost:3000 (로컬) basePath="" business=pending
+[seo] pages=9 색인=0 []
+[seo] noindex=9 [/about/ /contact/ /guide/daegu-areas/ /guide/first-visit/ /guide/ / /location/ /price/ /rooms/] sitemap=0
+  ⚠ placeholder (9)
+      /about/: 임시 문구/테스트 값 감지: /localhost(:\d+)?/i
+      /contact/: 임시 문구/테스트 값 감지: /localhost(:\d+)?/i
+      /guide/daegu-areas/: 임시 문구/테스트 값 감지: /localhost(:\d+)?/i
+      /guide/first-visit/: 임시 문구/테스트 값 감지: /localhost(:\d+)?/i
+      /guide/: 임시 문구/테스트 값 감지: /localhost(:\d+)?/i
+      /: 임시 문구/테스트 값 감지: /localhost(:\d+)?/i
+      … +3
+[seo] errors=0 warnings=9 info=0
+
+── test:routes
+[test:routes] serving out-preview/ at http://127.0.0.1:40191/ (GitHub Pages 규칙)
+  ✓ GET / → 200 — 200
+  ✓ / 초기 HTML에 H1 — 대구 가라오케·노래방,가기 전에 알아둘 것
+  ✓ / robots=noindex — noindex, follow
+  ✓ GET /guide/ → 200 — 200
+  ✓ /guide/ 초기 HTML에 H1 — 노래방과 가라오케, 무엇이 다른가요
+  ✓ /guide/ robots=noindex — noindex, follow
+  ✓ /guide → 301 /guide/ — 301 /guide/
+  ✓ GET /guide/first-visit/ → 200 — 200
+  ✓ /guide/first-visit/ 초기 HTML에 H1 — 가라오케 처음 이용 가이드
+  ✓ /guide/first-visit/ robots=noindex — noindex, follow
+  ✓ /guide/first-visit → 301 /guide/first-visit/ — 301 /guide/first-visit/
+  ✓ GET /guide/daegu-areas/ → 200 — 200
+  ✓ /guide/daegu-areas/ 초기 HTML에 H1 — 대구 지역별 안내
+  ✓ /guide/daegu-areas/ robots=noindex — noindex, follow
+  ✓ /guide/daegu-areas → 301 /guide/daegu-areas/ — 301 /guide/daegu-areas/
+  ✓ GET /about/ → 200 — 200
+  ✓ /about/ 초기 HTML에 H1 — 업체 소개
+  ✓ /about/ robots=noindex — noindex, follow
+  ✓ /about → 301 /about/ — 301 /about/
+  ✓ GET /rooms/ → 200 — 200
+  ✓ /rooms/ 초기 HTML에 H1 — 룸과 시설 안내
+  ✓ /rooms/ robots=noindex — noindex, follow
+  ✓ /rooms → 301 /rooms/ — 301 /rooms/
+  ✓ GET /price/ → 200 — 200
+  ✓ /price/ 초기 HTML에 H1 — 이용 요금
+  ✓ /price/ robots=noindex — noindex, follow
+  ✓ /price → 301 /price/ — 301 /price/
+  ✓ GET /location/ → 200 — 200
+  ✓ /location/ 초기 HTML에 H1 — 오시는 길·영업시간
+  ✓ /location/ robots=noindex — noindex, follow
+  ✓ /location → 301 /location/ — 301 /location/
+  ✓ GET /contact/ → 200 — 200
+  ✓ /contact/ 초기 HTML에 H1 — 예약·문의
+  ✓ /contact/ robots=noindex — noindex, follow
+  ✓ /contact → 301 /contact/ — 301 /contact/
+  ✓ GET /no-such-page/ → 404 — 404
+  ✓ GET /rooms/x/ → 404 — 404
+  ✓ GET /대구가라오케/ → 404 — 404
+  ✓ GET /robots.txt → 200 — 200
+  ✓ GET /sitemap.xml → 200 — 200
+  ✓ GET /icon.svg → 200 — 200
+  ✓ GET /og-default.png → 200 — 200
+  ✓ GET /.nojekyll → 200 — 200
+[test:routes] browser mobile
+  ✓ mobile / CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ mobile / 하위 리소스 4xx 없음
+  ✓ mobile / 깨진 이미지 없음
+  ✓ mobile / 가로 넘침 없음 — 0px
+  ✓ mobile / CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ mobile /guide/ CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ mobile /guide/ 하위 리소스 4xx 없음
+  ✓ mobile /guide/ 깨진 이미지 없음
+  ✓ mobile /guide/ 가로 넘침 없음 — 0px
+  ✓ mobile /guide/ CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ mobile /guide/first-visit/ CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ mobile /guide/first-visit/ 하위 리소스 4xx 없음
+  ✓ mobile /guide/first-visit/ 깨진 이미지 없음
+  ✓ mobile /guide/first-visit/ 가로 넘침 없음 — 0px
+  ✓ mobile /guide/first-visit/ CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ mobile /guide/daegu-areas/ CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ mobile /guide/daegu-areas/ 하위 리소스 4xx 없음
+  ✓ mobile /guide/daegu-areas/ 깨진 이미지 없음
+  ✓ mobile /guide/daegu-areas/ 가로 넘침 없음 — 0px
+  ✓ mobile /guide/daegu-areas/ CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ mobile /about/ CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ mobile /about/ 하위 리소스 4xx 없음
+  ✓ mobile /about/ 깨진 이미지 없음
+  ✓ mobile /about/ 가로 넘침 없음 — 0px
+  ✓ mobile /about/ CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ mobile /rooms/ CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ mobile /rooms/ 하위 리소스 4xx 없음
+  ✓ mobile /rooms/ 깨진 이미지 없음
+  ✓ mobile /rooms/ 가로 넘침 없음 — 0px
+  ✓ mobile /rooms/ CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ mobile /price/ CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ mobile /price/ 하위 리소스 4xx 없음
+  ✓ mobile /price/ 깨진 이미지 없음
+  ✓ mobile /price/ 가로 넘침 없음 — 0px
+  ✓ mobile /price/ CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ mobile /location/ CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ mobile /location/ 하위 리소스 4xx 없음
+  ✓ mobile /location/ 깨진 이미지 없음
+  ✓ mobile /location/ 가로 넘침 없음 — 0px
+  ✓ mobile /location/ CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ mobile /contact/ CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ mobile /contact/ 하위 리소스 4xx 없음
+  ✓ mobile /contact/ 깨진 이미지 없음
+  ✓ mobile /contact/ 가로 넘침 없음 — 0px
+  ✓ mobile /contact/ CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ mobile 푸터 링크 클릭 이동 — /guide/ → /guide/
+  - mobile 클릭 추적: 공개된 전화번호 없음 — 건너뜀
+[test:routes] browser desktop
+  ✓ desktop / CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ desktop / 하위 리소스 4xx 없음
+  ✓ desktop / 깨진 이미지 없음
+  ✓ desktop / 가로 넘침 없음 — 0px
+  ✓ desktop / CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ desktop /guide/ CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ desktop /guide/ 하위 리소스 4xx 없음
+  ✓ desktop /guide/ 깨진 이미지 없음
+  ✓ desktop /guide/ 가로 넘침 없음 — 0px
+  ✓ desktop /guide/ CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ desktop /guide/first-visit/ CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ desktop /guide/first-visit/ 하위 리소스 4xx 없음
+  ✓ desktop /guide/first-visit/ 깨진 이미지 없음
+  ✓ desktop /guide/first-visit/ 가로 넘침 없음 — 0px
+  ✓ desktop /guide/first-visit/ CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ desktop /guide/daegu-areas/ CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ desktop /guide/daegu-areas/ 하위 리소스 4xx 없음
+  ✓ desktop /guide/daegu-areas/ 깨진 이미지 없음
+  ✓ desktop /guide/daegu-areas/ 가로 넘침 없음 — 0px
+  ✓ desktop /guide/daegu-areas/ CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ desktop /about/ CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ desktop /about/ 하위 리소스 4xx 없음
+  ✓ desktop /about/ 깨진 이미지 없음
+  ✓ desktop /about/ 가로 넘침 없음 — 0px
+  ✓ desktop /about/ CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ desktop /rooms/ CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ desktop /rooms/ 하위 리소스 4xx 없음
+  ✓ desktop /rooms/ 깨진 이미지 없음
+  ✓ desktop /rooms/ 가로 넘침 없음 — 0px
+  ✓ desktop /rooms/ CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ desktop /price/ CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ desktop /price/ 하위 리소스 4xx 없음
+  ✓ desktop /price/ 깨진 이미지 없음
+  ✓ desktop /price/ 가로 넘침 없음 — 0px
+  ✓ desktop /price/ CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ desktop /location/ CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ desktop /location/ 하위 리소스 4xx 없음
+  ✓ desktop /location/ 깨진 이미지 없음
+  ✓ desktop /location/ 가로 넘침 없음 — 0px
+  ✓ desktop /location/ CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ desktop /contact/ CSS 적용(basePath 경로) — 1 sheets, bg rgb(11, 10, 13)
+  ✓ desktop /contact/ 하위 리소스 4xx 없음
+  ✓ desktop /contact/ 깨진 이미지 없음
+  ✓ desktop /contact/ 가로 넘침 없음 — 0px
+  ✓ desktop /contact/ CTA 터치 영역 ≥ 44px — 0개 미달
+  ✓ desktop 푸터 링크 클릭 이동 — /guide/ → /guide/
+  - desktop 클릭 추적: 공개된 전화번호 없음 — 건너뜀
+[test:routes] lab: max LCP 152ms, max CLS 0 (로컬, 네트워크 지연 없음)
+[test:routes] 135/135 passed
+── result: audit=0 routes=0

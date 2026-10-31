@@ -1,0 +1,10 @@
+node_modules/
+.next/
+out/
+out-*/
+*.tsbuildinfo
+next-env.d.ts
+tools/offline/.build/
+reports/screenshots/*.png
+!reports/screenshots/.gitkeep
+.env*.local

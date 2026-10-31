@@ -1,0 +1,6 @@
+{
+  "name": "next",
+  "version": "0.0.0-offline-stub",
+  "description": "OFFLINE VERIFICATION STUB ONLY. Real Next.js replaces this on npm install.",
+  "exports": { "./link": "./link.js", "./package.json": "./package.json" }
+}

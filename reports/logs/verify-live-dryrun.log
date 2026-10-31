@@ -1,0 +1,65 @@
+[verify:live] http://127.0.0.1:4173/daegu-karaoke/ (로컬 모의 — 실제 공개 URL 아님)
+  (빌드 기준 URL https://verify-owner.github.io/daegu-karaoke — canonical 비교는 빌드 기준 URL로 수행)
+  ✓ 공개 URL 응답
+  ✓ / 200 — 200
+  ✓ / text/html
+  ✓ / canonical — https://verify-owner.github.io/daegu-karaoke/
+  ✓ / og:url = canonical
+  ✓ / robots index — index, follow
+  ✓ /guide/ 200 — 200
+  ✓ /guide/ text/html
+  ✓ /guide/ canonical — https://verify-owner.github.io/daegu-karaoke/guide/
+  ✓ /guide/ og:url = canonical
+  ✓ /guide/ robots index — index, follow
+  ✓ /guide/ 슬래시 없는 주소 301 — 301 → /daegu-karaoke/guide/
+  ✓ /guide/first-visit/ 200 — 200
+  ✓ /guide/first-visit/ text/html
+  ✓ /guide/first-visit/ canonical — https://verify-owner.github.io/daegu-karaoke/guide/first-visit/
+  ✓ /guide/first-visit/ og:url = canonical
+  ✓ /guide/first-visit/ robots index — index, follow
+  ✓ /guide/first-visit/ 슬래시 없는 주소 301 — 301 → /daegu-karaoke/guide/first-visit/
+  ✓ /guide/daegu-areas/ 200 — 200
+  ✓ /guide/daegu-areas/ text/html
+  ✓ /guide/daegu-areas/ canonical — https://verify-owner.github.io/daegu-karaoke/guide/daegu-areas/
+  ✓ /guide/daegu-areas/ og:url = canonical
+  ✓ /guide/daegu-areas/ robots index — index, follow
+  ✓ /guide/daegu-areas/ 슬래시 없는 주소 301 — 301 → /daegu-karaoke/guide/daegu-areas/
+  ✓ /about/ 200 — 200
+  ✓ /about/ text/html
+  ✓ /about/ canonical — https://verify-owner.github.io/daegu-karaoke/about/
+  ✓ /about/ og:url = canonical
+  ✓ /about/ robots noindex — noindex, follow
+  ✓ /about/ 슬래시 없는 주소 301 — 301 → /daegu-karaoke/about/
+  ✓ /rooms/ 200 — 200
+  ✓ /rooms/ text/html
+  ✓ /rooms/ canonical — https://verify-owner.github.io/daegu-karaoke/rooms/
+  ✓ /rooms/ og:url = canonical
+  ✓ /rooms/ robots noindex — noindex, follow
+  ✓ /rooms/ 슬래시 없는 주소 301 — 301 → /daegu-karaoke/rooms/
+  ✓ /price/ 200 — 200
+  ✓ /price/ text/html
+  ✓ /price/ canonical — https://verify-owner.github.io/daegu-karaoke/price/
+  ✓ /price/ og:url = canonical
+  ✓ /price/ robots noindex — noindex, follow
+  ✓ /price/ 슬래시 없는 주소 301 — 301 → /daegu-karaoke/price/
+  ✓ /location/ 200 — 200
+  ✓ /location/ text/html
+  ✓ /location/ canonical — https://verify-owner.github.io/daegu-karaoke/location/
+  ✓ /location/ og:url = canonical
+  ✓ /location/ robots noindex — noindex, follow
+  ✓ /location/ 슬래시 없는 주소 301 — 301 → /daegu-karaoke/location/
+  ✓ /contact/ 200 — 200
+  ✓ /contact/ text/html
+  ✓ /contact/ canonical — https://verify-owner.github.io/daegu-karaoke/contact/
+  ✓ /contact/ og:url = canonical
+  ✓ /contact/ robots noindex — noindex, follow
+  ✓ /contact/ 슬래시 없는 주소 301 — 301 → /daegu-karaoke/contact/
+  ✓ CSS·JS·이미지·아이콘 3개 200
+  ✓ 내부 링크 4개 200
+  ✓ sitemap.xml 200
+  ✓ sitemap = 색인 페이지 — 4/4
+  ✓ robots.txt 200
+  ✓ robots.txt Sitemap 선언
+  ✓ robots.txt 전체 차단 아님
+  ✓ 없는 경로 404 — 404
+[verify:live] 62/62 passed

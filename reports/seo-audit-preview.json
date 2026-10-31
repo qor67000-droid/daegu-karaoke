@@ -1,0 +1,92 @@
+{
+  "generatedAt": "2026-10-31T10:10:24.867Z",
+  "mode": "preview",
+  "fixture": false,
+  "base": "http://localhost:3000",
+  "urlKind": "local",
+  "basePath": "",
+  "businessReady": false,
+  "pages": [
+    "/about/",
+    "/contact/",
+    "/guide/daegu-areas/",
+    "/guide/first-visit/",
+    "/guide/",
+    "/",
+    "/location/",
+    "/price/",
+    "/rooms/"
+  ],
+  "indexable": [],
+  "noindex": [
+    "/about/",
+    "/contact/",
+    "/guide/daegu-areas/",
+    "/guide/first-visit/",
+    "/guide/",
+    "/",
+    "/location/",
+    "/price/",
+    "/rooms/"
+  ],
+  "sitemap": [],
+  "errors": 0,
+  "warnings": 9,
+  "infos": 0,
+  "issues": [
+    {
+      "level": "warn",
+      "page": "/about/",
+      "rule": "placeholder",
+      "msg": "임시 문구/테스트 값 감지: /localhost(:\\d+)?/i"
+    },
+    {
+      "level": "warn",
+      "page": "/contact/",
+      "rule": "placeholder",
+      "msg": "임시 문구/테스트 값 감지: /localhost(:\\d+)?/i"
+    },
+    {
+      "level": "warn",
+      "page": "/guide/daegu-areas/",
+      "rule": "placeholder",
+      "msg": "임시 문구/테스트 값 감지: /localhost(:\\d+)?/i"
+    },
+    {
+      "level": "warn",
+      "page": "/guide/first-visit/",
+      "rule": "placeholder",
+      "msg": "임시 문구/테스트 값 감지: /localhost(:\\d+)?/i"
+    },
+    {
+      "level": "warn",
+      "page": "/guide/",
+      "rule": "placeholder",
+      "msg": "임시 문구/테스트 값 감지: /localhost(:\\d+)?/i"
+    },
+    {
+      "level": "warn",
+      "page": "/",
+      "rule": "placeholder",
+      "msg": "임시 문구/테스트 값 감지: /localhost(:\\d+)?/i"
+    },
+    {
+      "level": "warn",
+      "page": "/location/",
+      "rule": "placeholder",
+      "msg": "임시 문구/테스트 값 감지: /localhost(:\\d+)?/i"
+    },
+    {
+      "level": "warn",
+      "page": "/price/",
+      "rule": "placeholder",
+      "msg": "임시 문구/테스트 값 감지: /localhost(:\\d+)?/i"
+    },
+    {
+      "level": "warn",
+      "page": "/rooms/",
+      "rule": "placeholder",
+      "msg": "임시 문구/테스트 값 감지: /localhost(:\\d+)?/i"
+    }
+  ]
+}
