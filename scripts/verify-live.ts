@@ -16,10 +16,13 @@ import { absoluteUrl, baseUrl } from "@/lib/site";
 import { isTestHost } from "@/lib/env";
 
 const LIVE = (process.argv[2] || process.env.LIVE_URL || baseUrl()).replace(/\/$/, "");
+const TITLE = "verify:live";
 const results: { name: string; ok: boolean; detail?: string }[] = [];
 const check = (name: string, ok: boolean, detail?: string) => {
   results.push({ name, ok, detail });
   console.log(`  ${ok ? "✓" : "✖"} ${name}${detail ? ` — ${detail}` : ""}`);
+  // GitHub Actions에서는 실패 항목을 annotation으로 남겨 로그 없이도 API로 확인할 수 있게 한다
+  if (!ok && process.env.GITHUB_ACTIONS) console.log(`::error title=${TITLE}::${(name + (detail ? " — " + detail : "")).replace(/\r?\n/g, " ").slice(0, 900)}`);
 };
 const attr = (tag: string, n: string) => tag.match(new RegExp(`\\s${n}="([^"]*)"`, "i"))?.[1]?.replace(/&amp;/g, "&") ?? null;
 const meta = (html: string, key: string, by = "name") =>

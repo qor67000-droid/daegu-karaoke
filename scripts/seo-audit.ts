@@ -20,7 +20,11 @@ import { useFixture } from "@/lib/env";
 const OUT = process.argv[2] || "out";
 type Level = "error" | "warn" | "info";
 const issues: { level: Level; page: string; rule: string; msg: string }[] = [];
-const add = (level: Level, page: string, rule: string, msg: string) => issues.push({ level, page, rule, msg });
+const add = (level: Level, page: string, rule: string, msg: string) => {
+  issues.push({ level, page, rule, msg });
+  if (process.env.GITHUB_ACTIONS && level !== "info")
+    console.log(`::${level === "error" ? "error" : "warning"} title=seo ${rule}::${(page + ": " + msg).replace(/\r?\n/g, " ").slice(0, 900)}`);
+};
 
 if (!existsSync(OUT)) {
   console.error(`[seo] ${OUT}/ 가 없습니다. 먼저 npm run build 하세요.`);
