@@ -168,8 +168,13 @@ async function main() {
       await page.goto(root + "/");
       const navHref = await page.locator("footer nav a").nth(1).getAttribute("href");
       await page.locator("footer nav a").nth(1).click();
-      await page.waitForLoadState("load");
-      check(`${vp.name} 푸터 링크 클릭 이동`, page.url() === origin + (navHref ?? ""), `${navHref} → ${page.url().slice(origin.length)}`);
+      // Next <Link>는 클라이언트 측 이동이라 load 이벤트가 다시 오지 않는다 → URL 변경을 기다린다
+      const moved = await page
+        .waitForURL(origin + (navHref ?? ""), { timeout: 10_000 })
+        .then(() => true)
+        .catch(() => false);
+      const h1After = moved ? await page.locator("h1").first().textContent() : null;
+      check(`${vp.name} 푸터 링크 클릭 이동`, moved && Boolean(h1After), `${navHref} → ${page.url().slice(origin.length)} (h1: ${h1After?.trim().slice(0, 20) ?? "-"})`);
       // 클릭 추적
       const hasTel = await page.goto(root + "/contact/").then(() => page.locator('a[data-track="click_call"]').count());
       if (hasTel && (await page.evaluate(() => Boolean((window as any).__clickTrackerReady)))) {
