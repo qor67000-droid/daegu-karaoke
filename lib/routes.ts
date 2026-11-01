@@ -1,12 +1,13 @@
-import { site, brand, businessReady, isProduction } from "@/lib/site";
+import { site, brand, businessReady, isProduction, reservationReady } from "@/lib/site";
 
 /**
  * 라우트 두 종류
  *  - info     : 업체 정보와 무관하게 사실인 독립 정보 콘텐츠. 프로덕션에서 항상 색인 허용.
+ *  - service  : 독립 예약 안내 서비스(운영자 연락처 기반). 운영자 연락처가 있으면 공개·색인.
  *  - business : 실제 업체 소개. 필수 업체 정보 확인 + 페이지 고유 데이터가 있을 때만 색인·내비게이션·사이트맵 포함.
  * 경로는 GitHub Pages(trailingSlash) 정규형인 끝 슬래시 형태로 고정한다.
  */
-export type RouteKind = "info" | "business";
+export type RouteKind = "info" | "service" | "business";
 
 export interface RouteDef {
   path: string;
@@ -75,6 +76,19 @@ export const routes: RouteDef[] = [
     priority: 0.8,
   },
 
+  /* ───────── 예약 안내 서비스 ───────── */
+  {
+    path: "/reservation/",
+    kind: "service",
+    nav: "예약 문의",
+    title: () => "대구 가라오케·노래방 예약 문의 — 제휴 매장 연결 안내",
+    description: () =>
+      "날짜·시간·인원을 남기면 대구 수성구 제휴 매장의 예약 가능 여부를 확인해 연락드리는 독립 예약 안내 서비스입니다. 전화·문자·카카오톡·LINE·텔레그램으로 문의할 수 있습니다.",
+    h1: () => "대구 가라오케·노래방 예약 문의",
+    hasContent: () => reservationReady(),
+    priority: 0.9,
+  },
+
   /* ───────── 업체 페이지 (실제 정보 확인 후 공개) ───────── */
   {
     path: "/about/",
@@ -138,7 +152,8 @@ export const getRoute = (path: string) => {
 };
 
 /** 페이지를 실제로 공개(내비게이션 노출)할지 */
-export const isPublished = (r: RouteDef) => r.kind === "info" || (businessReady() && r.hasContent());
+export const isPublished = (r: RouteDef) =>
+  r.kind === "info" || (r.kind === "service" ? r.hasContent() : businessReady() && r.hasContent());
 
 /** 색인 허용 = 프로덕션 + 공개 페이지 */
 export const isIndexable = (r: RouteDef) => isProduction && isPublished(r);

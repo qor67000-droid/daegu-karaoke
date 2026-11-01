@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { getRoute, isPublished, navRoutes } from "@/lib/routes";
 import { articleLd, breadcrumbLd } from "@/lib/seo";
-import { isDev } from "@/lib/site";
+import { isDev, reservationReady } from "@/lib/site";
 import { Breadcrumbs, JsonLd } from "@/components/ui";
 import { ContactButtons } from "@/components/contact";
 
@@ -42,7 +42,7 @@ export function SubPage({
           <div className="mt-6 max-w-2xl text-mute">
             {showBody ? lead : "이 페이지는 업체 정보가 확인된 뒤 공개됩니다. 그동안 아래 이용 가이드를 참고해 주세요."}
           </div>
-          {r.kind === "info" && modified && (
+          {r.kind !== "business" && modified && (
             <p className="mt-4 text-xs text-mute/70">
               최종 수정 <time dateTime={modified}>{modified}</time>
             </p>
@@ -81,7 +81,13 @@ export function SubPage({
               ))}
             </ul>
           </div>
-          <ContactButtons compact />
+          {reservationReady() && path !== "/reservation/" ? (
+            <Link href="/reservation/" className="btn-gold" data-track="click_reservation_page">
+              예약 문의
+            </Link>
+          ) : (
+            <ContactButtons compact />
+          )}
         </div>
       </aside>
     </>

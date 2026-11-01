@@ -26,6 +26,7 @@ import * as Rooms from "@/app/rooms/page";
 import * as Price from "@/app/price/page";
 import * as Location from "@/app/location/page";
 import * as Contact from "@/app/contact/page";
+import * as Reservation from "@/app/reservation/page";
 import NotFound, { metadata as nfMeta } from "@/app/not-found";
 import { routes } from "@/lib/routes";
 import { basePath } from "@/lib/site";
@@ -143,6 +144,7 @@ const MODULES: Record<string, { default: () => React.ReactNode; metadata: Metada
   "/price/": Price,
   "/location/": Location,
   "/contact/": Contact,
+  "/reservation/": Reservation,
 };
 for (const r of routes) {
   const mod = MODULES[r.path];

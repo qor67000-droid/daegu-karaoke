@@ -1,11 +1,11 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { site, brand, fullAddress, isDev, businessReady } from "@/lib/site";
+import { site, brand, fullAddress, isDev, businessReady, reservationReady } from "@/lib/site";
 import { buildMetadata, businessLd, faqLd, websiteLd } from "@/lib/seo";
 import { GENERAL_FAQ, businessFaq } from "@/lib/content";
 import { DAEGU_AREAS } from "@/lib/guides";
 import { AmbientArt, JsonLd, MoreLink, Pending, Picture, SectionHeading } from "@/components/ui";
-import { ContactButtons } from "@/components/contact";
+import { ContactButtons, OperatorButtons } from "@/components/contact";
 import { Features, FaqList, HoursAndAddress, PriceTable, RoomCards, VenueCompare, VisitSteps } from "@/components/sections";
 
 export const metadata = buildMetadata("/");
@@ -86,7 +86,12 @@ function InfoHome() {
         }
         actions={
           <div className="flex flex-wrap gap-3">
-            <Link href="/guide/" className="btn-gold">
+            {reservationReady() && (
+              <Link href="/reservation/" className="btn-gold" data-track="click_reservation_page">
+                예약 문의
+              </Link>
+            )}
+            <Link href="/guide/" className={reservationReady() ? "btn-ghost" : "btn-gold"}>
               업종 차이 보기
             </Link>
             <Link href="/guide/daegu-areas/" className="btn-ghost">
@@ -119,6 +124,28 @@ function InfoHome() {
         <VisitSteps />
         <MoreLink href="/guide/first-visit/">요금 확인 체크리스트와 안전한 귀가 방법 보기</MoreLink>
       </section>
+
+      {reservationReady() && (
+        <section aria-labelledby="reservation" className="wrap py-16 sm:py-20">
+          <div className="card grain grid gap-8 p-8 sm:p-12 lg:grid-cols-[1.3fr_1fr] lg:items-center">
+            <div>
+              <p className="eyebrow mb-3">Reservation</p>
+              <h2 id="reservation" className="h-display text-[1.65rem] leading-snug sm:text-4xl">
+                예약 문의 안내
+              </h2>
+              <div className="gold-rule mt-5" />
+              <p className="mt-5 text-mute">
+                이 사이트는 독립적으로 운영되는 예약 안내 서비스입니다. 날짜·시간·인원을 남겨 주시면 대구 수성구 제휴 매장의 예약 가능 여부를 확인해 연락드립니다. 제휴 매장은 운영자의 직영점이 아니며, 예약은
+                안내 내용을 고객님이 확인하신 뒤 확정됩니다.
+              </p>
+              <Link href="/reservation/" className="link-more mt-6">
+                예약 문의 작성하기 <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+            <OperatorButtons set="primary" />
+          </div>
+        </section>
+      )}
 
       <section aria-labelledby="faq" className="wrap py-16 sm:py-20">
         <SectionHeading eyebrow="FAQ" id="faq" title="자주 묻는 질문" />

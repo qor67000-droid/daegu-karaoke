@@ -1,7 +1,12 @@
-import type { SiteConfig } from "@/lib/types";
+import type { OperatorConfig, PartnerVenue, SiteConfig } from "@/lib/types";
 
 /**
  * ─────────────────────────────────────────────────────────────
+ *  [운영 구조] 이 사이트는 독립 예약 안내 서비스입니다.
+ *   - operator : 사이트 운영자(예약 문의 접수) 연락처
+ *   - partners : 예약을 연결하는 제휴 매장 (운영자 사업장 아님, 확인된 정보만)
+ *   - site     : 업체 소개 페이지용(직영 업체 정보). 직영 업체가 없으므로 비워 둡니다.
+ *
  *  사업장 정보는 이 파일 한 곳에서만 관리합니다.
  *  메타데이터, JSON-LD, 사이트맵, robots, 리디렉션, 화면 표시가 모두 여기를 읽습니다.
  *
@@ -67,3 +72,30 @@ export const site: SiteConfig = {
   },
   ga4Id: null, // "G-XXXXXXX" — 환경변수 NEXT_PUBLIC_GA4_ID가 있으면 그것이 우선
 };
+
+/** 예약 안내 서비스 운영자 연락처 (사용자 제공, 2026-11-01) */
+export const operator: OperatorConfig = {
+  serviceName: "대구 가라오케·노래방 예약 안내",
+  phone: "010-2464-6135",
+  smsNumber: "01024646135",
+  kakaoUrl: "https://open.kakao.com/o/s3KS17Ui",
+  lineUrl: "https://line.me/ti/p/8DDtc6maE9",
+  telegramUrl: "https://t.me/+821024646135",
+};
+
+/**
+ * 현재 예약 연결 가능한 제휴 매장.
+ * 주소만 확인됨. 매장명·인허가 업종·영업시간·가격·사진은 확인 후 입력 (그 전에는 화면에 공개되지 않음).
+ */
+export const partners: PartnerVenue[] = [
+  {
+    address: "대구광역시 수성구 동대구로 117",
+    mapQuery: "대구광역시 수성구 동대구로 117",
+    name: null,
+    licenseType: null,
+    licenseVerified: false,
+    hours: null,
+    priceNote: null,
+    photos: [],
+  },
+];

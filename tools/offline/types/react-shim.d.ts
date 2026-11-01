@@ -5,6 +5,9 @@ declare module "react" {
   export type ReactElement = any;
   export type FC<P = {}> = (props: P) => any;
   export function useEffect(effect: () => void | (() => void), deps?: unknown[]): void;
+  export function useState<T>(initial: T | (() => T)): [T, (v: T | ((p: T) => T)) => void];
+  export function useMemo<T>(factory: () => T, deps: unknown[]): T;
+  export type MouseEvent<T = any> = { preventDefault(): void; target: T };
   const React: any;
   export default React;
 }

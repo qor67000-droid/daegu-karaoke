@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-31T10:12:01.690Z",
+  "generatedAt": "2026-11-01T11:19:36.018Z",
   "basePath": "/daegu-karaoke",
   "note": "로컬 실험실 측정. 실사용자(CrUX) 지표 아님",
   "results": [
@@ -77,6 +77,26 @@
       "name": "/guide/daegu-areas → 301 /guide/daegu-areas/",
       "ok": true,
       "detail": "301 /daegu-karaoke/guide/daegu-areas/"
+    },
+    {
+      "name": "GET /reservation/ → 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "/reservation/ 초기 HTML에 H1",
+      "ok": true,
+      "detail": "대구 가라오케·노래방 예약 문의"
+    },
+    {
+      "name": "/reservation/ robots=index",
+      "ok": true,
+      "detail": "index, follow"
+    },
+    {
+      "name": "/reservation → 301 /reservation/",
+      "ok": true,
+      "detail": "301 /daegu-karaoke/reservation/"
     },
     {
       "name": "GET /about/ → 200",
@@ -219,6 +239,11 @@
       "detail": "200"
     },
     {
+      "name": "GET /googled971f9f9c013485d.html → 200, 원본과 동일",
+      "ok": true,
+      "detail": "200, 53B"
+    },
+    {
       "name": "basePath 밖 /guide/ → 404",
       "ok": true,
       "detail": "404"
@@ -320,6 +345,31 @@
     },
     {
       "name": "mobile /guide/daegu-areas/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "mobile /reservation/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "mobile /reservation/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /reservation/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /reservation/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "mobile /reservation/ CTA 터치 영역 ≥ 44px",
       "ok": true,
       "detail": "0개 미달"
     },
@@ -451,7 +501,66 @@
     {
       "name": "mobile 푸터 링크 클릭 이동",
       "ok": true,
-      "detail": "/daegu-karaoke/guide/ → /daegu-karaoke/guide/"
+      "detail": "/daegu-karaoke/guide/ → /daegu-karaoke/guide/ (h1: 노래방과 가라오케, 무엇이 다른가요)"
+    },
+    {
+      "name": "mobile 예약페이지 click_kakao 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://open.kakao.com/o/s3KS17Ui, https://open.kakao.com/o/s3KS17Ui"
+    },
+    {
+      "name": "mobile 예약페이지 click_line 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://line.me/ti/p/8DDtc6maE9, https://line.me/ti/p/8DDtc6maE9"
+    },
+    {
+      "name": "mobile 예약페이지 click_telegram 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://t.me/+821024646135, https://t.me/+821024646135"
+    },
+    {
+      "name": "mobile 예약페이지 click_call 링크 = 제공 링크",
+      "ok": true,
+      "detail": "tel:01024646135"
+    },
+    {
+      "name": "mobile 예약 폼 필수값 검증",
+      "ok": true,
+      "detail": "오류 4개"
+    },
+    {
+      "name": "mobile 문자 문의 링크 생성",
+      "ok": true,
+      "detail": "sms:01024646135?body=%5B%EB%8C%80%EA%B5%…"
+    },
+    {
+      "name": "mobile 입력 완료 후 오류 없음",
+      "ok": true,
+      "detail": "0"
+    },
+    {
+      "name": "mobile 예약 완료/저장 허위 표시 없음",
+      "ok": true,
+      "detail": "0"
+    },
+    {
+      "name": "mobile 홈 '예약 문의' 버튼 → /reservation/",
+      "ok": true,
+      "detail": "2"
+    },
+    {
+      "name": "mobile 하단 전화·문자·카카오톡 버튼",
+      "ok": true,
+      "detail": "tel:01024646135, sms:01024646135, https://open.kakao.com/o/s3KS17Ui"
+    },
+    {
+      "name": "mobile 하단 예약 바 표시",
+      "ok": true
+    },
+    {
+      "name": "mobile 전화 클릭 → dataLayer click_call",
+      "ok": true,
+      "detail": "[\"click_call\"]"
     },
     {
       "name": "desktop / CSS 적용(basePath 경로)",
@@ -550,6 +659,31 @@
     },
     {
       "name": "desktop /guide/daegu-areas/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "desktop /reservation/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "desktop /reservation/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /reservation/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /reservation/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "desktop /reservation/ CTA 터치 영역 ≥ 44px",
       "ok": true,
       "detail": "0개 미달"
     },
@@ -681,76 +815,134 @@
     {
       "name": "desktop 푸터 링크 클릭 이동",
       "ok": true,
-      "detail": "/daegu-karaoke/guide/ → /daegu-karaoke/guide/"
+      "detail": "/daegu-karaoke/guide/ → /daegu-karaoke/guide/ (h1: 노래방과 가라오케, 무엇이 다른가요)"
+    },
+    {
+      "name": "desktop 예약페이지 click_kakao 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://open.kakao.com/o/s3KS17Ui, https://open.kakao.com/o/s3KS17Ui"
+    },
+    {
+      "name": "desktop 예약페이지 click_line 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://line.me/ti/p/8DDtc6maE9, https://line.me/ti/p/8DDtc6maE9"
+    },
+    {
+      "name": "desktop 예약페이지 click_telegram 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://t.me/+821024646135, https://t.me/+821024646135"
+    },
+    {
+      "name": "desktop 예약페이지 click_call 링크 = 제공 링크",
+      "ok": true,
+      "detail": "tel:01024646135"
+    },
+    {
+      "name": "desktop 예약 폼 필수값 검증",
+      "ok": true,
+      "detail": "오류 4개"
+    },
+    {
+      "name": "desktop 문자 문의 링크 생성",
+      "ok": true,
+      "detail": "sms:01024646135?body=%5B%EB%8C%80%EA%B5%…"
+    },
+    {
+      "name": "desktop 입력 완료 후 오류 없음",
+      "ok": true,
+      "detail": "0"
+    },
+    {
+      "name": "desktop 예약 완료/저장 허위 표시 없음",
+      "ok": true,
+      "detail": "0"
+    },
+    {
+      "name": "desktop 홈 '예약 문의' 버튼 → /reservation/",
+      "ok": true,
+      "detail": "2"
+    },
+    {
+      "name": "desktop 전화 클릭 → dataLayer click_call",
+      "ok": true,
+      "detail": "[\"click_call\"]"
     }
   ],
   "perf": {
     "mobile /": {
-      "lcp": 172,
+      "lcp": 232,
       "cls": 0
     },
     "mobile /guide/": {
-      "lcp": 92,
+      "lcp": 160,
       "cls": 0
     },
     "mobile /guide/first-visit/": {
-      "lcp": 96,
+      "lcp": 112,
       "cls": 0
     },
     "mobile /guide/daegu-areas/": {
-      "lcp": 104,
+      "lcp": 140,
+      "cls": 0
+    },
+    "mobile /reservation/": {
+      "lcp": 148,
       "cls": 0
     },
     "mobile /about/": {
-      "lcp": 72,
-      "cls": 0
-    },
-    "mobile /rooms/": {
-      "lcp": 84,
-      "cls": 0
-    },
-    "mobile /price/": {
-      "lcp": 80,
-      "cls": 0
-    },
-    "mobile /location/": {
-      "lcp": 132,
-      "cls": 0
-    },
-    "mobile /contact/": {
-      "lcp": 72,
-      "cls": 0
-    },
-    "desktop /": {
-      "lcp": 128,
-      "cls": 0
-    },
-    "desktop /guide/": {
-      "lcp": 136,
-      "cls": 0
-    },
-    "desktop /guide/first-visit/": {
-      "lcp": 116,
-      "cls": 0
-    },
-    "desktop /guide/daegu-areas/": {
-      "lcp": 116,
-      "cls": 0
-    },
-    "desktop /about/": {
-      "lcp": 104,
-      "cls": 0
-    },
-    "desktop /rooms/": {
-      "lcp": 128,
-      "cls": 0
-    },
-    "desktop /price/": {
       "lcp": 124,
       "cls": 0
     },
-    "desktop /location/": {
+    "mobile /rooms/": {
+      "lcp": 108,
+      "cls": 0
+    },
+    "mobile /price/": {
+      "lcp": 92,
+      "cls": 0
+    },
+    "mobile /location/": {
+      "lcp": 104,
+      "cls": 0
+    },
+    "mobile /contact/": {
       "lcp": 116,
+      "cls": 0
+    },
+    "desktop /": {
+      "lcp": 152,
+      "cls": 0
+    },
+    "desktop /guide/": {
+      "lcp": 120,
+      "cls": 0
+    },
+    "desktop /guide/first-visit/": {
+      "lcp": 136,
+      "cls": 0
+    },
+    "desktop /guide/daegu-areas/": {
+      "lcp": 144,
+      "cls": 0
+    },
+    "desktop /reservation/": {
+      "lcp": 120,
+      "cls": 0.226
+    },
+    "desktop /about/": {
+      "lcp": 176,
+      "cls": 0
+    },
+    "desktop /rooms/": {
+      "lcp": 116,
+      "cls": 0
+    },
+    "desktop /price/": {
+      "lcp": 136,
+      "cls": 0
+    },
+    "desktop /location/": {
+      "lcp": 104,
       "cls": 0
     },
     "desktop /contact/": {

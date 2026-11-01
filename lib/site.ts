@@ -1,4 +1,4 @@
-import { site as realSite } from "@/config/site";
+import { site as realSite, operator as operatorConfig, partners as partnerList } from "@/config/site";
 import { fixtureSite } from "@/tests/fixtures/site.fixture";
 import { getBasePath, getSiteMode, isPagesDeploy, isTestHost, useFixture, type SiteMode } from "@/lib/env";
 import type { DayCode, SiteConfig } from "@/lib/types";
@@ -8,6 +8,12 @@ if (useFixture() && isPagesDeploy()) {
 }
 
 export const site: SiteConfig = useFixture() ? fixtureSite : realSite;
+/** 예약 안내 운영자 연락처 (사이트 운영자 본인) */
+export const operator = operatorConfig;
+/** 제휴 매장 (운영자 사업장 아님) */
+export const partners = partnerList;
+/** 예약 문의를 실제로 받을 수 있는 상태인지 */
+export const reservationReady = () => Boolean(operator.phone && operator.smsNumber);
 export const mode: SiteMode = getSiteMode();
 export const isDev = mode === "development";
 export const isProduction = mode === "production";

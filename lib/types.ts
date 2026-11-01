@@ -100,3 +100,29 @@ export interface SiteConfig {
   verification: { google: string | null; naver: string | null };
   ga4Id: string | null;
 }
+
+/** 예약 안내 서비스 운영자(사이트 운영자 본인) — 제휴 매장과 별개 */
+export interface OperatorConfig {
+  /** 서비스 성격 표기 */
+  serviceName: string;
+  phone: string | null;
+  /** sms: 링크용 숫자만 */
+  smsNumber: string | null;
+  kakaoUrl: string | null;
+  lineUrl: string | null;
+  telegramUrl: string | null;
+}
+
+/** 예약을 연결하는 제휴 매장 — 운영자 사업장이 아님. 확인된 값만 입력 */
+export interface PartnerVenue {
+  /** 매장 소재지 (확인됨) */
+  address: string;
+  /** 지도 검색어 (주소 그대로) */
+  mapQuery: string;
+  name: string | null;
+  licenseType: string | null;
+  licenseVerified: boolean;
+  hours: string | null;
+  priceNote: string | null;
+  photos: Photo[];
+}

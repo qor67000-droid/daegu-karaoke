@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { site, brand, businessReady, fullAddress, telHref, isDev, formatDays, formatHours } from "@/lib/site";
+import { site, operator, brand, businessReady, reservationReady, fullAddress, telHref, isDev, formatDays, formatHours } from "@/lib/site";
 import { navRoutes } from "@/lib/routes";
 import { legalNotice, DRINK_NOTICE } from "@/lib/content";
 import { Pending } from "@/components/ui";
@@ -111,9 +111,20 @@ export function Footer() {
             )}
           </address>
           ) : (
-            <p className="mt-6 max-w-sm text-sm text-mute">
-              대구에서 노래방·가라오케를 찾는 분들을 위한 이용 가이드입니다. 업체 정보는 실제 영업 정보가 확인된 뒤 게시합니다.
-            </p>
+            <div className="mt-6 max-w-sm space-y-2 text-sm text-mute">
+              <p>
+                대구에서 노래방·가라오케를 찾는 분들을 위한 이용 가이드이자 <strong className="text-ivory/85">독립 예약 안내 서비스</strong>입니다. 예약 가능한
+                제휴 매장을 연결해 드리며, 제휴 매장은 운영자의 직영점이 아닙니다.
+              </p>
+              {reservationReady() && operator.phone && (
+                <p>
+                  <span className="text-ivory/80">예약 문의</span>{" "}
+                  <a href={telHref(operator.phone)} data-track="click_call" className="hover:text-gold-2">
+                    {operator.phone}
+                  </a>
+                </p>
+              )}
+            </div>
           )}
         </div>
         <nav aria-label="사이트 메뉴">

@@ -11,7 +11,7 @@ import { createServer, type Server } from "node:http";
 import { readFileSync, readdirSync, existsSync, statSync, mkdirSync, writeFileSync } from "node:fs";
 import { join, extname } from "node:path";
 import { routes, isIndexable } from "@/lib/routes";
-import { basePath } from "@/lib/site";
+import { basePath, operator, reservationReady } from "@/lib/site";
 
 const OUT = process.argv[2] || "out";
 const SHOTS = process.env.SCREENSHOT_DIR || "reports/screenshots";
@@ -180,11 +180,62 @@ async function main() {
         .catch(() => false);
       const h1After = moved ? await page.locator("h1").first().textContent() : null;
       check(`${vp.name} 푸터 링크 클릭 이동`, moved && Boolean(h1After), `${navHref} → ${page.url().slice(origin.length)} (h1: ${h1After?.trim().slice(0, 20) ?? "-"})`);
+      // ── 예약 안내 기능 ──
+      if (reservationReady()) {
+        const rp = await ctx.newPage();
+        await rp.goto(root + "/reservation/", { waitUntil: "networkidle" });
+        const exact = async (track: string, expected: string | null) => {
+          if (!expected) return;
+          const hrefs = await rp.locator(`main a[data-track="${track}"]`).evaluateAll((els) => els.map((e) => e.getAttribute("href")));
+          check(`${vp.name} 예약페이지 ${track} 링크 = 제공 링크`, hrefs.length > 0 && hrefs.every((h) => h === expected), hrefs.join(", "));
+        };
+        await exact("click_kakao", operator.kakaoUrl);
+        await exact("click_line", operator.lineUrl);
+        await exact("click_telegram", operator.telegramUrl);
+        await exact("click_call", operator.phone ? `tel:${operator.phone.replace(/[^0-9+]/g, "")}` : null);
+        // 필수값 없이 문자 버튼 → 이동하지 않고 오류 표시
+        await rp.evaluate(() => document.addEventListener("click", (e) => { if ((e.target as HTMLElement).closest("a[href^='sms:']")) e.preventDefault(); }));
+        await rp.locator('[data-testid="rsv-sms"]').click();
+        const alerts = await rp.locator('form [role="alert"]').count();
+        check(`${vp.name} 예약 폼 필수값 검증`, alerts >= 3, `오류 ${alerts}개`);
+        // 입력 → 문자 본문 생성
+        const d = new Date(Date.now() + 3 * 86400_000 + 9 * 3600_000).toISOString().slice(0, 10);
+        await rp.fill('input[name="date"]', d);
+        await rp.selectOption('select[name="time"]', "21:00");
+        await rp.selectOption('select[name="people"]', "4명");
+        await rp.fill('textarea[name="note"]', "중형룸 희망 & 테스트");
+        await rp.check('input[name="adult"]');
+        const href = (await rp.locator('[data-testid="rsv-sms"]').getAttribute("href")) ?? "";
+        const body = decodeURIComponent(href.split(/[?&]body=/)[1] ?? "");
+        check(
+          `${vp.name} 문자 문의 링크 생성`,
+          href.startsWith(`sms:${operator.smsNumber}`) && body.includes(`날짜: ${d}`) && body.includes("시간: 21:00") && body.includes("인원: 4명") && body.includes("중형룸 희망 & 테스트"),
+          href.slice(0, 40) + "…",
+        );
+        const okAlerts = await rp.locator('form [role="alert"]').count();
+        check(`${vp.name} 입력 완료 후 오류 없음`, okAlerts === 0, String(okAlerts));
+        const fakeDone = await rp.getByText(/예약(이)? ?(완료|접수되었습니다|확정되었습니다)|저장되었습니다/).count();
+        check(`${vp.name} 예약 완료/저장 허위 표시 없음`, fakeDone === 0, String(fakeDone));
+        await rp.close();
+        // 홈 예약 문의 버튼
+        const hp = await ctx.newPage();
+        await hp.goto(root + "/");
+        const homeBtn = await hp.locator(`main a[href="${basePath}/reservation/"]`).count();
+        check(`${vp.name} 홈 '예약 문의' 버튼 → /reservation/`, homeBtn > 0, String(homeBtn));
+        if (vp.isMobile) {
+          const bar = await hp.locator("nav[aria-label='빠른 연락'] a").evaluateAll((els) => els.map((e) => e.getAttribute("href")));
+          const want = [`tel:${operator.phone?.replace(/[^0-9+]/g, "")}`, `sms:${operator.smsNumber}`, operator.kakaoUrl];
+          check(`mobile 하단 전화·문자·카카오톡 버튼`, JSON.stringify(bar) === JSON.stringify(want), bar.join(", "));
+          const visible = await hp.locator("nav[aria-label='빠른 연락']").isVisible();
+          check(`mobile 하단 예약 바 표시`, visible);
+        }
+        await hp.close();
+      }
       // 클릭 추적
-      const hasTel = await page.goto(root + "/contact/").then(() => page.locator('a[data-track="click_call"]').count());
+      const hasTel = await page.goto(root + "/contact/").then(() => page.locator('a[data-track="click_call"]:visible').count());
       if (hasTel && (await page.evaluate(() => Boolean((window as any).__clickTrackerReady)))) {
         await page.evaluate(() => document.addEventListener("click", (e) => e.preventDefault()));
-        await page.locator('a[data-track="click_call"]').first().click();
+        await page.locator('a[data-track="click_call"]:visible').first().click();
         const ev = await page.evaluate(() => ((window as any).dataLayer ?? []).map((x: any) => x.event ?? x[1]));
         check(`${vp.name} 전화 클릭 → dataLayer click_call`, ev.includes("click_call"), JSON.stringify(ev));
       } else console.log(`  - ${vp.name} 클릭 추적: ${hasTel ? "트래커 미로딩" : "공개된 전화번호 없음"} — 건너뜀`);

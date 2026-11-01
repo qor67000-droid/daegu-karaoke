@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-10-31T10:11:41.618Z",
+  "generatedAt": "2026-11-01T11:19:08.550Z",
   "mode": "production",
   "fixture": false,
-  "base": "https://verify-owner.github.io/daegu-karaoke",
-  "urlKind": "test",
+  "base": "https://qor67000-droid.github.io/daegu-karaoke",
+  "urlKind": "production",
   "basePath": "/daegu-karaoke",
   "businessReady": false,
   "pages": [
@@ -15,13 +15,15 @@
     "/",
     "/location/",
     "/price/",
+    "/reservation/",
     "/rooms/"
   ],
   "indexable": [
     "/guide/daegu-areas/",
     "/guide/first-visit/",
     "/guide/",
-    "/"
+    "/",
+    "/reservation/"
   ],
   "noindex": [
     "/about/",
@@ -31,10 +33,11 @@
     "/rooms/"
   ],
   "sitemap": [
-    "https://verify-owner.github.io/daegu-karaoke/",
-    "https://verify-owner.github.io/daegu-karaoke/guide/",
-    "https://verify-owner.github.io/daegu-karaoke/guide/first-visit/",
-    "https://verify-owner.github.io/daegu-karaoke/guide/daegu-areas/"
+    "https://qor67000-droid.github.io/daegu-karaoke/",
+    "https://qor67000-droid.github.io/daegu-karaoke/guide/",
+    "https://qor67000-droid.github.io/daegu-karaoke/guide/first-visit/",
+    "https://qor67000-droid.github.io/daegu-karaoke/guide/daegu-areas/",
+    "https://qor67000-droid.github.io/daegu-karaoke/reservation/"
   ],
   "errors": 0,
   "warnings": 0,

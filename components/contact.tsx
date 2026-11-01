@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { site, telHref, smsHref, isDev } from "@/lib/site";
+import { site, operator, telHref, smsHref, isDev } from "@/lib/site";
 import { Pending } from "@/components/ui";
 
 /**
@@ -38,13 +38,44 @@ export function ContactButtons({ compact = false }: { compact?: boolean }) {
   return <div className="flex flex-wrap gap-3">{items}</div>;
 }
 
-/** 모바일 하단 고정 CTA. 실제 연락처가 하나도 없으면 렌더링하지 않는다. */
+/**
+ * 예약 안내 운영자 연락 버튼 (전화·문자·카카오톡·LINE·텔레그램). 제공된 링크로만 연결한다.
+ * set: "primary" = 전화·문자·카카오톡, "all" = LINE·텔레그램 포함
+ */
+export function OperatorButtons({ set = "all" }: { set?: "primary" | "all" }) {
+  const o = operator;
+  const items: { href: string; label: string; track: string; external?: boolean; gold?: boolean }[] = [];
+  if (o.phone) items.push({ href: telHref(o.phone), label: `전화 ${o.phone}`, track: "click_call", gold: true });
+  if (o.smsNumber) items.push({ href: smsHref(o.smsNumber), label: "문자 문의", track: "click_sms" });
+  if (o.kakaoUrl) items.push({ href: o.kakaoUrl, label: "카카오톡 문의", track: "click_kakao", external: true });
+  if (set === "all" && o.lineUrl) items.push({ href: o.lineUrl, label: "LINE 문의", track: "click_line", external: true });
+  if (set === "all" && o.telegramUrl) items.push({ href: o.telegramUrl, label: "텔레그램 문의", track: "click_telegram", external: true });
+  if (!items.length) return null;
+  return (
+    <ul className="flex flex-wrap gap-3">
+      {items.map((i) => (
+        <li key={i.track}>
+          <a
+            href={i.href}
+            data-track={i.track}
+            className={i.gold ? "btn-gold" : "btn-ghost"}
+            {...(i.external ? { target: "_blank", rel: "noopener" } : {})}
+          >
+            {i.gold && <PhoneIcon />} {i.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/** 모바일 하단 고정 예약 버튼: 운영자 전화·문자·카카오톡. 연락처가 없으면 렌더링하지 않는다. */
 export function MobileCtaBar() {
+  const o = operator;
   const links: { href: string; label: string; track: string; external?: boolean }[] = [];
-  if (site.phone) links.push({ href: telHref(site.phone), label: "전화", track: "click_call" });
-  if (site.kakaoUrl) links.push({ href: site.kakaoUrl, label: "카카오톡", track: "click_kakao", external: true });
-  else if (site.smsNumber) links.push({ href: smsHref(site.smsNumber), label: "문자", track: "click_sms" });
-  if (site.mapUrl) links.push({ href: site.mapUrl, label: "길찾기", track: "click_directions", external: true });
+  if (o.phone) links.push({ href: telHref(o.phone), label: "전화 예약", track: "click_call" });
+  if (o.smsNumber) links.push({ href: smsHref(o.smsNumber), label: "문자 예약", track: "click_sms" });
+  if (o.kakaoUrl) links.push({ href: o.kakaoUrl, label: "카카오톡", track: "click_kakao", external: true });
   if (!links.length) return null;
   return (
     <nav
@@ -58,9 +89,7 @@ export function MobileCtaBar() {
               href={l.href}
               data-track={l.track}
               {...(l.external ? { target: "_blank", rel: "noopener" } : {})}
-              className={`flex h-14 items-center justify-center text-sm font-semibold ${
-                i === 0 ? "bg-gold text-ink" : "text-gold-2"
-              }`}
+              className={`flex h-14 items-center justify-center text-sm font-semibold ${i === 0 ? "bg-gold text-ink" : "text-gold-2"}`}
             >
               {l.label}
             </a>

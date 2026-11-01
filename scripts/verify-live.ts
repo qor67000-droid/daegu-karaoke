@@ -13,7 +13,7 @@
 import { writeFileSync, mkdirSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { routes, isIndexable } from "@/lib/routes";
-import { absoluteUrl, baseUrl } from "@/lib/site";
+import { absoluteUrl, baseUrl, operator, reservationReady } from "@/lib/site";
 import { isTestHost } from "@/lib/env";
 
 const LIVE = (process.argv[2] || process.env.LIVE_URL || baseUrl()).replace(/\/$/, "");
@@ -117,6 +117,27 @@ async function main() {
     const same = body.equals(readFileSync(join("public", f)));
     check(`소유권 인증 파일 /${f} 200·내용 일치`, r.status === 200 && same, `${r.status} ${r.headers.get("content-type") ?? ""} "${body.toString("utf8").trim().slice(0, 80)}"`);
   }
+  if (reservationReady()) {
+    const rs = await get(LIVE + "/reservation/");
+    const rh = await rs.text();
+    const hrefs = (track: string) => [...rh.matchAll(new RegExp(`<a[^>]*href="([^"]+)"[^>]*data-track="${track}"`, "g"))].map((m) => m[1]!.replace(/&amp;/g, "&"));
+    for (const [track, want] of [
+      ["click_kakao", operator.kakaoUrl],
+      ["click_line", operator.lineUrl],
+      ["click_telegram", operator.telegramUrl],
+      ["click_call", operator.phone ? `tel:${operator.phone.replace(/[^0-9+]/g, "")}` : null],
+      ["click_sms", operator.smsNumber ? `sms:${operator.smsNumber}` : null],
+    ] as const) {
+      if (!want) continue;
+      const got = hrefs(track);
+      check(`예약 버튼 ${track} 링크 정확`, got.length > 0 && got.every((h) => h === want), got.slice(0, 3).join(", "));
+    }
+    check("예약 문의 폼 문자 버튼 존재", /data-testid="rsv-sms"/.test(rh) && rh.includes(`sms:${operator.smsNumber}`));
+    check("예약 완료/저장 허위 표시 없음", !/예약(이)?\s?(완료|접수되었습니다|확정되었습니다)|저장되었습니다/.test(rh.replace(/<script[\s\S]*?<\/script>/g, "")));
+    const home = await (await get(LIVE + "/")).text();
+    check("홈 '예약 문의' 버튼", /href="[^"]*\/reservation\/"/.test(home));
+    check("모바일 하단 전화·문자·카카오톡 버튼", home.includes('aria-label="빠른 연락"') && home.includes(`sms:${operator.smsNumber}`) && home.includes(operator.kakaoUrl ?? "__"));
+  }
   const nf = await get(LIVE + "/__no_such_page__/", "manual");
   check("없는 경로 404", nf.status === 404, String(nf.status));
 
@@ -131,7 +152,7 @@ async function main() {
   if (process.env.GITHUB_ACTIONS) {
     // 통과 내역도 API(annotations)로 확인할 수 있도록 요약을 notice로 남긴다 (항목명은 묶어서 1~3줄)
     console.log(`::notice title=verify:live summary::${LIVE}/ — ${results.length - failed.length}/${results.length} passed (assets ${sameOrigin.length}, internal links ${linkRefs.size}, sitemap ${locs.length})`);
-    const names = results.map((r) => `${r.ok ? "OK" : "FAIL"} ${r.name}${r.detail && /canonical|sitemap|robots|404|301|소유권/.test(r.name) ? ` [${r.detail}]` : ""}`);
+    const names = results.map((r) => `${r.ok ? "OK" : "FAIL"} ${r.name}${r.detail && /canonical|sitemap|robots|404|301|소유권|예약/.test(r.name) ? ` [${r.detail}]` : ""}`);
     for (let i = 0; i < names.length; i += 25) console.log(`::notice title=verify:live checks ${i + 1}-${Math.min(i + 25, names.length)}::${names.slice(i, i + 25).join(" | ").slice(0, 3900)}`);
   }
   process.exit(failed.length ? 1 : 0);

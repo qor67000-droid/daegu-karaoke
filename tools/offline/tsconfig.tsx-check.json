@@ -1,6 +1,38 @@
 {
   "extends": "../../tsconfig.json",
-  "compilerOptions": { "noEmit": true, "incremental": false, "plugins": [], "jsx": "react-jsx", "types": ["node"], "typeRoots": ["../../node_modules/@types"], "paths": { "@/*": ["../../*"], "react": ["./types/react-shim.d.ts"], "react/jsx-runtime": ["./types/react-shim.d.ts"] } },
-  "include": ["../../app/**/*.tsx", "../../app/**/*.ts", "../../components/**/*.tsx", "../../lib/**/*.ts", "../../config/**/*.ts", "../../tests/**/*.ts", "types/next.d.ts", "types/react-shim.d.ts"],
+  "compilerOptions": {
+    "noEmit": true,
+    "incremental": false,
+    "plugins": [],
+    "jsx": "react-jsx",
+    "types": [
+      "node"
+    ],
+    "typeRoots": [
+      "../../node_modules/@types"
+    ],
+    "paths": {
+      "@/*": [
+        "../../*"
+      ],
+      "react": [
+        "./types/react-shim.d.ts"
+      ],
+      "react/jsx-runtime": [
+        "./types/react-shim.d.ts"
+      ]
+    },
+    "noImplicitAny": false
+  },
+  "include": [
+    "../../app/**/*.tsx",
+    "../../app/**/*.ts",
+    "../../components/**/*.tsx",
+    "../../lib/**/*.ts",
+    "../../config/**/*.ts",
+    "../../tests/**/*.ts",
+    "types/next.d.ts",
+    "types/react-shim.d.ts"
+  ],
   "exclude": []
 }

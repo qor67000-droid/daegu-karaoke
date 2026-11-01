@@ -13,7 +13,7 @@
  */
 import { readFileSync, readdirSync, statSync, existsSync, writeFileSync, mkdirSync } from "node:fs";
 import { join, relative } from "node:path";
-import { mode, baseUrl, absoluteUrl, basePath, site, businessReady, isProduction, urlKind } from "@/lib/site";
+import { mode, baseUrl, absoluteUrl, basePath, site, operator, partners, businessReady, isProduction, urlKind } from "@/lib/site";
 import { routes, isIndexable, isPublished } from "@/lib/routes";
 import { useFixture } from "@/lib/env";
 
@@ -186,13 +186,16 @@ for (const file of pages) {
     // 얇은 콘텐츠: 색인 페이지는 본문이 충분해야 함
     if (expect) {
       const main = visibleText(html.match(/<main[\s\S]*?<\/main>/i)?.[0] ?? "");
-      const min = def.kind === "info" ? 600 : 300; // 정보 글은 충분한 설명, 업체 페이지는 사실 정보 위주
+      const min = def.kind === "business" ? 300 : 600; // 정보·예약 안내는 충분한 설명, 업체 페이지는 사실 정보 위주
       const len = main.replace(/\s/g, "").length;
       if (len < min) add("error", route, "thin-content", `색인 페이지 본문 ${len}자 (<${min}, ${def.kind})`);
     }
     // 미공개 업체 페이지: 업체 정보·연락처가 새어 나오지 않아야 함
     if (def.kind === "business" && !isPublished(def) && mode !== "development") {
-      if (/href="(tel|sms):/.test(html)) add("error", route, "unpublished-leak", "미공개 업체 페이지에 연락처 링크 노출");
+      // 예약 안내 운영자 연락처(하단 바·푸터)는 허용, 그 외 업체 연락처는 미공개 페이지에 나오면 안 됨
+      const allowed = [operator.phone, operator.smsNumber].filter(Boolean).map((n) => n!.replace(/[^0-9+]/g, ""));
+      for (const m of html.matchAll(/href="(?:tel|sms):([^"?&]+)/g))
+        if (!allowed.includes(m[1]!.replace(/[^0-9+]/g, ""))) add("error", route, "unpublished-leak", `미공개 업체 페이지에 업체 연락처 노출: ${m[1]}`);
     }
   }
 
@@ -260,6 +263,13 @@ for (const file of pages) {
   if (!useFixture()) for (const re of FIXTURE) if (re.test(scan)) add("error", route, "placeholder", `테스트 fixture 값 노출: ${re}`);
   if (/\{\{|\}\}/.test(text)) add(ph, route, "placeholder", "템플릿 문법 {{ }} 노출");
   for (const re of SUPERLATIVE) if (re.test(text)) add("error", route, "claim", `근거 없는 최상급 표현: ${re}`);
+  // 서버가 없으므로 예약 접수·저장·확정을 완료한 것처럼 표시하면 안 됨
+  if (/예약(이)?\s?(완료|접수\s?완료|접수되었습니다|확정되었습니다)|저장되었습니다|접수되었습니다/.test(text))
+    add("error", route, "claim", "서버 없이 예약 접수/저장/확정 완료로 표시");
+  // 제휴 매장 주소를 표시하면 운영자 사업장이 아니라는 고지가 함께 있어야 함
+  for (const pv of partners)
+    if (text.includes(pv.address) && !/사업장 주소가 아닙니다|직영점이 아닙니다/.test(text))
+      add("error", route, "partner-address", `제휴 매장 주소(${pv.address})가 운영자 사업장이 아니라는 고지 없이 표시됨`);
 }
 
 for (const [t, rs] of titles) if (rs.length > 1) add("error", rs.join(", "), "title-dup", `중복 title: ${t}`);
