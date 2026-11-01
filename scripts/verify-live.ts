@@ -121,6 +121,12 @@ async function main() {
   );
   const failed = results.filter((r) => !r.ok);
   console.log(`[verify:live] ${results.length - failed.length}/${results.length} passed`);
+  if (process.env.GITHUB_ACTIONS) {
+    // 통과 내역도 API(annotations)로 확인할 수 있도록 요약을 notice로 남긴다 (항목명은 묶어서 1~3줄)
+    console.log(`::notice title=verify:live summary::${LIVE}/ — ${results.length - failed.length}/${results.length} passed (assets ${sameOrigin.length}, internal links ${linkRefs.size}, sitemap ${locs.length})`);
+    const names = results.map((r) => `${r.ok ? "OK" : "FAIL"} ${r.name}${r.detail && /canonical|sitemap|robots|404|301/.test(r.name) ? ` [${r.detail}]` : ""}`);
+    for (let i = 0; i < names.length; i += 25) console.log(`::notice title=verify:live checks ${i + 1}-${Math.min(i + 25, names.length)}::${names.slice(i, i + 25).join(" | ").slice(0, 3900)}`);
+  }
   process.exit(failed.length ? 1 : 0);
 }
 main().catch((e) => {
