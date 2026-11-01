@@ -10,11 +10,11 @@ el.hidden = true;
 document.body.appendChild(el);
 createRoot(el).render(<ClickTracker />);
 
-const form = document.querySelector('[data-testid="rsv-sms"]')?.closest("form");
+const form = document.querySelector('[data-testid="rsv-submit"]')?.closest("form");
 if (form?.parentElement && operator.smsNumber) {
   const host = document.createElement("div");
   form.replaceWith(host);
   createRoot(host).render(
-    <ReservationForm smsNumber={operator.smsNumber} kakaoUrl={operator.kakaoUrl} lineUrl={operator.lineUrl} telegramUrl={operator.telegramUrl} />,
+    <ReservationForm smsNumber={operator.smsNumber} phone={operator.phone} kakaoUrl={operator.kakaoUrl} lineUrl={operator.lineUrl} telegramUrl={operator.telegramUrl} />,
   );
 }

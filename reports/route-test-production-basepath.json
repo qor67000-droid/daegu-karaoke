@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-01T11:19:36.018Z",
+  "generatedAt": "2026-11-01T11:37:10.381Z",
   "basePath": "/daegu-karaoke",
   "note": "로컬 실험실 측정. 실사용자(CrUX) 지표 아님",
   "results": [
@@ -506,17 +506,17 @@
     {
       "name": "mobile 예약페이지 click_kakao 링크 = 제공 링크",
       "ok": true,
-      "detail": "https://open.kakao.com/o/s3KS17Ui, https://open.kakao.com/o/s3KS17Ui"
+      "detail": "https://open.kakao.com/o/s3KS17Ui"
     },
     {
       "name": "mobile 예약페이지 click_line 링크 = 제공 링크",
       "ok": true,
-      "detail": "https://line.me/ti/p/8DDtc6maE9, https://line.me/ti/p/8DDtc6maE9"
+      "detail": "https://line.me/ti/p/8DDtc6maE9"
     },
     {
       "name": "mobile 예약페이지 click_telegram 링크 = 제공 링크",
       "ok": true,
-      "detail": "https://t.me/+821024646135, https://t.me/+821024646135"
+      "detail": "https://t.me/+821024646135"
     },
     {
       "name": "mobile 예약페이지 click_call 링크 = 제공 링크",
@@ -539,23 +539,71 @@
       "detail": "0"
     },
     {
+      "name": "mobile 연락 방식 '카카오톡' 선택 → 버튼 링크",
+      "ok": true,
+      "detail": "https://open.kakao.com/o/s3KS17Ui"
+    },
+    {
+      "name": "mobile 연락 방식 'LINE' 선택 → 버튼 링크",
+      "ok": true,
+      "detail": "https://line.me/ti/p/8DDtc6maE9"
+    },
+    {
+      "name": "mobile 연락 방식 '텔레그램' 선택 → 버튼 링크",
+      "ok": true,
+      "detail": "https://t.me/+821024646135"
+    },
+    {
+      "name": "mobile 연락 방식 '전화' 선택 → 버튼 링크",
+      "ok": true,
+      "detail": "tel:01024646135"
+    },
+    {
       "name": "mobile 예약 완료/저장 허위 표시 없음",
       "ok": true,
       "detail": "0"
     },
     {
-      "name": "mobile 홈 '예약 문의' 버튼 → /reservation/",
-      "ok": true,
-      "detail": "2"
+      "name": "mobile 상단 '예약 문의' 메뉴 → /reservation/",
+      "ok": true
     },
     {
-      "name": "mobile 하단 전화·문자·카카오톡 버튼",
+      "name": "mobile 히어로 '예약 문의하기' → /reservation/",
+      "ok": true
+    },
+    {
+      "name": "mobile 히어로 예약 버튼 첫 화면 노출",
+      "ok": true
+    },
+    {
+      "name": "mobile 첫 화면 전화·문자·카카오톡 빠른 문의",
       "ok": true,
       "detail": "tel:01024646135, sms:01024646135, https://open.kakao.com/o/s3KS17Ui"
     },
     {
-      "name": "mobile 하단 예약 바 표시",
-      "ok": true
+      "name": "mobile 예약 안내 → 업종 비교 → 지역 → 이용 가이드 → FAQ 순서",
+      "ok": true,
+      "detail": "1174 < 2492 < 3608 < 4639 < 5712"
+    },
+    {
+      "name": "mobile 예약 문의하기 클릭 → 예약 페이지 이동",
+      "ok": true,
+      "detail": "/daegu-karaoke/reservation/"
+    },
+    {
+      "name": "mobile 하단 예약·전화·카카오톡 버튼",
+      "ok": true,
+      "detail": "/daegu-karaoke/reservation/, tel:01024646135, https://open.kakao.com/o/s3KS17Ui"
+    },
+    {
+      "name": "mobile 하단 바 화면 하단 고정",
+      "ok": true,
+      "detail": "{\"x\":0,\"y\":787,\"width\":390,\"height\":57}"
+    },
+    {
+      "name": "mobile 하단 예약 버튼 클릭 → 예약 페이지 이동",
+      "ok": true,
+      "detail": "/daegu-karaoke/reservation/"
     },
     {
       "name": "mobile 전화 클릭 → dataLayer click_call",
@@ -820,17 +868,17 @@
     {
       "name": "desktop 예약페이지 click_kakao 링크 = 제공 링크",
       "ok": true,
-      "detail": "https://open.kakao.com/o/s3KS17Ui, https://open.kakao.com/o/s3KS17Ui"
+      "detail": "https://open.kakao.com/o/s3KS17Ui"
     },
     {
       "name": "desktop 예약페이지 click_line 링크 = 제공 링크",
       "ok": true,
-      "detail": "https://line.me/ti/p/8DDtc6maE9, https://line.me/ti/p/8DDtc6maE9"
+      "detail": "https://line.me/ti/p/8DDtc6maE9"
     },
     {
       "name": "desktop 예약페이지 click_telegram 링크 = 제공 링크",
       "ok": true,
-      "detail": "https://t.me/+821024646135, https://t.me/+821024646135"
+      "detail": "https://t.me/+821024646135"
     },
     {
       "name": "desktop 예약페이지 click_call 링크 = 제공 링크",
@@ -853,14 +901,60 @@
       "detail": "0"
     },
     {
+      "name": "desktop 연락 방식 '카카오톡' 선택 → 버튼 링크",
+      "ok": true,
+      "detail": "https://open.kakao.com/o/s3KS17Ui"
+    },
+    {
+      "name": "desktop 연락 방식 'LINE' 선택 → 버튼 링크",
+      "ok": true,
+      "detail": "https://line.me/ti/p/8DDtc6maE9"
+    },
+    {
+      "name": "desktop 연락 방식 '텔레그램' 선택 → 버튼 링크",
+      "ok": true,
+      "detail": "https://t.me/+821024646135"
+    },
+    {
+      "name": "desktop 연락 방식 '전화' 선택 → 버튼 링크",
+      "ok": true,
+      "detail": "tel:01024646135"
+    },
+    {
       "name": "desktop 예약 완료/저장 허위 표시 없음",
       "ok": true,
       "detail": "0"
     },
     {
-      "name": "desktop 홈 '예약 문의' 버튼 → /reservation/",
+      "name": "desktop 상단 '예약 문의' 메뉴 → /reservation/",
+      "ok": true
+    },
+    {
+      "name": "desktop 히어로 '예약 문의하기' → /reservation/",
+      "ok": true
+    },
+    {
+      "name": "desktop 히어로 예약 버튼 첫 화면 노출",
+      "ok": true
+    },
+    {
+      "name": "desktop 첫 화면 전화·문자·카카오톡 빠른 문의",
       "ok": true,
-      "detail": "2"
+      "detail": "tel:01024646135, sms:01024646135, https://open.kakao.com/o/s3KS17Ui"
+    },
+    {
+      "name": "desktop 예약 안내 → 업종 비교 → 지역 → 이용 가이드 → FAQ 순서",
+      "ok": true,
+      "detail": "855 < 1612 < 2270 < 2939 < 3503"
+    },
+    {
+      "name": "desktop 예약 문의하기 클릭 → 예약 페이지 이동",
+      "ok": true,
+      "detail": "/daegu-karaoke/reservation/"
+    },
+    {
+      "name": "desktop 하단 바 숨김",
+      "ok": true
     },
     {
       "name": "desktop 전화 클릭 → dataLayer click_call",
@@ -870,83 +964,83 @@
   ],
   "perf": {
     "mobile /": {
-      "lcp": 232,
+      "lcp": 196,
       "cls": 0
     },
     "mobile /guide/": {
-      "lcp": 160,
+      "lcp": 136,
       "cls": 0
     },
     "mobile /guide/first-visit/": {
-      "lcp": 112,
+      "lcp": 116,
       "cls": 0
     },
     "mobile /guide/daegu-areas/": {
-      "lcp": 140,
+      "lcp": 100,
       "cls": 0
     },
     "mobile /reservation/": {
-      "lcp": 148,
-      "cls": 0
-    },
-    "mobile /about/": {
       "lcp": 124,
       "cls": 0
     },
+    "mobile /about/": {
+      "lcp": 96,
+      "cls": 0
+    },
     "mobile /rooms/": {
-      "lcp": 108,
+      "lcp": 100,
       "cls": 0
     },
     "mobile /price/": {
-      "lcp": 92,
+      "lcp": 100,
       "cls": 0
     },
     "mobile /location/": {
-      "lcp": 104,
+      "lcp": 112,
       "cls": 0
     },
     "mobile /contact/": {
-      "lcp": 116,
-      "cls": 0
-    },
-    "desktop /": {
-      "lcp": 152,
-      "cls": 0
-    },
-    "desktop /guide/": {
-      "lcp": 120,
-      "cls": 0
-    },
-    "desktop /guide/first-visit/": {
-      "lcp": 136,
-      "cls": 0
-    },
-    "desktop /guide/daegu-areas/": {
-      "lcp": 144,
-      "cls": 0
-    },
-    "desktop /reservation/": {
-      "lcp": 120,
-      "cls": 0.226
-    },
-    "desktop /about/": {
-      "lcp": 176,
-      "cls": 0
-    },
-    "desktop /rooms/": {
-      "lcp": 116,
-      "cls": 0
-    },
-    "desktop /price/": {
-      "lcp": 136,
-      "cls": 0
-    },
-    "desktop /location/": {
       "lcp": 104,
       "cls": 0
     },
+    "desktop /": {
+      "lcp": 128,
+      "cls": 0
+    },
+    "desktop /guide/": {
+      "lcp": 136,
+      "cls": 0
+    },
+    "desktop /guide/first-visit/": {
+      "lcp": 144,
+      "cls": 0
+    },
+    "desktop /guide/daegu-areas/": {
+      "lcp": 124,
+      "cls": 0
+    },
+    "desktop /reservation/": {
+      "lcp": 184,
+      "cls": 0.12
+    },
+    "desktop /about/": {
+      "lcp": 148,
+      "cls": 0
+    },
+    "desktop /rooms/": {
+      "lcp": 100,
+      "cls": 0
+    },
+    "desktop /price/": {
+      "lcp": 124,
+      "cls": 0
+    },
+    "desktop /location/": {
+      "lcp": 124,
+      "cls": 0
+    },
     "desktop /contact/": {
-      "lcp": 112,
+      "lcp": 120,
       "cls": 0
     }
   }

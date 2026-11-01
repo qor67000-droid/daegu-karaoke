@@ -59,14 +59,14 @@ export default function ReservationPage() {
       {reservationReady() && operator.smsNumber && (
         <section aria-labelledby="form">
           <SectionHeading id="form" title="예약 문의 작성">
-            필수 항목을 선택하면 보낼 내용이 자동으로 만들어집니다. 문자 버튼은 휴대폰에서 문자 앱을 엽니다.
+            날짜·시간·인원과 연락 방식을 선택하면 보낼 내용이 자동으로 만들어집니다. 전송은 고객님이 직접 하시며, 예약은 운영자가 제휴 매장과 확인한 뒤 연락드려 확정됩니다.
           </SectionHeading>
-          <ReservationForm smsNumber={operator.smsNumber} kakaoUrl={operator.kakaoUrl} lineUrl={operator.lineUrl} telegramUrl={operator.telegramUrl} />
+          <ReservationForm smsNumber={operator.smsNumber} phone={operator.phone} kakaoUrl={operator.kakaoUrl} lineUrl={operator.lineUrl} telegramUrl={operator.telegramUrl} />
         </section>
       )}
 
       <section aria-labelledby="channels">
-        <SectionHeading id="channels" title="전화·메신저로 바로 문의">
+        <SectionHeading id="channels" title="전화·문자·카카오톡·LINE·텔레그램으로 바로 문의">
           작성 없이 바로 연락하셔도 됩니다. 날짜, 시간, 인원을 함께 알려 주시면 확인이 빠릅니다.
         </SectionHeading>
         <OperatorButtons set="all" />

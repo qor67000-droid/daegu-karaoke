@@ -6,7 +6,7 @@ import { Pending } from "@/components/ui";
 
 function Logo() {
   return (
-    <Link href="/" className="group flex items-center gap-3" aria-label={`${brand() || "대구 가라오케·노래방 가이드"} 홈`}>
+    <Link href="/" className="group flex shrink-0 items-center gap-2 sm:gap-3" aria-label={`${brand() || "대구 가라오케·노래방 가이드"} 홈`}>
       <span aria-hidden="true" className="grid h-9 w-9 place-items-center rounded-full border border-gold/60 text-gold">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
           <path d="M9 18V6l10-2v12" stroke="currentColor" strokeWidth="1.6" />
@@ -15,7 +15,7 @@ function Logo() {
         </svg>
       </span>
       <span className="leading-tight">
-        <span className="h-display block text-[1.05rem]">{brand() || (isDev ? <Pending label="상호" /> : "대구 가라오케·노래방")}</span>
+        <span className="h-display block text-[0.95rem] whitespace-nowrap sm:text-[1.05rem]">{brand() || (isDev ? <Pending label="상호" /> : "대구 가라오케·노래방")}</span>
         <span className="block text-[0.66rem] tracking-[0.28em] text-mute">{brand() ? "DAEGU KARAOKE" : "DAEGU GUIDE"}</span>
       </span>
     </Link>
@@ -23,42 +23,56 @@ function Logo() {
 }
 
 export function Header() {
-  const nav = navRoutes(isDev).filter((r) => r.path !== "/");
+  const nav = navRoutes(isDev).filter((r) => r.path !== "/" && r.path !== "/reservation/");
+  const rsv = reservationReady();
   return (
     <header className="absolute inset-x-0 top-0 z-30">
-      <div className="wrap flex h-20 items-center justify-between">
+      <div className="wrap flex h-20 items-center justify-between gap-3">
         <Logo />
-        <nav aria-label="주요 메뉴" className="hidden md:block">
-          <ul className="flex items-center gap-7 text-sm text-ivory/85">
-            {nav.map((r) => (
-              <li key={r.path}>
-                <Link href={r.path} className="hover:text-gold-2">
-                  {r.nav}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-        {/* JS 없이 동작하는 모바일 메뉴 */}
-        <details className="relative md:hidden">
-          <summary className="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-full border border-line [&::-webkit-details-marker]:hidden">
-            <span className="sr-only">메뉴 열기</span>
-            <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" strokeWidth="1.6" />
-            </svg>
-          </summary>
-          <nav aria-label="모바일 메뉴" className="card absolute right-0 mt-2 w-52 p-2 shadow-2xl">
-            <ul>
-              {navRoutes(isDev).map((r) => (
+        <div className="flex shrink-0 items-center gap-2 md:gap-7">
+          <nav aria-label="주요 메뉴" className="hidden md:block">
+            <ul className="flex items-center gap-7 text-sm text-ivory/85">
+              {nav.map((r) => (
                 <li key={r.path}>
-                  <Link href={r.path} className="block rounded-lg px-4 py-3 text-sm hover:bg-ink-3">
+                  <Link href={r.path} className="hover:text-gold-2">
                     {r.nav}
                   </Link>
                 </li>
               ))}
             </ul>
           </nav>
-        </details>
+          {/* 핵심 동선: 예약 문의 — PC·모바일 모두 상단에 항상 노출 */}
+          {rsv && (
+            <Link
+              href="/reservation/"
+              className="inline-flex min-h-11 items-center rounded-full bg-gold px-3.5 text-sm font-semibold whitespace-nowrap text-ink hover:bg-gold-2 md:px-5"
+              data-track="click_reservation_header"
+              data-testid="header-reservation"
+            >
+              예약 문의
+            </Link>
+          )}
+          {/* JS 없이 동작하는 모바일 메뉴 */}
+          <details className="relative md:hidden">
+            <summary className="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-full border border-line [&::-webkit-details-marker]:hidden">
+              <span className="sr-only">메뉴 열기</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" strokeWidth="1.6" />
+              </svg>
+            </summary>
+            <nav aria-label="모바일 메뉴" className="card absolute right-0 mt-2 w-52 p-2 shadow-2xl">
+              <ul>
+                {navRoutes(isDev).map((r) => (
+                  <li key={r.path}>
+                    <Link href={r.path} className="block rounded-lg px-4 py-3 text-sm hover:bg-ink-3">
+                      {r.nav}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </details>
+        </div>
       </div>
     </header>
   );

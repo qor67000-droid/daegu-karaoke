@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { ReactNode } from "react";
 import { site, operator, telHref, smsHref, isDev } from "@/lib/site";
 import { Pending } from "@/components/ui";
@@ -69,34 +70,64 @@ export function OperatorButtons({ set = "all" }: { set?: "primary" | "all" }) {
   );
 }
 
-/** 모바일 하단 고정 예약 버튼: 운영자 전화·문자·카카오톡. 연락처가 없으면 렌더링하지 않는다. */
+/** 모바일 하단 고정 바: 예약(→/reservation/)·전화·카카오톡. 운영자 연락처가 없으면 렌더링하지 않는다. */
 export function MobileCtaBar() {
   const o = operator;
-  const links: { href: string; label: string; track: string; external?: boolean }[] = [];
-  if (o.phone) links.push({ href: telHref(o.phone), label: "전화 예약", track: "click_call" });
-  if (o.smsNumber) links.push({ href: smsHref(o.smsNumber), label: "문자 예약", track: "click_sms" });
-  if (o.kakaoUrl) links.push({ href: o.kakaoUrl, label: "카카오톡", track: "click_kakao", external: true });
-  if (!links.length) return null;
+  if (!o.phone && !o.kakaoUrl) return null;
+  const cell = "flex h-14 items-center justify-center gap-1.5 text-sm font-semibold";
   return (
     <nav
       aria-label="빠른 연락"
-      className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-ink/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden"
+      className="fixed inset-x-0 bottom-0 z-40 border-t border-gold/30 bg-ink/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden"
     >
-      <ul className="grid" style={{ gridTemplateColumns: `repeat(${links.length}, minmax(0, 1fr))` }}>
-        {links.map((l, i) => (
-          <li key={l.track}>
-            <a
-              href={l.href}
-              data-track={l.track}
-              {...(l.external ? { target: "_blank", rel: "noopener" } : {})}
-              className={`flex h-14 items-center justify-center text-sm font-semibold ${i === 0 ? "bg-gold text-ink" : "text-gold-2"}`}
-            >
-              {l.label}
+      <ul className="grid grid-cols-3">
+        <li>
+          <Link href="/reservation/" className={`${cell} bg-gold text-ink`} data-track="click_reservation_bar" data-testid="bar-reservation">
+            예약 문의
+          </Link>
+        </li>
+        {o.phone && (
+          <li>
+            <a href={telHref(o.phone)} className={`${cell} border-r border-line text-gold-2`} data-track="click_call">
+              <PhoneIcon /> 전화
             </a>
           </li>
-        ))}
+        )}
+        {o.kakaoUrl && (
+          <li>
+            <a href={o.kakaoUrl} target="_blank" rel="noopener" className={`${cell} text-gold-2`} data-track="click_kakao">
+              카카오톡
+            </a>
+          </li>
+        )}
       </ul>
     </nav>
+  );
+}
+
+/** 히어로용 빠른 문의: 전화·문자·카카오톡 (첫 화면) */
+export function QuickContact() {
+  const o = operator;
+  const items: { href: string; label: string; track: string; external?: boolean }[] = [];
+  if (o.phone) items.push({ href: telHref(o.phone), label: "전화", track: "click_call" });
+  if (o.smsNumber) items.push({ href: smsHref(o.smsNumber), label: "문자", track: "click_sms" });
+  if (o.kakaoUrl) items.push({ href: o.kakaoUrl, label: "카카오톡", track: "click_kakao", external: true });
+  if (!items.length) return null;
+  return (
+    <ul className="grid grid-cols-3 gap-2 sm:flex sm:flex-wrap sm:gap-3" data-testid="hero-quick">
+      {items.map((i) => (
+        <li key={i.track}>
+          <a
+            href={i.href}
+            data-track={i.track}
+            className="inline-flex min-h-12 w-full items-center justify-center rounded-full border border-gold/50 px-5 text-sm font-semibold text-gold-2 hover:border-gold hover:bg-gold/10"
+            {...(i.external ? { target: "_blank", rel: "noopener" } : {})}
+          >
+            {i.label}
+          </a>
+        </li>
+      ))}
+    </ul>
   );
 }
 

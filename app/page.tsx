@@ -5,7 +5,7 @@ import { buildMetadata, businessLd, faqLd, websiteLd } from "@/lib/seo";
 import { GENERAL_FAQ, businessFaq } from "@/lib/content";
 import { DAEGU_AREAS } from "@/lib/guides";
 import { AmbientArt, JsonLd, MoreLink, Pending, Picture, SectionHeading } from "@/components/ui";
-import { ContactButtons, OperatorButtons } from "@/components/contact";
+import { ContactButtons, OperatorButtons, QuickContact } from "@/components/contact";
 import { Features, FaqList, HoursAndAddress, PriceTable, RoomCards, VenueCompare, VisitSteps } from "@/components/sections";
 
 export const metadata = buildMetadata("/");
@@ -65,12 +65,13 @@ function AreasPreview() {
 
 /* ───────────────────────── 정보 모드 ───────────────────────── */
 function InfoHome() {
+  const rsv = reservationReady();
   return (
     <>
       <JsonLd data={websiteLd()} />
       <JsonLd data={faqLd(GENERAL_FAQ)} />
       <Hero
-        eyebrow="Daegu · Karaoke & Noraebang Guide"
+        eyebrow={rsv ? "Daegu · Independent Reservation Service" : "Daegu · Karaoke & Noraebang Guide"}
         title={
           <>
             대구 가라오케·노래방,
@@ -79,27 +80,99 @@ function InfoHome() {
           </>
         }
         lead={
-          <p>
-            “대구 노래방”과 “대구 가라오케”는 검색 결과에 같이 나오지만 법적으로 다른 업종입니다. 업종 차이, 지역별 교통, 처음 갈 때
-            요금 확인하는 법을 정리했습니다.
-          </p>
+          rsv ? (
+            <p>
+              날짜·시간·인원을 남기면 대구 수성구 제휴 매장의 예약 가능 여부를 확인해 연락드리는{" "}
+              <strong className="font-semibold text-ivory">독립 예약 안내 서비스</strong>입니다. 업종 차이와 지역 정보도 함께 안내합니다.
+            </p>
+          ) : (
+            <p>
+              “대구 노래방”과 “대구 가라오케”는 검색 결과에 같이 나오지만 법적으로 다른 업종입니다. 업종 차이, 지역별 교통, 처음 갈 때
+              요금 확인하는 법을 정리했습니다.
+            </p>
+          )
         }
         actions={
-          <div className="flex flex-wrap gap-3">
-            {reservationReady() && (
-              <Link href="/reservation/" className="btn-gold" data-track="click_reservation_page">
-                예약 문의
+          rsv ? (
+            <div className="space-y-4">
+              <Link
+                href="/reservation/"
+                className="group inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-gold-2 to-gold px-8 text-base font-bold text-ink shadow-[0_10px_30px_-10px_rgb(201_169_107/0.7)] hover:from-gold hover:to-gold sm:w-auto sm:text-lg"
+                data-track="click_reservation_hero"
+                data-testid="hero-reservation"
+              >
+                예약 문의하기
+                <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">
+                  →
+                </span>
               </Link>
-            )}
-            <Link href="/guide/" className={reservationReady() ? "btn-ghost" : "btn-gold"}>
-              업종 차이 보기
-            </Link>
-            <Link href="/guide/daegu-areas/" className="btn-ghost">
-              대구 지역별 안내
-            </Link>
-          </div>
+              <div>
+                <p className="mb-2 text-xs tracking-widest text-mute">빠른 문의</p>
+                <QuickContact />
+              </div>
+              <p className="flex flex-wrap gap-x-5 gap-y-1 pt-1 text-sm">
+                <Link href="/guide/" className="text-mute underline-offset-4 hover:text-ivory hover:underline">
+                  업종 차이 보기
+                </Link>
+                <Link href="/guide/daegu-areas/" className="text-mute underline-offset-4 hover:text-ivory hover:underline">
+                  대구 지역별 안내
+                </Link>
+              </p>
+            </div>
+          ) : (
+            <div className="flex flex-wrap gap-3">
+              <Link href="/guide/" className="btn-gold">
+                업종 차이 보기
+              </Link>
+              <Link href="/guide/daegu-areas/" className="btn-ghost">
+                대구 지역별 안내
+              </Link>
+            </div>
+          )
         }
       />
+
+      {rsv && (
+        <section aria-labelledby="reservation" className="wrap pt-4 pb-16 sm:pb-20">
+          <div className="card grain p-8 sm:p-12">
+            <div className="grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:items-start">
+              <div>
+                <p className="eyebrow mb-3">Reservation</p>
+                <h2 id="reservation" className="h-display text-[1.65rem] leading-snug sm:text-4xl">
+                  예약 문의 안내
+                </h2>
+                <div className="gold-rule mt-5" />
+                <p className="mt-5 text-mute">
+                  이 사이트는 독립적으로 운영되는 예약 안내 서비스입니다. 제휴 매장은 운영자의 직영점이 아니며, 매장의 영업과 요금은 각 매장이
+                  정합니다. 예약은 아래 순서로 진행되고, 고객님이 안내 내용을 확인하신 뒤에만 확정됩니다.
+                </p>
+                <Link href="/reservation/" className="btn-gold mt-7" data-track="click_reservation_section">
+                  예약 문의 작성하기
+                </Link>
+              </div>
+              <ol className="space-y-3">
+                {[
+                  ["문의", "전화·문자·카카오톡·LINE·텔레그램으로 날짜·시간·인원을 보내 주세요."],
+                  ["확인", "운영자가 제휴 매장에 예약 가능 여부와 요금을 확인합니다."],
+                  ["안내", "확인 결과를 보내주신 연락처로 알려드립니다."],
+                  ["확정", "안내 내용에 동의하시면 예약이 확정됩니다."],
+                ].map(([t, d], i) => (
+                  <li key={t} className="flex gap-4 rounded-xl border border-line bg-ink/60 p-4">
+                    <span className="h-display text-2xl text-gold/80">{String(i + 1).padStart(2, "0")}</span>
+                    <span>
+                      <span className="block font-semibold">{t}</span>
+                      <span className="text-sm text-mute">{d}</span>
+                    </span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+            <div className="mt-8 border-t border-line pt-6">
+              <OperatorButtons set="all" />
+            </div>
+          </div>
+        </section>
+      )}
 
       <section aria-labelledby="compare" className="wrap py-16 sm:py-20">
         <SectionHeading eyebrow="Guide" id="compare" title="노래연습장·단란주점·유흥주점 한눈에 비교">
@@ -124,28 +197,6 @@ function InfoHome() {
         <VisitSteps />
         <MoreLink href="/guide/first-visit/">요금 확인 체크리스트와 안전한 귀가 방법 보기</MoreLink>
       </section>
-
-      {reservationReady() && (
-        <section aria-labelledby="reservation" className="wrap py-16 sm:py-20">
-          <div className="card grain grid gap-8 p-8 sm:p-12 lg:grid-cols-[1.3fr_1fr] lg:items-center">
-            <div>
-              <p className="eyebrow mb-3">Reservation</p>
-              <h2 id="reservation" className="h-display text-[1.65rem] leading-snug sm:text-4xl">
-                예약 문의 안내
-              </h2>
-              <div className="gold-rule mt-5" />
-              <p className="mt-5 text-mute">
-                이 사이트는 독립적으로 운영되는 예약 안내 서비스입니다. 날짜·시간·인원을 남겨 주시면 대구 수성구 제휴 매장의 예약 가능 여부를 확인해 연락드립니다. 제휴 매장은 운영자의 직영점이 아니며, 예약은
-                안내 내용을 고객님이 확인하신 뒤 확정됩니다.
-              </p>
-              <Link href="/reservation/" className="link-more mt-6">
-                예약 문의 작성하기 <span aria-hidden="true">→</span>
-              </Link>
-            </div>
-            <OperatorButtons set="primary" />
-          </div>
-        </section>
-      )}
 
       <section aria-labelledby="faq" className="wrap py-16 sm:py-20">
         <SectionHeading eyebrow="FAQ" id="faq" title="자주 묻는 질문" />

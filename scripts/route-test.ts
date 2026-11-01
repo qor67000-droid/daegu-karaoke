@@ -193,9 +193,9 @@ async function main() {
         await exact("click_line", operator.lineUrl);
         await exact("click_telegram", operator.telegramUrl);
         await exact("click_call", operator.phone ? `tel:${operator.phone.replace(/[^0-9+]/g, "")}` : null);
-        // 필수값 없이 문자 버튼 → 이동하지 않고 오류 표시
-        await rp.evaluate(() => document.addEventListener("click", (e) => { if ((e.target as HTMLElement).closest("a[href^='sms:']")) e.preventDefault(); }));
-        await rp.locator('[data-testid="rsv-sms"]').click();
+        // 필수값 없이 문자 보내기 → 이동하지 않고 오류 표시
+        await rp.evaluate(() => document.addEventListener("click", (e) => { const a = (e.target as HTMLElement).closest("a"); if (a && /^(sms|tel):|^https?:\/\/(open\.kakao|line\.me|t\.me)/.test(a.getAttribute("href") ?? "")) e.preventDefault(); }));
+        await rp.locator('[data-testid="rsv-submit"]').click();
         const alerts = await rp.locator('form [role="alert"]').count();
         check(`${vp.name} 예약 폼 필수값 검증`, alerts >= 3, `오류 ${alerts}개`);
         // 입력 → 문자 본문 생성
@@ -205,29 +205,67 @@ async function main() {
         await rp.selectOption('select[name="people"]', "4명");
         await rp.fill('textarea[name="note"]', "중형룸 희망 & 테스트");
         await rp.check('input[name="adult"]');
-        const href = (await rp.locator('[data-testid="rsv-sms"]').getAttribute("href")) ?? "";
+        const href = (await rp.locator('[data-testid="rsv-submit"]').getAttribute("href")) ?? "";
         const body = decodeURIComponent(href.split(/[?&]body=/)[1] ?? "");
         check(
           `${vp.name} 문자 문의 링크 생성`,
-          href.startsWith(`sms:${operator.smsNumber}`) && body.includes(`날짜: ${d}`) && body.includes("시간: 21:00") && body.includes("인원: 4명") && body.includes("중형룸 희망 & 테스트"),
+          href.startsWith(`sms:${operator.smsNumber}`) && body.includes(`날짜: ${d}`) && body.includes("시간: 21:00") && body.includes("인원: 4명") && body.includes("중형룸 희망 & 테스트") && body.includes("희망 연락 방식: 문자"),
           href.slice(0, 40) + "…",
         );
         const okAlerts = await rp.locator('form [role="alert"]').count();
         check(`${vp.name} 입력 완료 후 오류 없음`, okAlerts === 0, String(okAlerts));
+        // 연락 방식 선택 → 실행 버튼 전환
+        for (const [label, want] of [
+          ["카카오톡", operator.kakaoUrl],
+          ["LINE", operator.lineUrl],
+          ["텔레그램", operator.telegramUrl],
+          ["전화", operator.phone ? `tel:${operator.phone.replace(/[^0-9+]/g, "")}` : null],
+        ] as const) {
+          if (!want) continue;
+          await rp.locator("form fieldset label", { hasText: new RegExp(`^${label}$`) }).click();
+          const h = await rp.locator('[data-testid="rsv-submit"]').getAttribute("href");
+          const preview = await rp.locator('[data-testid="rsv-preview"]').textContent();
+          check(`${vp.name} 연락 방식 '${label}' 선택 → 버튼 링크`, h === want && (preview ?? "").includes(`희망 연락 방식: ${label}`), h ?? "");
+        }
         const fakeDone = await rp.getByText(/예약(이)? ?(완료|접수되었습니다|확정되었습니다)|저장되었습니다/).count();
         check(`${vp.name} 예약 완료/저장 허위 표시 없음`, fakeDone === 0, String(fakeDone));
         await rp.close();
-        // 홈 예약 문의 버튼
+        // 홈: 상단 메뉴·히어로 예약 버튼·빠른 문의 (첫 화면 노출)
         const hp = await ctx.newPage();
-        await hp.goto(root + "/");
-        const homeBtn = await hp.locator(`main a[href="${basePath}/reservation/"]`).count();
-        check(`${vp.name} 홈 '예약 문의' 버튼 → /reservation/`, homeBtn > 0, String(homeBtn));
+        await hp.goto(root + "/", { waitUntil: "networkidle" });
+        const vh = vp.height;
+        const inFold = async (sel: string) => {
+          const box = await hp.locator(sel).first().boundingBox();
+          return box !== null && box.y + box.height <= vh;
+        };
+        const hdr = hp.locator('[data-testid="header-reservation"]');
+        check(`${vp.name} 상단 '예약 문의' 메뉴 → /reservation/`, (await hdr.getAttribute("href")) === `${basePath}/reservation/` && (await hdr.isVisible()));
+        const hero = hp.locator('[data-testid="hero-reservation"]');
+        check(`${vp.name} 히어로 '예약 문의하기' → /reservation/`, (await hero.getAttribute("href")) === `${basePath}/reservation/` && (await hero.textContent())?.includes("예약 문의하기") === true);
+        check(`${vp.name} 히어로 예약 버튼 첫 화면 노출`, await inFold('[data-testid="hero-reservation"]'));
+        const quick = await hp.locator('[data-testid="hero-quick"] a').evaluateAll((els) => els.map((e) => e.getAttribute("href")));
+        const wantQuick = [`tel:${operator.phone?.replace(/[^0-9+]/g, "")}`, `sms:${operator.smsNumber}`, operator.kakaoUrl];
+        check(`${vp.name} 첫 화면 전화·문자·카카오톡 빠른 문의`, JSON.stringify(quick) === JSON.stringify(wantQuick) && (await inFold('[data-testid="hero-quick"]')), quick.join(", "));
+        // 기존 콘텐츠 유지 + 예약 안내 아래 배치
+        const order = await hp.evaluate(() => ["reservation", "compare", "areas", "steps", "faq"].map((id) => document.getElementById(id)?.getBoundingClientRect().top ?? -1));
+        check(`${vp.name} 예약 안내 → 업종 비교 → 지역 → 이용 가이드 → FAQ 순서`, order.every((v, i) => v > 0 && (i === 0 || v > order[i - 1]!)), order.map(Math.round).join(" < "));
+        // 실제 클릭 이동
+        await hero.click();
+        const movedRsv = await hp.waitForURL(`${origin}${basePath}/reservation/`, { timeout: 10_000 }).then(() => true).catch(() => false);
+        check(`${vp.name} 예약 문의하기 클릭 → 예약 페이지 이동`, movedRsv, hp.url().slice(origin.length));
         if (vp.isMobile) {
+          await hp.goto(root + "/guide/", { waitUntil: "networkidle" });
           const bar = await hp.locator("nav[aria-label='빠른 연락'] a").evaluateAll((els) => els.map((e) => e.getAttribute("href")));
-          const want = [`tel:${operator.phone?.replace(/[^0-9+]/g, "")}`, `sms:${operator.smsNumber}`, operator.kakaoUrl];
-          check(`mobile 하단 전화·문자·카카오톡 버튼`, JSON.stringify(bar) === JSON.stringify(want), bar.join(", "));
-          const visible = await hp.locator("nav[aria-label='빠른 연락']").isVisible();
-          check(`mobile 하단 예약 바 표시`, visible);
+          const want = [`${basePath}/reservation/`, `tel:${operator.phone?.replace(/[^0-9+]/g, "")}`, operator.kakaoUrl];
+          check(`mobile 하단 예약·전화·카카오톡 버튼`, JSON.stringify(bar) === JSON.stringify(want), bar.join(", "));
+          const barBox = await hp.locator("nav[aria-label='빠른 연락']").boundingBox();
+          check(`mobile 하단 바 화면 하단 고정`, barBox !== null && Math.abs(barBox.y + barBox.height - vh) <= 2, JSON.stringify(barBox));
+          await hp.locator('[data-testid="bar-reservation"]').click();
+          const movedBar = await hp.waitForURL(`${origin}${basePath}/reservation/`, { timeout: 10_000 }).then(() => true).catch(() => false);
+          check(`mobile 하단 예약 버튼 클릭 → 예약 페이지 이동`, movedBar, hp.url().slice(origin.length));
+        } else {
+          const barVisible = await hp.locator("nav[aria-label='빠른 연락']").isVisible();
+          check(`desktop 하단 바 숨김`, !barVisible);
         }
         await hp.close();
       }

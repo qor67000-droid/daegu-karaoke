@@ -132,11 +132,19 @@ async function main() {
       const got = hrefs(track);
       check(`예약 버튼 ${track} 링크 정확`, got.length > 0 && got.every((h) => h === want), got.slice(0, 3).join(", "));
     }
-    check("예약 문의 폼 문자 버튼 존재", /data-testid="rsv-sms"/.test(rh) && rh.includes(`sms:${operator.smsNumber}`));
+    check("예약 문의 폼 실행 버튼(문자) 존재", /data-testid="rsv-submit"/.test(rh) && rh.includes(`sms:${operator.smsNumber}`));
+    check("예약 폼 연락 방식 선택(문자·카카오톡·LINE·텔레그램·전화)", ["문자", "카카오톡", "LINE", "텔레그램", "전화"].every((m) => rh.includes(`value="${{ 문자: "sms", 카카오톡: "kakao", LINE: "line", 텔레그램: "telegram", 전화: "call" }[m]}"`)));
     check("예약 완료/저장 허위 표시 없음", !/예약(이)?\s?(완료|접수되었습니다|확정되었습니다)|저장되었습니다/.test(rh.replace(/<script[\s\S]*?<\/script>/g, "")));
     const home = await (await get(LIVE + "/")).text();
-    check("홈 '예약 문의' 버튼", /href="[^"]*\/reservation\/"/.test(home));
-    check("모바일 하단 전화·문자·카카오톡 버튼", home.includes('aria-label="빠른 연락"') && home.includes(`sms:${operator.smsNumber}`) && home.includes(operator.kakaoUrl ?? "__"));
+    const rsvPath = new URL(absoluteUrl("/reservation/")).pathname;
+    check("상단 메뉴 '예약 문의' → /reservation/", new RegExp(`href="${rsvPath}"[^>]*data-testid="header-reservation"`).test(home));
+    check("히어로 '예약 문의하기' → /reservation/", new RegExp(`href="${rsvPath}"[^>]*data-testid="hero-reservation"`).test(home) && home.includes("예약 문의하기"));
+    const quick = home.match(/data-testid="hero-quick"[\s\S]*?<\/ul>/)?.[0] ?? "";
+    check("첫 화면 전화·문자·카카오톡 빠른 문의", quick.includes(`tel:${operator.phone?.replace(/[^0-9+]/g, "")}`) && quick.includes(`sms:${operator.smsNumber}`) && quick.includes(operator.kakaoUrl ?? "__"));
+    const bar = home.match(/aria-label="빠른 연락"[\s\S]*?<\/nav>/)?.[0] ?? "";
+    check("모바일 하단 예약·전화·카카오톡 버튼", bar.includes(`href="${rsvPath}"`) && bar.includes("tel:") && bar.includes(operator.kakaoUrl ?? "__"));
+    const ids = ["reservation", "compare", "areas", "steps", "faq"].map((id) => home.indexOf(`id="${id}"`));
+    check("홈 섹션 순서: 예약 안내 → 업종 비교 → 지역 → 이용 가이드 → FAQ", ids.every((v, i) => v > 0 && (i === 0 || v > ids[i - 1]!)));
   }
   const nf = await get(LIVE + "/__no_such_page__/", "manual");
   check("없는 경로 404", nf.status === 404, String(nf.status));
