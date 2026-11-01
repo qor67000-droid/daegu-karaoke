@@ -120,7 +120,8 @@ async function main() {
   if (reservationReady()) {
     const rs = await get(LIVE + "/reservation/");
     const rh = await rs.text();
-    const hrefs = (track: string) => [...rh.matchAll(new RegExp(`<a[^>]*href="([^"]+)"[^>]*data-track="${track}"`, "g"))].map((m) => m[1]!.replace(/&amp;/g, "&"));
+    const hrefs = (track: string) =>
+      [...rh.matchAll(new RegExp(`<a\\b[^>]*data-track="${track}"[^>]*>`, "g"))].map((m) => (m[0].match(/\shref="([^"]+)"/)?.[1] ?? "").replace(/&amp;/g, "&"));
     for (const [track, want] of [
       ["click_kakao", operator.kakaoUrl],
       ["click_line", operator.lineUrl],
@@ -137,8 +138,13 @@ async function main() {
     check("예약 완료/저장 허위 표시 없음", !/예약(이)?\s?(완료|접수되었습니다|확정되었습니다)|저장되었습니다/.test(rh.replace(/<script[\s\S]*?<\/script>/g, "")));
     const home = await (await get(LIVE + "/")).text();
     const rsvPath = new URL(absoluteUrl("/reservation/")).pathname;
-    check("상단 메뉴 '예약 문의' → /reservation/", new RegExp(`href="${rsvPath}"[^>]*data-testid="header-reservation"`).test(home));
-    check("히어로 '예약 문의하기' → /reservation/", new RegExp(`href="${rsvPath}"[^>]*data-testid="hero-reservation"`).test(home) && home.includes("예약 문의하기"));
+    // 속성 순서와 무관하게 data-testid가 있는 <a> 태그의 href를 읽는다 (Next <Link>는 속성 순서가 다를 수 있음)
+    const hrefOf = (html: string, testid: string) => {
+      const tag = html.match(new RegExp(`<a\\b[^>]*data-testid="${testid}"[^>]*>`))?.[0] ?? "";
+      return tag.match(/\shref="([^"]+)"/)?.[1] ?? null;
+    };
+    check("상단 메뉴 '예약 문의' → /reservation/", hrefOf(home, "header-reservation") === rsvPath, String(hrefOf(home, "header-reservation")));
+    check("히어로 '예약 문의하기' → /reservation/", hrefOf(home, "hero-reservation") === rsvPath && home.includes("예약 문의하기"), String(hrefOf(home, "hero-reservation")));
     const quick = home.match(/data-testid="hero-quick"[\s\S]*?<\/ul>/)?.[0] ?? "";
     check("첫 화면 전화·문자·카카오톡 빠른 문의", quick.includes(`tel:${operator.phone?.replace(/[^0-9+]/g, "")}`) && quick.includes(`sms:${operator.smsNumber}`) && quick.includes(operator.kakaoUrl ?? "__"));
     const bar = home.match(/aria-label="빠른 연락"[\s\S]*?<\/nav>/)?.[0] ?? "";
