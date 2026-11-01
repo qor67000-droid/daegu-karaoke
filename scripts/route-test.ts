@@ -8,7 +8,7 @@
  *       모바일·데스크톱 가로 넘침, CTA 터치 영역, 클릭 이벤트, 실험실 LCP/CLS(로컬 — 실사용자 지표 아님)
  */
 import { createServer, type Server } from "node:http";
-import { readFileSync, existsSync, statSync, mkdirSync, writeFileSync } from "node:fs";
+import { readFileSync, readdirSync, existsSync, statSync, mkdirSync, writeFileSync } from "node:fs";
 import { join, extname } from "node:path";
 import { routes, isIndexable } from "@/lib/routes";
 import { basePath } from "@/lib/site";
@@ -101,6 +101,11 @@ async function main() {
   for (const p of ["/robots.txt", "/sitemap.xml", "/icon.svg", "/og-default.png", "/.nojekyll"]) {
     const res = await fetch(root + p);
     check(`GET ${p} → 200`, res.status === 200, String(res.status));
+  }
+  for (const f of readdirSync("public").filter((x) => /^(google[0-9a-f]+|naver[0-9a-f]+)\.html$/.test(x))) {
+    const res = await fetch(`${root}/${f}`, { redirect: "manual" });
+    const body = Buffer.from(await res.arrayBuffer());
+    check(`GET /${f} → 200, 원본과 동일`, res.status === 200 && body.equals(readFileSync(join("public", f))), `${res.status}, ${body.length}B`);
   }
   if (basePath) {
     const res = await fetch(origin + "/guide/", { redirect: "manual" });

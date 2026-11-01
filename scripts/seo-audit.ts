@@ -95,7 +95,10 @@ const routeOf = (file: string) => {
 };
 
 /* ───── pages ───── */
-const htmlFiles = walk(OUT).filter((f) => f.endsWith(".html") && !f.includes(`${OUT}/_next/`));
+// 검색엔진 소유권 인증 파일(google*.html, naver*.html)은 웹페이지가 아니므로 페이지 검사에서 제외한다
+const VERIFICATION_FILE = /^(google[0-9a-f]+|naver[0-9a-f]+)\.html$/;
+const verificationFiles = walk(OUT).filter((f) => VERIFICATION_FILE.test(relative(OUT, f)));
+const htmlFiles = walk(OUT).filter((f) => f.endsWith(".html") && !f.includes(`${OUT}/_next/`) && !VERIFICATION_FILE.test(relative(OUT, f)));
 const notFoundFiles = htmlFiles.filter((f) => /(^|\/)(404|_not-found)(\/index)?\.html$/.test(relative(OUT, f)));
 const pages = htmlFiles.filter((f) => !notFoundFiles.includes(f));
 const titles = new Map<string, string[]>();
@@ -311,6 +314,14 @@ else {
     if (basePath) add("info", "/robots.txt", "robots-scope", `프로젝트 사이트의 ${basePath}/robots.txt는 크롤러가 읽지 않음 → 색인 제어는 meta robots로 수행 (정상)`);
   } else if (!blocksAll) add("error", "/robots.txt", "robots", "미리보기 빌드인데 크롤링 허용");
 }
+
+/* ───── 소유권 인증 파일 (public/ 원본과 바이트 동일해야 함) ───── */
+for (const f of readdirSync("public").filter((x) => VERIFICATION_FILE.test(x))) {
+  const outFile = join(OUT, f);
+  if (!existsSync(outFile)) add("error", `/${f}`, "verification", "public/의 소유권 인증 파일이 빌드 결과에 없음");
+  else if (!readFileSync(outFile).equals(readFileSync(join("public", f)))) add("error", `/${f}`, "verification", "소유권 인증 파일 내용이 원본과 다름");
+}
+void verificationFiles;
 
 /* ───── GitHub Pages 산출물 ───── */
 if (!existsSync(join(OUT, ".nojekyll"))) add("error", "/.nojekyll", "pages", ".nojekyll 없음 (_next 폴더가 무시될 수 있음)");

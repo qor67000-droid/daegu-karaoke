@@ -10,7 +10,8 @@
  *  - 없는 경로 404
  * Pages CDN 반영 지연을 고려해 첫 요청은 최대 5분간 재시도한다.
  */
-import { writeFileSync, mkdirSync } from "node:fs";
+import { writeFileSync, mkdirSync, readdirSync, readFileSync } from "node:fs";
+import { join } from "node:path";
 import { routes, isIndexable } from "@/lib/routes";
 import { absoluteUrl, baseUrl } from "@/lib/site";
 import { isTestHost } from "@/lib/env";
@@ -110,6 +111,12 @@ async function main() {
   check("robots.txt 200", rb.status === 200);
   check("robots.txt Sitemap 선언", rbt.includes(`Sitemap: ${absoluteUrl("/sitemap.xml")}`));
   check("robots.txt 전체 차단 아님", !/^Disallow:\s*\/\s*$/im.test(rbt));
+  for (const f of readdirSync("public").filter((x) => /^(google[0-9a-f]+|naver[0-9a-f]+)\.html$/.test(x))) {
+    const r = await get(`${LIVE}/${f}`, "manual");
+    const body = Buffer.from(await r.arrayBuffer());
+    const same = body.equals(readFileSync(join("public", f)));
+    check(`소유권 인증 파일 /${f} 200·내용 일치`, r.status === 200 && same, `${r.status} ${r.headers.get("content-type") ?? ""} "${body.toString("utf8").trim().slice(0, 80)}"`);
+  }
   const nf = await get(LIVE + "/__no_such_page__/", "manual");
   check("없는 경로 404", nf.status === 404, String(nf.status));
 
@@ -124,7 +131,7 @@ async function main() {
   if (process.env.GITHUB_ACTIONS) {
     // 통과 내역도 API(annotations)로 확인할 수 있도록 요약을 notice로 남긴다 (항목명은 묶어서 1~3줄)
     console.log(`::notice title=verify:live summary::${LIVE}/ — ${results.length - failed.length}/${results.length} passed (assets ${sameOrigin.length}, internal links ${linkRefs.size}, sitemap ${locs.length})`);
-    const names = results.map((r) => `${r.ok ? "OK" : "FAIL"} ${r.name}${r.detail && /canonical|sitemap|robots|404|301/.test(r.name) ? ` [${r.detail}]` : ""}`);
+    const names = results.map((r) => `${r.ok ? "OK" : "FAIL"} ${r.name}${r.detail && /canonical|sitemap|robots|404|301|소유권/.test(r.name) ? ` [${r.detail}]` : ""}`);
     for (let i = 0; i < names.length; i += 25) console.log(`::notice title=verify:live checks ${i + 1}-${Math.min(i + 25, names.length)}::${names.slice(i, i + 25).join(" | ").slice(0, 3900)}`);
   }
   process.exit(failed.length ? 1 : 0);
