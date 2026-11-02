@@ -1,0 +1,42 @@
+name: Live site monitor
+
+# 공개 사이트를 매일 점검 (배포 없음). 실패하면 GitHub 기본 알림으로 통지됩니다.
+# 검사: 페이지 200·canonical·robots·sitemap XML·예약 버튼 링크·인증 파일 + 모바일 Lighthouse(실험실)
+on:
+  schedule:
+    - cron: "37 0 * * *" # 매일 09:37 KST
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: read
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - id: pages
+        uses: actions/configure-pages@v6
+      - name: Set site env
+        run: |
+          echo "SITE_ENV=production" >> "$GITHUB_ENV"
+          echo "SITE_URL=${{ steps.pages.outputs.base_url }}" >> "$GITHUB_ENV"
+          echo "NEXT_PUBLIC_BASE_PATH=${{ steps.pages.outputs.base_path }}" >> "$GITHUB_ENV"
+      - run: npm ci --no-audit --no-fund
+      - name: Verify public URL
+        run: npm run verify:live -- "${{ steps.pages.outputs.base_url }}/"
+      - name: Lighthouse mobile
+        continue-on-error: true
+        run: |
+          URL="${{ steps.pages.outputs.base_url }}/"
+          export CHROME_PATH="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || true)"
+          for P in "" "reservation/"; do
+            L=$([ -z "$P" ] && echo home || echo reservation)
+            npx --yes lighthouse@12 "${URL}${P}" --quiet --form-factor=mobile --only-categories=performance,accessibility,best-practices,seo \
+              --chrome-flags="--headless=new --no-sandbox" --output=json --output-path="lh-$L.json" || true
+            node scripts/lighthouse-summary.mjs "$L" "lh-$L.json"
+          done

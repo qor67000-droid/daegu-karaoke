@@ -73,11 +73,19 @@ function InfoHome() {
       <Hero
         eyebrow={rsv ? "Daegu · Independent Reservation Service" : "Daegu · Karaoke & Noraebang Guide"}
         title={
-          <>
-            대구 가라오케·노래방,
-            <br />
-            <span className="text-gold-2">가기 전에 알아둘 것</span>
-          </>
+          rsv ? (
+            <>
+              대구 가라오케·노래방
+              <br />
+              <span className="text-gold-2">예약 안내</span>
+            </>
+          ) : (
+            <>
+              대구 가라오케·노래방,
+              <br />
+              <span className="text-gold-2">가기 전에 알아둘 것</span>
+            </>
+          )
         }
         lead={
           rsv ? (
@@ -170,6 +178,39 @@ function InfoHome() {
             <div className="mt-8 border-t border-line pt-6">
               <OperatorButtons set="all" />
             </div>
+          </div>
+        </section>
+      )}
+
+      {rsv && (
+        <section aria-labelledby="intent" className="wrap py-16 sm:py-20">
+          <SectionHeading eyebrow="Which one?" id="intent" title="대구 노래방과 가라오케, 어떤 곳을 찾으세요?">
+            “대구 노래방”과 “대구 가라오케”는 비슷해 보이지만 업종이 다릅니다. 목적에 맞는 곳을 먼저 고르세요.
+          </SectionHeading>
+          <div className="grid gap-5 lg:grid-cols-2">
+            <article className="card p-6 sm:p-8">
+              <p className="eyebrow mb-2">노래만 부를 때</p>
+              <h3 className="h-display text-2xl">노래연습장 (코인·일반 노래방)</h3>
+              <ul className="mt-4 space-y-2 text-sm text-mute">
+                <li>· 주류를 팔지 않고, 시간·곡 단위로 요금을 냅니다.</li>
+                <li>· 청소년실이 있으면 청소년도 이용할 수 있습니다.</li>
+                <li>· 이 서비스는 노래연습장 예약을 안내하지 않습니다. 가까운 노래연습장은 지도 앱에서 찾으세요.</li>
+              </ul>
+              <MoreLink href="/guide/">업종 차이 자세히 보기</MoreLink>
+            </article>
+            <article className="card border-gold/40 p-6 sm:p-8">
+              <p className="eyebrow mb-2">술과 함께 룸에서</p>
+              <h3 className="h-display text-2xl">가라오케 (유흥주점·단란주점)</h3>
+              <ul className="mt-4 space-y-2 text-sm text-mute">
+                <li>· 주류를 판매하며 만 19세 이상만 이용할 수 있습니다.</li>
+                <li>· “가라오케”라는 이름의 업소는 식품위생법상 유흥주점이나 단란주점으로 영업신고된 경우가 있습니다. 간판보다 영업신고 업종을 확인하세요.</li>
+                <li>· 요금은 업소마다 다르므로 예약할 때 포함 항목과 연장 기준을 확인하세요.</li>
+              </ul>
+              <p className="mt-5 text-sm text-ivory/85">문의 전에 정해 두면 빠릅니다: <strong>방문 날짜·도착 시간</strong>, <strong>인원</strong>, <strong>원하는 룸 크기나 요청</strong>.</p>
+              <Link href="/reservation/" className="btn-gold mt-5" data-track="click_reservation_intent">
+                가라오케 예약 문의하기
+              </Link>
+            </article>
           </div>
         </section>
       )}

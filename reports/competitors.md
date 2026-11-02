@@ -106,3 +106,53 @@
 - https://www.geumcheon.go.kr/portal/contents.do?key=764 (청소년유해업소 정의)
 - https://www.gimhae.go.kr/00976/02310/01410.web (청소년 고용 금지 벌칙)
 - https://www.imaeil.com/page/view/2020060613594778097 (대구 코인노래방 설문)
+
+---
+
+## 2차 조사 (2026-11-02, 7일 집중 개선 Day 1)
+
+- 도구: Claude 웹 검색(extended). **Google SERP 직접 조회 불가(프록시 차단) → 아래는 Google 순위가 아님.** 광고·지도(로컬팩) 결과는 이 도구가 반환하지 않아 **미검증**.
+- 검색량·키워드 난이도: 측정 수단 없음 → 기재하지 않음.
+- 우리 사이트 노출: `qor67000-droid.github.io daegu-karaoke` 질의에서도 이 검색 도구에 나오지 않음. **Google 색인 여부는 Search Console URL 검사로만 확인 가능(미확인).**
+
+### '대구 가라오케' (반환 순서)
+| # | URL | 유형 | 관찰 |
+|---|---|---|---|
+| 1 | https://www.114.co.kr/search/detail?comp_id=3469952… | 전화번호부 | 실제 상호·주소·전화(NAP) 단일 업소 정보 |
+| 2 | https://bampick.uriweb.kr/daegukaraoke | 예약 안내 플랫폼 | "예약 전 확인" 체크리스트형 콘텐츠, 전국 지역명 복제 메뉴 |
+| 3 | http://cheongju2.co.kr/ | 실장 홍보 | 키워드 나열, "1등" 표현 |
+| 4 | https://www.susungroom.com/ | 실장 홍보 | 업소명 나열 |
+| 5 | https://daegufull.com/대구가라오케-추천/ | 업소 블로그 | 룸 수·서비스 홍보 |
+| 6 | https://www.suseongsalon.com/ | 실장 홍보 | 가격·운영시간 텍스트 기재 |
+| 7 | https://www.daeguroomsaloon.xyz/ | 실장 홍보 | 동 단위 주소 |
+
+### '대구 노래방'
+| # | URL | 유형 | 관찰 |
+|---|---|---|---|
+| 1 | https://www.spacecloud.kr/space/62101 | 공간대여 | 일반 이용자 의도 |
+| 2 | https://m.cafe.daum.net/nolbangpa/GvLm/91 | 커뮤니티 | 일반 노래연습장 시설 정보 |
+| 3 | https://www.st-news.co.kr/news/articleView.html?idxno=9189 | 지역 언론 | **코인·일반 노래연습장 요금·영업시간 기사** — 일반 노래방 의도가 강함 |
+| 4 | https://monobinj.com/article/notice/1/119935/ | 제3자 게시판 스팸 | 출처 불명 후기 |
+| 5 | https://daegujs.com/ | 실장 홍보 | — |
+| 6 | https://www.daegusing.com/ | 실장 홍보 | "사이즈 1등" |
+| 7 | https://daegujj.com/daegu-noraebang/ | 디렉터리 | 구별 섹션, 유형별 가격대(일반 노래방 기준) |
+| 8 | https://daegujj.com/ | 디렉터리 | 지역별 주점 가이드 |
+| 9 | https://dongseongro-noraebang.com/ | 코인·룸 노래방 디렉터리 | 별점 표시, 가격대 표 |
+
+### '대구 가라오케 예약'
+| # | URL | 유형 | 관찰 |
+|---|---|---|---|
+| 1 | https://bampick.uriweb.kr/daegukaraoke | 예약 안내 | 인원·시간·분위기 순서형 가이드 |
+| 2 | https://sadangkaraoke.blogspot.com/ | 블로그 | 타 지역 블로그의 대구 글 |
+| 3 | https://www.haebyeong.co.kr/board_SWLp54/218355 | 제3자 게시판 스팸 | 출처 불명 별점 후기, FAQ |
+| 4 | https://www.hwanggeum.co.kr/ | 업소 홍보 | 시간당 요금 텍스트 |
+| 5 | https://www.xn--o39a10a04t2ipqgcwsq.com/대구가라오케 | 전국 예약 플랫폼 | **상담→매칭→확정 절차, 선결제 없음, FAQ** — 예약 플랫폼형 경쟁 |
+
+### 비교 → 개선 우선순위 (실행)
+| 경쟁 요소 | 경쟁사 | 우리 사이트 대응 |
+|---|---|---|
+| 검색 의도 분기 | '대구 노래방' 결과의 상당수가 일반 노래연습장(언론·커뮤니티·코인 디렉터리) | 홈에 "노래만 / 술과 룸" 의도 분기 섹션 추가 — 일반 노래방 검색자를 오도하지 않고 가라오케 예약 의도만 예약으로 연결 |
+| 예약 절차 설명 | 예약 플랫폼형(전국가라오케·밤픽)은 절차·FAQ 제공 | 이미 4단계 절차·FAQ 보유 → 홈 title/H1을 실제 서비스(예약 안내)와 일치시킴 |
+| 예약 전 준비 체크 | 밤픽: 인원·시간·분위기 체크 | 홈에 "문의 전에 정할 3가지" + 예약 폼 빠른 날짜 선택 |
+| 가격·업소명·별점 | 다수가 가격·"1위"·별점 후기 게시 | **확인되지 않은 가격·후기·업소명은 게시하지 않음** (확인 필요 항목으로 분리). 이 부분은 경쟁 열위로 남음 |
+| NAP(실제 업소 정보) | 114 등 디렉터리는 실제 상호·주소·전화 | 제휴 매장명·업종 확인 시 공개 → 현재 최대 약점 |

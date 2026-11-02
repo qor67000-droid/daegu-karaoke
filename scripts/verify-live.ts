@@ -97,7 +97,27 @@ async function main() {
   check(`내부 링크 ${linkRefs.size}개 200`, linkFail.length === 0, linkFail.slice(0, 5).join(", "));
 
   const sm = await get(LIVE + "/sitemap.xml");
-  const xml = await sm.text();
+  const smBuf = Buffer.from(await sm.arrayBuffer());
+  const xml = smBuf.toString("utf8");
+  // Search Console '가져올 수 없음' 대비: 실제 응답·XML 형식 점검
+  const ctype = sm.headers.get("content-type") ?? "";
+  check("sitemap.xml Content-Type이 XML", /xml/i.test(ctype), ctype);
+  check("sitemap.xml BOM 없음·XML 선언으로 시작", !(smBuf[0] === 0xef && smBuf[1] === 0xbb) && xml.startsWith('<?xml version="1.0" encoding="UTF-8"?>'));
+  const urlBlocks = xml.match(/<url>[\s\S]*?<\/url>/g) ?? [];
+  const wellFormed =
+    (xml.match(/<urlset\b/g) ?? []).length === 1 &&
+    xml.trimEnd().endsWith("</urlset>") &&
+    xml.includes('xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"') &&
+    urlBlocks.length > 0 &&
+    urlBlocks.every((b) => /<loc>https:\/\/[^<\s]+<\/loc>/.test(b)) &&
+    (xml.match(/<url>/g) ?? []).length === (xml.match(/<\/url>/g) ?? []).length &&
+    !/&(?!amp;|lt;|gt;|quot;|apos;)/.test(xml);
+  check("sitemap.xml XML 구조 유효(urlset·loc·이스케이프)", wellFormed, `${smBuf.length}B, url ${urlBlocks.length}개`);
+  const lastmods = [...xml.matchAll(/<lastmod>([^<]+)<\/lastmod>/g)].map((m) => m[1]!);
+  check("sitemap lastmod W3C 날짜 형식", lastmods.every((d) => /^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}(:\d{2}(\.\d+)?)?(Z|[+-]\d{2}:\d{2}))?$/.test(d)), lastmods[0] ?? "");
+  if (process.env.GITHUB_ACTIONS) {
+    console.log(`::notice title=verify:live sitemap.xml::status=${sm.status} content-type=${ctype} bytes=${smBuf.length} — ${xml.replace(/\s+/g, " ").slice(0, 1500)}`);
+  }
   const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]!).sort();
   const expected = routes.filter(isIndexable).map((r) => absoluteUrl(r.path)).sort();
   check("sitemap.xml 200", sm.status === 200);
@@ -108,6 +128,7 @@ async function main() {
   }
   const rb = await get(LIVE + "/robots.txt");
   const rbt = await rb.text();
+  if (process.env.GITHUB_ACTIONS) console.log(`::notice title=verify:live robots.txt::status=${rb.status} — ${rbt.replace(/\n/g, " ⏎ ")}`);
   check("robots.txt 200", rb.status === 200);
   check("robots.txt Sitemap 선언", rbt.includes(`Sitemap: ${absoluteUrl("/sitemap.xml")}`));
   check("robots.txt 전체 차단 아님", !/^Disallow:\s*\/\s*$/im.test(rbt));
@@ -166,7 +187,7 @@ async function main() {
   if (process.env.GITHUB_ACTIONS) {
     // 통과 내역도 API(annotations)로 확인할 수 있도록 요약을 notice로 남긴다 (항목명은 묶어서 1~3줄)
     console.log(`::notice title=verify:live summary::${LIVE}/ — ${results.length - failed.length}/${results.length} passed (assets ${sameOrigin.length}, internal links ${linkRefs.size}, sitemap ${locs.length})`);
-    const names = results.map((r) => `${r.ok ? "OK" : "FAIL"} ${r.name}${r.detail && /canonical|sitemap|robots|404|301|소유권|예약/.test(r.name) ? ` [${r.detail}]` : ""}`);
+    const names = results.map((r) => `${r.ok ? "OK" : "FAIL"} ${r.name}${r.detail && /canonical|sitemap|robots|404|301|소유권|예약|Content-Type|lastmod/.test(r.name) ? ` [${r.detail}]` : ""}`);
     for (let i = 0; i < names.length; i += 25) console.log(`::notice title=verify:live checks ${i + 1}-${Math.min(i + 25, names.length)}::${names.slice(i, i + 25).join(" | ").slice(0, 3900)}`);
   }
   process.exit(failed.length ? 1 : 0);

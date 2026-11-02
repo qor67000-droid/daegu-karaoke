@@ -35,6 +35,23 @@ function todayISO() {
 type Method = "sms" | "kakao" | "line" | "telegram" | "call";
 const METHOD_LABEL: Record<Method, string> = { sms: "문자", kakao: "카카오톡", line: "LINE", telegram: "텔레그램", call: "전화" };
 
+/** 오늘·내일·이번 토요일(오늘이 토요일이면 다음 토요일) */
+function quickDates(today: string) {
+  const base = new Date(`${today}T00:00:00`);
+  const fmt = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  const add = (n: number) => {
+    const d = new Date(base);
+    d.setDate(d.getDate() + n);
+    return d;
+  };
+  const toSat = (6 - base.getDay() + 7) % 7 || 7;
+  return [
+    { key: "today", label: "오늘", value: fmt(base) },
+    { key: "tomorrow", label: "내일", value: fmt(add(1)) },
+    { key: "saturday", label: `토요일 ${add(toSat).getMonth() + 1}/${add(toSat).getDate()}`, value: fmt(add(toSat)) },
+  ];
+}
+
 export function buildMessage(v: { date: string; time: string; people: string; note: string; method?: Method }) {
   const d = v.date ? new Date(`${v.date}T00:00:00`) : null;
   const dateLabel = d && !Number.isNaN(d.getTime()) ? `${v.date} (${DAY[d.getDay()]})` : v.date;
@@ -126,6 +143,21 @@ export function ReservationForm({ smsNumber, phone, kakaoUrl, lineUrl, telegramU
         <label className="block text-sm">
           방문 날짜 <span className="text-gold">*</span>
           <input type="date" name="date" className={field} value={date} min={minDate} onChange={(e) => setDate(e.target.value)} required />
+          {minDate && (
+            <span className="mt-2 flex gap-2" role="group" aria-label="빠른 날짜 선택">
+              {quickDates(minDate).map((q) => (
+                <button
+                  key={q.label}
+                  type="button"
+                  onClick={() => setDate(q.value)}
+                  className={`min-h-10 rounded-full border px-3 text-xs ${date === q.value ? "border-gold bg-gold/15 text-gold-2" : "border-line text-ivory/80"}`}
+                  data-testid={`quick-date-${q.key}`}
+                >
+                  {q.label}
+                </button>
+              ))}
+            </span>
+          )}
           {err(errors.date)}
         </label>
         <label className="block text-sm">

@@ -198,6 +198,11 @@ async function main() {
         await rp.locator('[data-testid="rsv-submit"]').click();
         const alerts = await rp.locator('form [role="alert"]').count();
         check(`${vp.name} 예약 폼 필수값 검증`, alerts >= 3, `오류 ${alerts}개`);
+        // 빠른 날짜 선택(내일) → 날짜 입력값 반영
+        await rp.locator('[data-testid="quick-date-tomorrow"]').click();
+        const tomorrowVal = await rp.inputValue('input[name="date"]');
+        const tmr = await rp.evaluate(() => { const d = new Date(); d.setDate(d.getDate() + 1); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; });
+        check(`${vp.name} 빠른 날짜 '내일' 선택`, tomorrowVal === tmr, tomorrowVal);
         // 입력 → 문자 본문 생성
         const d = new Date(Date.now() + 3 * 86400_000 + 9 * 3600_000).toISOString().slice(0, 10);
         await rp.fill('input[name="date"]', d);
@@ -247,8 +252,8 @@ async function main() {
         const wantQuick = [`tel:${operator.phone?.replace(/[^0-9+]/g, "")}`, `sms:${operator.smsNumber}`, operator.kakaoUrl];
         check(`${vp.name} 첫 화면 전화·문자·카카오톡 빠른 문의`, JSON.stringify(quick) === JSON.stringify(wantQuick) && (await inFold('[data-testid="hero-quick"]')), quick.join(", "));
         // 기존 콘텐츠 유지 + 예약 안내 아래 배치
-        const order = await hp.evaluate(() => ["reservation", "compare", "areas", "steps", "faq"].map((id) => document.getElementById(id)?.getBoundingClientRect().top ?? -1));
-        check(`${vp.name} 예약 안내 → 업종 비교 → 지역 → 이용 가이드 → FAQ 순서`, order.every((v, i) => v > 0 && (i === 0 || v > order[i - 1]!)), order.map(Math.round).join(" < "));
+        const order = await hp.evaluate(() => ["reservation", "intent", "compare", "areas", "steps", "faq"].map((id) => document.getElementById(id)?.getBoundingClientRect().top ?? -1));
+        check(`${vp.name} 예약 안내 → 의도 분기 → 업종 비교 → 지역 → 이용 가이드 → FAQ 순서`, order.every((v, i) => v > 0 && (i === 0 || v > order[i - 1]!)), order.map(Math.round).join(" < "));
         // 실제 클릭 이동
         await hero.click();
         const movedRsv = await hp.waitForURL(`${origin}${basePath}/reservation/`, { timeout: 10_000 }).then(() => true).catch(() => false);
