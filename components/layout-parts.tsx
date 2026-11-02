@@ -164,10 +164,10 @@ export function Footer() {
             </span>
             <span>{legalNotice()}</span>
           </p>
-          <p className="mt-3 text-xs text-mute/80">{DRINK_NOTICE}</p>
+          <p className="mt-3 text-xs text-mute">{DRINK_NOTICE}</p>
         </div>
       </div>
-      <div className="wrap border-t border-line pt-6 text-xs text-mute/70">
+      <div className="wrap border-t border-line pt-6 text-xs text-mute">
         © {new Date().getFullYear()} {brand() || "대구 가라오케·노래방 가이드"}. 요금·영업시간 등 업소 정보는 업소 사정에 따라 변경될 수 있으니 방문 전 확인하세요.
       </div>
     </footer>

@@ -43,7 +43,7 @@ export function SubPage({
             {showBody ? lead : "이 페이지는 업체 정보가 확인된 뒤 공개됩니다. 그동안 아래 이용 가이드를 참고해 주세요."}
           </div>
           {r.kind !== "business" && modified && (
-            <p className="mt-4 text-xs text-mute/70">
+            <p className="mt-4 text-xs text-mute">
               최종 수정 <time dateTime={modified}>{modified}</time>
             </p>
           )}
