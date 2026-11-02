@@ -6,7 +6,7 @@ import { Pending } from "@/components/ui";
 
 function Logo() {
   return (
-    <Link href="/" className="group flex shrink-0 items-center gap-2 sm:gap-3" aria-label={`${brand() || "대구 가라오케·노래방 가이드"} 홈`}>
+    <Link href="/" className="group flex shrink-0 items-center gap-2 sm:gap-3">
       <span aria-hidden="true" className="grid h-9 w-9 place-items-center rounded-full border border-gold/60 text-gold">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
           <path d="M9 18V6l10-2v12" stroke="currentColor" strokeWidth="1.6" />

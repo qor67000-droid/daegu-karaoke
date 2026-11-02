@@ -105,7 +105,7 @@ function InfoHome() {
             <div className="space-y-4">
               <Link
                 href="/reservation/"
-                className="group inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-gold-2 to-gold px-8 text-base font-bold text-ink shadow-[0_10px_30px_-10px_rgb(201_169_107/0.7)] hover:from-gold hover:to-gold sm:w-auto sm:text-lg"
+                className="group inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-full bg-gold bg-gradient-to-r from-gold-2 to-gold px-8 text-base font-bold text-ink shadow-[0_10px_30px_-10px_rgb(201_169_107/0.7)] hover:from-gold hover:to-gold sm:w-auto sm:text-lg"
                 data-track="click_reservation_hero"
                 data-testid="hero-reservation"
               >

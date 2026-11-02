@@ -19,3 +19,11 @@ const failed = Object.values(a)
   .filter((x) => (c.seo?.auditRefs ?? []).concat(c.accessibility?.auditRefs ?? [], c["best-practices"]?.auditRefs ?? []).some((ref) => ref.id === x.id) || ["largest-contentful-paint", "cumulative-layout-shift", "total-blocking-time"].includes(x.id))
   .map((x) => `${x.id}(${Math.round(x.score * 100)})`);
 if (failed.length) console.log(`::notice title=lighthouse ${label} 개선 후보::${failed.slice(0, 25).join(", ")}`);
+
+// 접근성·SEO 실패 감사의 실제 요소(셀렉터·HTML 일부)를 남긴다
+for (const id of ["color-contrast", "label-content-name-mismatch", "link-name", "button-name", "tap-targets", "target-size", "image-alt", "document-title", "meta-description", "link-text", "crawlable-anchors", "is-crawlable", "canonical", "hreflang"]) {
+  const au = a[id];
+  if (!au || typeof au.score !== "number" || au.score >= 0.9) continue;
+  const items = (au.details?.items ?? []).slice(0, 6).map((it) => `${it.node?.selector ?? ""} ${(it.node?.snippet ?? "").slice(0, 140)} ${it.node?.explanation ? "— " + it.node.explanation.split("\n")[1]?.trim() : ""}`.trim());
+  console.log(`::notice title=lighthouse ${label} ${id}::${items.join(" ‖ ").slice(0, 3500)}`);
+}
