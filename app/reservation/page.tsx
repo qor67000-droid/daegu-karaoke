@@ -72,6 +72,30 @@ export default function ReservationPage() {
         <OperatorButtons set="all" />
       </section>
 
+      <section aria-labelledby="model">
+        <SectionHeading id="model" title="운영 방식">
+          이 서비스는 매장과 별개로 운영되는 예약 안내 서비스입니다. 운영자가 하는 일과 하지 않는 일을 구분해 안내합니다.
+        </SectionHeading>
+        <div className="grid gap-5 sm:grid-cols-2">
+          <div className="card p-6">
+            <h3 className="font-semibold text-gold-2">운영자가 하는 일</h3>
+            <ul className="mt-3 space-y-2 text-sm text-ivory/85">
+              <li>· 전화·문자·카카오톡·LINE·텔레그램으로 예약 문의를 받습니다.</li>
+              <li>· 제휴 매장에 날짜·시간·인원별 예약 가능 여부와 이용 요금을 확인합니다.</li>
+              <li>· 확인 결과를 고객님께 안내하고, 고객님이 동의하시면 예약을 진행합니다.</li>
+            </ul>
+          </div>
+          <div className="card p-6">
+            <h3 className="font-semibold text-gold-2">하지 않는 일</h3>
+            <ul className="mt-3 space-y-2 text-sm text-ivory/85">
+              <li>· 매장을 직접 운영하거나 매장의 요금·영업시간을 정하지 않습니다.</li>
+              <li>· 이 사이트에서 결제나 예약금을 받지 않고, 입력한 내용을 저장하지 않습니다.</li>
+              <li>· 확인되지 않은 매장명·객실·요금·사진은 게시하지 않습니다.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
       <section aria-labelledby="flow">
         <SectionHeading id="flow" title="예약은 이렇게 진행됩니다" />
         <ol className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">

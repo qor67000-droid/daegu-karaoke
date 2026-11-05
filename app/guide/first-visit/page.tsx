@@ -1,4 +1,6 @@
+import Link from "next/link";
 import { buildMetadata, faqLd } from "@/lib/seo";
+import { reservationReady } from "@/lib/site";
 import { FIRST_VISIT } from "@/lib/guides";
 import { SubPage } from "@/components/subpage";
 import { FaqList } from "@/components/sections";
@@ -66,6 +68,15 @@ export default function FirstVisitPage() {
           예약 전화에서 아래 다섯 가지를 확인하면 계산할 때 생기는 오해 대부분을 막을 수 있습니다.
         </SectionHeading>
         <Checklist items={FIRST_VISIT.priceChecklist} />
+        {reservationReady() && (
+          <p className="mt-5 text-sm text-mute">
+            체크리스트 내용을 함께 물어보고 싶다면{" "}
+            <Link href="/reservation/" className="link-more" data-track="click_reservation_guide">
+              예약 문의 페이지
+            </Link>
+            의 요청사항 칸에 적어 보내세요.
+          </p>
+        )}
       </section>
       <section aria-labelledby="at-venue">
         <SectionHeading id="at-venue" title="3. 업소에서" />

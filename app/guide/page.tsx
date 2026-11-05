@@ -1,4 +1,4 @@
-import { brand, businessReady, site } from "@/lib/site";
+import { brand, businessReady, reservationReady, site } from "@/lib/site";
 import Link from "next/link";
 import { buildMetadata, faqLd } from "@/lib/seo";
 import { legalNotice } from "@/lib/content";
@@ -70,6 +70,9 @@ export default function GuidePage() {
         <ul className="flex flex-wrap gap-3">
           <li><Link href="/guide/first-visit/" className="btn-ghost">처음 이용 가이드</Link></li>
           <li><Link href="/guide/daegu-areas/" className="btn-ghost">대구 지역별 안내</Link></li>
+          {reservationReady() && (
+            <li><Link href="/reservation/" className="btn-gold" data-track="click_reservation_guide">가라오케 예약 문의</Link></li>
+          )}
         </ul>
       </section>
       <section aria-labelledby="rules">

@@ -1,4 +1,6 @@
+import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
+import { partners, reservationReady } from "@/lib/site";
 import { DAEGU_AREAS, LICENSE_COUNTS } from "@/lib/guides";
 import { DRINK_NOTICE } from "@/lib/content";
 import { SubPage } from "@/components/subpage";
@@ -79,6 +81,16 @@ export default function AreasPage() {
           <figcaption className="mt-4 text-xs text-mute">유흥주점 업종만 집계한 값이며 노래연습장·단란주점은 포함하지 않습니다.</figcaption>
         </figure>
       </section>
+      {reservationReady() && partners.length > 0 && (
+        <section aria-labelledby="area-rsv">
+          <SectionHeading id="area-rsv" title="수성구 제휴 매장 예약 문의">
+            현재 예약을 연결하는 제휴 매장은 수성구에 있습니다. 예약 안내 서비스는 매장의 직영점이 아니며, 예약 가능 여부는 문의 후 확인해 안내합니다.
+          </SectionHeading>
+          <Link href="/reservation/" className="btn-gold" data-track="click_reservation_guide">
+            예약 문의하기
+          </Link>
+        </section>
+      )}
       <section aria-labelledby="home-safe">
         <SectionHeading id="home-safe" title="어느 지역이든 공통으로">
           {DRINK_NOTICE} 도시철도 운행 시간은 노선마다 다르니 대구교통공사 안내에서 막차 시간을 확인하세요.

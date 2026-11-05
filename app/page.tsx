@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { site, brand, fullAddress, isDev, businessReady, reservationReady } from "@/lib/site";
 import { buildMetadata, businessLd, faqLd, websiteLd } from "@/lib/seo";
-import { GENERAL_FAQ, businessFaq } from "@/lib/content";
+import { GENERAL_FAQ, SERVICE_FAQ, businessFaq } from "@/lib/content";
 import { DAEGU_AREAS } from "@/lib/guides";
 import { AmbientArt, JsonLd, MoreLink, Pending, Picture, SectionHeading } from "@/components/ui";
 import { ContactButtons, OperatorButtons, QuickContact } from "@/components/contact";
@@ -66,10 +66,11 @@ function AreasPreview() {
 /* ───────────────────────── 정보 모드 ───────────────────────── */
 function InfoHome() {
   const rsv = reservationReady();
+  const faq = rsv ? [...SERVICE_FAQ, ...GENERAL_FAQ] : GENERAL_FAQ;
   return (
     <>
       <JsonLd data={websiteLd()} />
-      <JsonLd data={faqLd(GENERAL_FAQ)} />
+      <JsonLd data={faqLd(faq)} />
       <Hero
         eyebrow={rsv ? "Daegu · Independent Reservation Service" : "Daegu · Karaoke & Noraebang Guide"}
         title={
@@ -241,7 +242,7 @@ function InfoHome() {
 
       <section aria-labelledby="faq" className="wrap py-16 sm:py-20">
         <SectionHeading eyebrow="FAQ" id="faq" title="자주 묻는 질문" />
-        <FaqList items={GENERAL_FAQ} />
+        <FaqList items={faq} />
       </section>
     </>
   );

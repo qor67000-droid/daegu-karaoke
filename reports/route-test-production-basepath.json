@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-02T09:58:32.754Z",
+  "generatedAt": "2026-11-05T09:58:32.425Z",
   "basePath": "/daegu-karaoke",
   "note": "로컬 실험실 측정. 실사용자(CrUX) 지표 아님",
   "results": [
@@ -531,7 +531,7 @@
     {
       "name": "mobile 빠른 날짜 '내일' 선택",
       "ok": true,
-      "detail": "2026-11-03"
+      "detail": "2026-11-06"
     },
     {
       "name": "mobile 문자 문의 링크 생성",
@@ -898,7 +898,7 @@
     {
       "name": "desktop 빠른 날짜 '내일' 선택",
       "ok": true,
-      "detail": "2026-11-03"
+      "detail": "2026-11-06"
     },
     {
       "name": "desktop 문자 문의 링크 생성",
@@ -974,79 +974,79 @@
   ],
   "perf": {
     "mobile /": {
-      "lcp": 360,
-      "cls": 0
-    },
-    "mobile /guide/": {
-      "lcp": 228,
-      "cls": 0
-    },
-    "mobile /guide/first-visit/": {
-      "lcp": 144,
-      "cls": 0
-    },
-    "mobile /guide/daegu-areas/": {
-      "lcp": 132,
-      "cls": 0
-    },
-    "mobile /reservation/": {
-      "lcp": 152,
-      "cls": 0
-    },
-    "mobile /about/": {
       "lcp": 176,
       "cls": 0
     },
-    "mobile /rooms/": {
-      "lcp": 144,
+    "mobile /guide/": {
+      "lcp": 88,
       "cls": 0
     },
-    "mobile /price/": {
+    "mobile /guide/first-visit/": {
+      "lcp": 128,
+      "cls": 0
+    },
+    "mobile /guide/daegu-areas/": {
       "lcp": 108,
       "cls": 0
     },
+    "mobile /reservation/": {
+      "lcp": 124,
+      "cls": 0
+    },
+    "mobile /about/": {
+      "lcp": 76,
+      "cls": 0
+    },
+    "mobile /rooms/": {
+      "lcp": 104,
+      "cls": 0
+    },
+    "mobile /price/": {
+      "lcp": 100,
+      "cls": 0
+    },
     "mobile /location/": {
-      "lcp": 136,
+      "lcp": 80,
       "cls": 0
     },
     "mobile /contact/": {
-      "lcp": 120,
+      "lcp": 76,
       "cls": 0
     },
     "desktop /": {
-      "lcp": 172,
+      "lcp": 132,
       "cls": 0
     },
     "desktop /guide/": {
-      "lcp": 160,
-      "cls": 0
-    },
-    "desktop /guide/first-visit/": {
       "lcp": 144,
       "cls": 0
     },
+    "desktop /guide/first-visit/": {
+      "lcp": 128,
+      "cls": 0
+    },
     "desktop /guide/daegu-areas/": {
-      "lcp": 192,
+      "lcp": 132,
       "cls": 0
     },
     "desktop /reservation/": {
-      "lcp": 192,
-      "cls": 0.244
+      "lcp": 152,
+      "cls": 0.247
     },
     "desktop /about/": {
-      "lcp": 148,
+      "lcp": 136,
       "cls": 0
     },
     "desktop /rooms/": {
-      "lcp": 140,
-      "cls": 0
-    },
-    "desktop /price/": {
       "lcp": 116,
       "cls": 0
     },
+    "desktop /price/": {
+      "lcp": 112,
+      "cls": 0
+    },
     "desktop /location/": {
-      "lcp": 140,
+      "lcp": 136,
       "cls": 0
     },
     "desktop /contact/": {

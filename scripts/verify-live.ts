@@ -170,6 +170,12 @@ async function main() {
     check("첫 화면 전화·문자·카카오톡 빠른 문의", quick.includes(`tel:${operator.phone?.replace(/[^0-9+]/g, "")}`) && quick.includes(`sms:${operator.smsNumber}`) && quick.includes(operator.kakaoUrl ?? "__"));
     const bar = home.match(/aria-label="빠른 연락"[\s\S]*?<\/nav>/)?.[0] ?? "";
     check("모바일 하단 예약·전화·카카오톡 버튼", bar.includes(`href="${rsvPath}"`) && bar.includes("tel:") && bar.includes(operator.kakaoUrl ?? "__"));
+    // 공개 정보 페이지 본문(main)에서 예약 페이지로 이어지는 링크
+    for (const path of ["/guide/", "/guide/first-visit/", "/guide/daegu-areas/"]) {
+      const h = await (await get(LIVE + path)).text();
+      const main = h.match(/<main[\s\S]*?<\/main>/)?.[0] ?? "";
+      check(`${path} 본문 → 예약 페이지 내부 링크`, main.includes(`href="${rsvPath}"`));
+    }
     const ids = ["reservation", "compare", "areas", "steps", "faq"].map((id) => home.indexOf(`id="${id}"`));
     check("홈 섹션 순서: 예약 안내 → 업종 비교 → 지역 → 이용 가이드 → FAQ", ids.every((v, i) => v > 0 && (i === 0 || v > ids[i - 1]!)));
   }
@@ -187,7 +193,7 @@ async function main() {
   if (process.env.GITHUB_ACTIONS) {
     // 통과 내역도 API(annotations)로 확인할 수 있도록 요약을 notice로 남긴다 (항목명은 묶어서 1~3줄)
     console.log(`::notice title=verify:live summary::${LIVE}/ — ${results.length - failed.length}/${results.length} passed (assets ${sameOrigin.length}, internal links ${linkRefs.size}, sitemap ${locs.length})`);
-    const names = results.map((r) => `${r.ok ? "OK" : "FAIL"} ${r.name}${r.detail && /canonical|sitemap|robots|404|301|소유권|예약|Content-Type|lastmod/.test(r.name) ? ` [${r.detail}]` : ""}`);
+    const names = results.map((r) => `${r.ok ? "OK" : "FAIL"} ${r.name}${r.detail && /canonical|sitemap|robots|404|301|소유권|예약|Content-Type|lastmod|본문/.test(r.name) ? ` [${r.detail}]` : ""}`);
     for (let i = 0; i < names.length; i += 25) console.log(`::notice title=verify:live checks ${i + 1}-${Math.min(i + 25, names.length)}::${names.slice(i, i + 25).join(" | ").slice(0, 3900)}`);
   }
   process.exit(failed.length ? 1 : 0);
