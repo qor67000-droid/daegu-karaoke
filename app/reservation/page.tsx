@@ -11,8 +11,8 @@ import { ReservationForm } from "@/components/reservation-form";
 export const metadata = buildMetadata("/reservation/");
 
 const STEPS = [
-  { title: "문의 남기기", body: "아래에서 날짜·시간·인원·요청사항을 선택하고 문자 또는 메신저로 보내 주세요. 보내기 버튼을 누른 뒤 전송은 직접 하셔야 합니다." },
-  { title: "예약 가능 여부 확인", body: "운영자가 제휴 매장에 해당 날짜·시간·인원의 예약 가능 여부와 이용 요금을 확인합니다." },
+  { title: "문의 남기기", body: "아래에서 희망 업종과 날짜·시간·인원·요청사항을 선택하고 문자 또는 메신저로 보내 주세요. 보내기 버튼을 누른 뒤 전송은 직접 하셔야 합니다." },
+  { title: "예약 가능 여부 확인", body: "운영자가 제휴 매장의 영업신고 업종과 해당 날짜·시간·인원의 예약 가능 여부, 이용 요금을 확인합니다." },
   { title: "연락·안내", body: "확인 결과를 보내주신 연락처로 안내해 드립니다. 요금과 이용 조건을 이때 함께 확인하세요." },
   { title: "고객 확인 후 확정", body: "안내 내용에 고객님이 동의하신 경우에만 예약이 확정됩니다. 사이트에서 자동으로 확정되지 않습니다." },
 ];
@@ -36,7 +36,7 @@ const FAQ = [
   },
   {
     q: "미성년자도 예약할 수 있나요?",
-    a: "아니요. 주류를 판매하는 가라오케·주점은 만 19세 미만이 출입할 수 없으므로 만 19세 이상만 예약 문의를 받습니다.",
+    a: "아니요. 유흥주점과 단란주점은 청소년보호법상 청소년유해업소로 만 19세 미만이 출입할 수 없으므로 만 19세 이상만 예약 문의를 받습니다.",
   },
 ];
 
@@ -46,11 +46,11 @@ export default function ReservationPage() {
   return (
     <SubPage
       path="/reservation/"
-      modified="2026-11-01"
+      modified="2026-11-05"
       lead={
         <>
-          이 페이지는 <strong className="text-ivory">독립적으로 운영되는 예약 안내 서비스</strong>입니다. 날짜·시간·인원을 남겨 주시면 운영자가 대구
-          수성구 제휴 매장의 예약 가능 여부를 확인해 연락드립니다. 제휴 매장은 운영자의 직영점이 아닙니다.
+          대구 지역 유흥주점·단란주점 이용을 위한 <strong className="text-ivory">독립 운영 예약 문의 서비스</strong>입니다. 희망 업종과 날짜·시간·인원을
+          남겨 주시면 운영자가 대구 수성구 제휴 매장의 이용 가능 여부를 확인해 연락드립니다. 제휴 매장은 운영자의 직영점이 아닙니다.
         </>
       }
     >
@@ -121,11 +121,17 @@ export default function ReservationPage() {
                 <dd className="text-lg">{p.address}</dd>
               </div>
               <div>
+                <dt className="eyebrow mb-1">영업신고 업종</dt>
+                <dd className="text-sm" data-testid="partner-license">
+                  {p.licenseVerified && p.licenseType ? p.licenseType : "확인 중 — 영업신고(허가)증 확인 후 게시합니다"}
+                </dd>
+              </div>
+              <div>
                 <dt className="eyebrow mb-1">매장 정보</dt>
                 <dd className="text-sm text-mute">
                   {p.name && p.licenseVerified
                     ? `${p.name} · ${p.licenseType}`
-                    : "매장명·영업신고 업종·영업시간·요금·사진은 확인되는 대로 게시합니다. 예약 안내 시 문의해 주시면 확인된 내용을 알려드립니다."}
+                    : "매장명·영업시간·요금·사진은 확인되는 대로 게시합니다. 예약 안내 시 문의해 주시면 확인된 내용을 알려드립니다."}
                 </dd>
               </div>
             </dl>

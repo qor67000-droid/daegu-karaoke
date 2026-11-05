@@ -52,11 +52,20 @@ function quickDates(today: string) {
   ];
 }
 
-export function buildMessage(v: { date: string; time: string; people: string; note: string; method?: Method }) {
+export const VENUE_TYPE_OPTIONS = [
+  { key: "yuheung", label: "유흥주점" },
+  { key: "danran", label: "단란주점" },
+  { key: "any", label: "상담 후 결정" },
+] as const;
+export type VenueTypeKey = (typeof VENUE_TYPE_OPTIONS)[number]["key"];
+const typeLabel = (k: VenueTypeKey) => VENUE_TYPE_OPTIONS.find((o) => o.key === k)?.label ?? "상담 후 결정";
+
+export function buildMessage(v: { venueType?: VenueTypeKey; date: string; time: string; people: string; note: string; method?: Method }) {
   const d = v.date ? new Date(`${v.date}T00:00:00`) : null;
   const dateLabel = d && !Number.isNaN(d.getTime()) ? `${v.date} (${DAY[d.getDay()]})` : v.date;
   return [
     "[대구 가라오케 예약 문의]",
+    `희망 업종: ${typeLabel(v.venueType ?? "any")}`,
     `날짜: ${dateLabel}`,
     `시간: ${v.time}`,
     `인원: ${v.people}`,
@@ -68,6 +77,7 @@ export function buildMessage(v: { date: string; time: string; people: string; no
 
 export function ReservationForm({ smsNumber, phone, kakaoUrl, lineUrl, telegramUrl }: ReservationFormProps) {
   const [method, setMethod] = useState<Method>("sms");
+  const [venueType, setVenueType] = useState<VenueTypeKey>("any");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [people, setPeople] = useState("");
@@ -80,6 +90,8 @@ export function ReservationForm({ smsNumber, phone, kakaoUrl, lineUrl, telegramU
 
   useEffect(() => {
     setMinDate(todayISO());
+    const q = new URLSearchParams(window.location.search).get("type");
+    if (q === "yuheung" || q === "danran") setVenueType(q);
     setIos(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent) && "ontouchend" in document);
   }, []);
 
@@ -90,7 +102,7 @@ export function ReservationForm({ smsNumber, phone, kakaoUrl, lineUrl, telegramU
     adult: !adult ? "만 19세 이상만 문의할 수 있습니다." : "",
   };
   const valid = !Object.values(errors).some(Boolean);
-  const message = useMemo(() => buildMessage({ date, time, people, note, method }), [date, time, people, note, method]);
+  const message = useMemo(() => buildMessage({ venueType, date, time, people, note, method }), [venueType, date, time, people, note, method]);
   // iOS는 sms:번호&body=, 그 외(안드로이드 등)는 sms:번호?body=
   const smsHref = `sms:${smsNumber}${ios ? "&" : "?"}body=${encodeURIComponent(message)}`;
 
@@ -139,6 +151,36 @@ export function ReservationForm({ smsNumber, phone, kakaoUrl, lineUrl, telegramU
 
   return (
     <form className="card space-y-6 p-6 sm:p-8" onSubmit={(e) => e.preventDefault()} noValidate aria-describedby="rsv-notice">
+      <fieldset>
+        <legend className="text-sm">
+          희망 업종 <span className="text-gold">*</span>
+        </legend>
+        <div className="mt-2 flex flex-wrap gap-2" role="radiogroup" data-testid="rsv-type">
+          {VENUE_TYPE_OPTIONS.map((o) => (
+            <label
+              key={o.key}
+              className={`inline-flex min-h-11 cursor-pointer items-center rounded-full border px-4 text-sm ${
+                venueType === o.key ? "border-gold bg-gold/15 text-gold-2" : "border-line text-ivory/80 hover:border-gold/50"
+              }`}
+            >
+              <input
+                type="radio"
+                name="venueType"
+                value={o.key}
+                checked={venueType === o.key}
+                onChange={() => setVenueType(o.key)}
+                className="sr-only"
+                data-testid={`rsv-type-${o.key}`}
+              />
+              {o.label}
+            </label>
+          ))}
+        </div>
+        <p className="mt-2 text-xs text-mute">
+          유흥주점과 단란주점은 영업 범위가 다른 업종입니다. 선택하신 업종으로 영업신고된 제휴 매장이 있는지 확인해 안내하며, 잘 모르시면 ‘상담 후
+          결정’을 선택하세요.
+        </p>
+      </fieldset>
       <div className="grid gap-5 sm:grid-cols-3">
         <label className="block text-sm">
           방문 날짜 <span className="text-gold">*</span>

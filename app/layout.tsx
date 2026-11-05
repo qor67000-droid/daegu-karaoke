@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
-import { site, baseUrl, brand, isProduction } from "@/lib/site";
+import { site, operator, baseUrl, brand, isProduction } from "@/lib/site";
 import { Header, Footer } from "@/components/layout-parts";
 import { MobileCtaBar } from "@/components/contact";
 import { ClickTracker } from "@/components/analytics";
@@ -9,7 +9,7 @@ import { GA4 } from "@/components/ga4";
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl() + "/"),
-  applicationName: brand() || "대구 가라오케·노래방 가이드",
+  applicationName: brand() || operator.serviceName,
   formatDetection: { telephone: false },
   referrer: "strict-origin-when-cross-origin",
   verification: {

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { site, absoluteUrl, brand, fullAddress, SCHEMA_DAY, baseUrl, businessReady } from "@/lib/site";
+import { site, operator, absoluteUrl, brand, fullAddress, SCHEMA_DAY, baseUrl, businessReady } from "@/lib/site";
 import { getRoute, isIndexable, routes, type RouteDef } from "@/lib/routes";
 import type { FaqItem } from "@/lib/types";
 
@@ -21,10 +21,10 @@ export function buildMetadata(path: string): Metadata {
       type: "website",
       locale: "ko_KR",
       url,
-      siteName: brand() || "대구 가라오케·노래방 가이드",
+      siteName: brand() || operator.serviceName,
       title: r.title(),
       description: r.description(),
-      images: [{ url: ogImage, width: 1200, height: 630, alt: brand() || "대구 가라오케·노래방 가이드" }],
+      images: [{ url: ogImage, width: 1200, height: 630, alt: brand() || operator.serviceName }],
     },
     twitter: { card: "summary_large_image", title: r.title(), description: r.description() },
   };
@@ -40,7 +40,7 @@ export function websiteLd(): Json {
     "@type": "WebSite",
     "@id": `${baseUrl()}/#website`,
     url: absoluteUrl("/"),
-    name: brand() || "대구 가라오케·노래방 가이드",
+    name: brand() || operator.serviceName,
     inLanguage: "ko-KR",
   };
 }

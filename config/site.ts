@@ -75,7 +75,7 @@ export const site: SiteConfig = {
 
 /** 예약 안내 서비스 운영자 연락처 (사용자 제공, 2026-11-01) */
 export const operator: OperatorConfig = {
-  serviceName: "대구 가라오케·노래방 예약 안내",
+  serviceName: "대구 가라오케",
   phone: "010-2464-6135",
   smsNumber: "01024646135",
   kakaoUrl: "https://open.kakao.com/o/s3KS17Ui",

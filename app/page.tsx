@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { site, brand, fullAddress, isDev, businessReady, reservationReady } from "@/lib/site";
 import { buildMetadata, businessLd, faqLd, websiteLd } from "@/lib/seo";
-import { GENERAL_FAQ, SERVICE_FAQ, businessFaq } from "@/lib/content";
+import { GENERAL_FAQ, NAME_NOTE, SERVICE_FAQ, businessFaq } from "@/lib/content";
 import { DAEGU_AREAS } from "@/lib/guides";
 import { AmbientArt, JsonLd, MoreLink, Pending, Picture, SectionHeading } from "@/components/ui";
 import { ContactButtons, OperatorButtons, QuickContact } from "@/components/contact";
@@ -12,7 +12,7 @@ export const metadata = buildMetadata("/");
 
 /**
  * 홈은 두 모드로 동작한다.
- *  - 정보 모드(업체 정보 미확인): 특정 업체를 소개하지 않는 독립 정보 가이드
+ *  - 예약 문의 모드(업체 정보 미확인): 운영자가 제휴 매장 예약 문의를 연결하는 홈
  *  - 업체 모드(필수 정보 확인 완료): 공식 업체 안내 + 가이드 링크
  * 개발 모드에서는 업체 모드 레이아웃에 [미정] 표시를 보여 준다.
  */
@@ -72,13 +72,13 @@ function InfoHome() {
       <JsonLd data={websiteLd()} />
       <JsonLd data={faqLd(faq)} />
       <Hero
-        eyebrow={rsv ? "Daegu · Independent Reservation Service" : "Daegu · Karaoke & Noraebang Guide"}
+        eyebrow={rsv ? "Daegu Karaoke · Reservation Inquiry" : "Daegu · Karaoke & Noraebang Guide"}
         title={
           rsv ? (
             <>
-              대구 가라오케·노래방
+              대구 가라오케{" "}
               <br />
-              <span className="text-gold-2">예약 안내</span>
+              <span className="text-gold-2">예약 문의</span>
             </>
           ) : (
             <>
@@ -90,10 +90,15 @@ function InfoHome() {
         }
         lead={
           rsv ? (
-            <p>
-              날짜·시간·인원을 남기면 대구 수성구 제휴 매장의 예약 가능 여부를 확인해 연락드리는{" "}
-              <strong className="font-semibold text-ivory">독립 예약 안내 서비스</strong>입니다. 업종 차이와 지역 정보도 함께 안내합니다.
-            </p>
+            <>
+              <p>
+                대구 지역 <strong className="font-semibold text-ivory">유흥주점·단란주점</strong> 이용을 위한 예약 문의 서비스를 제공합니다. 방문
+                일정과 인원을 알려주시면 이용 가능 여부를 확인해 안내합니다.
+              </p>
+              <p className="mt-3 text-sm">
+                독립적으로 운영하는 예약 문의 서비스이며, 제휴 매장은 운영자의 직영점이 아닙니다. 노래연습장·코인노래방 예약은 안내하지 않습니다.
+              </p>
+            </>
           ) : (
             <p>
               “대구 노래방”과 “대구 가라오케”는 검색 결과에 같이 나오지만 법적으로 다른 업종입니다. 업종 차이, 지역별 교통, 처음 갈 때
@@ -119,14 +124,29 @@ function InfoHome() {
                 <p className="mb-2 text-xs tracking-widest text-mute">빠른 문의</p>
                 <QuickContact />
               </div>
-              <p className="flex flex-wrap gap-x-5 gap-y-1 pt-1 text-sm">
-                <Link href="/guide/" className="text-mute underline-offset-4 hover:text-ivory hover:underline">
-                  업종 차이 보기
-                </Link>
-                <Link href="/guide/daegu-areas/" className="text-mute underline-offset-4 hover:text-ivory hover:underline">
-                  대구 지역별 안내
-                </Link>
-              </p>
+              <div data-testid="hero-types">
+                <p className="mb-2 text-xs tracking-widest text-mute">업종별 예약 문의</p>
+                <div className="grid grid-cols-2 gap-2">
+                  <Link
+                    href="/reservation/?type=yuheung"
+                    className="rounded-xl border border-gold/50 bg-ink/60 px-4 py-3 text-sm hover:border-gold"
+                    data-track="click_reservation_type_yuheung"
+                    data-testid="hero-type-yuheung"
+                  >
+                    <span className="block font-semibold text-ivory">유흥주점</span>
+                    <span className="text-xs text-mute">노래·춤 허용 업종</span>
+                  </Link>
+                  <Link
+                    href="/reservation/?type=danran"
+                    className="rounded-xl border border-gold/50 bg-ink/60 px-4 py-3 text-sm hover:border-gold"
+                    data-track="click_reservation_type_danran"
+                    data-testid="hero-type-danran"
+                  >
+                    <span className="block font-semibold text-ivory">단란주점</span>
+                    <span className="text-xs text-mute">노래 허용 업종</span>
+                  </Link>
+                </div>
+              </div>
             </div>
           ) : (
             <div className="flex flex-wrap gap-3">
@@ -152,8 +172,8 @@ function InfoHome() {
                 </h2>
                 <div className="gold-rule mt-5" />
                 <p className="mt-5 text-mute">
-                  이 사이트는 독립적으로 운영되는 예약 안내 서비스입니다. 제휴 매장은 운영자의 직영점이 아니며, 매장의 영업과 요금은 각 매장이
-                  정합니다. 예약은 아래 순서로 진행되고, 고객님이 안내 내용을 확인하신 뒤에만 확정됩니다.
+                  희망 업종(유흥주점·단란주점)과 방문 날짜·시간·인원을 보내 주시면 운영자가 제휴 매장에 이용 가능 여부를 확인해 알려드립니다. 제휴
+                  매장은 운영자의 직영점이 아니며, 매장의 영업과 요금은 각 매장이 정합니다. 예약은 고객님이 안내 내용을 확인하신 뒤에만 확정됩니다.
                 </p>
                 <Link href="/reservation/" className="btn-gold mt-7" data-track="click_reservation_section">
                   예약 문의 작성하기
@@ -161,8 +181,8 @@ function InfoHome() {
               </div>
               <ol className="space-y-3">
                 {[
-                  ["문의", "전화·문자·카카오톡·LINE·텔레그램으로 날짜·시간·인원을 보내 주세요."],
-                  ["확인", "운영자가 제휴 매장에 예약 가능 여부와 요금을 확인합니다."],
+                  ["문의", "전화·문자·카카오톡·LINE·텔레그램으로 희망 업종과 날짜·시간·인원을 보내 주세요."],
+                  ["확인", "운영자가 제휴 매장의 영업신고 업종과 예약 가능 여부, 요금을 확인합니다."],
                   ["안내", "확인 결과를 보내주신 연락처로 알려드립니다."],
                   ["확정", "안내 내용에 동의하시면 예약이 확정됩니다."],
                 ].map(([t, d], i) => (
@@ -185,49 +205,64 @@ function InfoHome() {
 
       {rsv && (
         <section aria-labelledby="intent" className="wrap py-16 sm:py-20">
-          <SectionHeading eyebrow="Which one?" id="intent" title="대구 노래방과 가라오케, 어떤 곳을 찾으세요?">
-            “대구 노래방”과 “대구 가라오케”는 비슷해 보이지만 업종이 다릅니다. 목적에 맞는 곳을 먼저 고르세요.
+          <SectionHeading eyebrow="Reservation by type" id="intent" title="유흥주점·단란주점 예약 안내">
+            두 업종은 법에서 허용하는 영업 범위가 다릅니다. 문의하실 때 희망 업종을 알려 주시면 그 업종으로 영업신고된 제휴 매장만 확인해
+            안내합니다.
           </SectionHeading>
           <div className="grid gap-5 lg:grid-cols-2">
-            <article className="card p-6 sm:p-8">
-              <p className="eyebrow mb-2">노래만 부를 때</p>
-              <h3 className="h-display text-2xl">노래연습장 (코인·일반 노래방)</h3>
+            <article className="card border-gold/40 p-6 sm:p-8" data-testid="type-yuheung">
+              <p className="eyebrow mb-2">식품위생법 · 유흥주점영업</p>
+              <h3 className="h-display text-2xl">대구 유흥주점 예약 문의</h3>
               <ul className="mt-4 space-y-2 text-sm text-mute">
-                <li>· 주류를 팔지 않고, 시간·곡 단위로 요금을 냅니다.</li>
-                <li>· 청소년실이 있으면 청소년도 이용할 수 있습니다.</li>
-                <li>· 이 서비스는 노래연습장 예약을 안내하지 않습니다. 가까운 노래연습장은 지도 앱에서 찾으세요.</li>
+                <li>· 주류를 조리·판매하며, 유흥종사자를 두거나 유흥시설을 설치할 수 있는 업종입니다.</li>
+                <li>· 손님이 노래를 부르거나 춤을 추는 것이 허용됩니다.</li>
+                <li>· 문의하시면 해당 매장이 유흥주점으로 신고된 곳인지와 예약 가능 시간, 요금 기준을 확인해 알려드립니다.</li>
               </ul>
-              <MoreLink href="/guide/">업종 차이 자세히 보기</MoreLink>
-            </article>
-            <article className="card border-gold/40 p-6 sm:p-8">
-              <p className="eyebrow mb-2">술과 함께 룸에서</p>
-              <h3 className="h-display text-2xl">가라오케 (유흥주점·단란주점)</h3>
-              <ul className="mt-4 space-y-2 text-sm text-mute">
-                <li>· 주류를 판매하며 만 19세 이상만 이용할 수 있습니다.</li>
-                <li>· “가라오케”라는 이름의 업소는 식품위생법상 유흥주점이나 단란주점으로 영업신고된 경우가 있습니다. 간판보다 영업신고 업종을 확인하세요.</li>
-                <li>· 요금은 업소마다 다르므로 예약할 때 포함 항목과 연장 기준을 확인하세요.</li>
-              </ul>
-              <p className="mt-5 text-sm text-ivory/85">문의 전에 정해 두면 빠릅니다: <strong>방문 날짜·도착 시간</strong>, <strong>인원</strong>, <strong>원하는 룸 크기나 요청</strong>.</p>
-              <Link href="/reservation/" className="btn-gold mt-5" data-track="click_reservation_intent">
-                가라오케 예약 문의하기
+              <Link href="/reservation/?type=yuheung" className="btn-gold mt-6" data-track="click_reservation_intent_yuheung">
+                유흥주점 예약 문의
               </Link>
             </article>
+            <article className="card border-gold/40 p-6 sm:p-8" data-testid="type-danran">
+              <p className="eyebrow mb-2">식품위생법 · 단란주점영업</p>
+              <h3 className="h-display text-2xl">대구 단란주점 예약 문의</h3>
+              <ul className="mt-4 space-y-2 text-sm text-mute">
+                <li>· 주류를 조리·판매하며, 손님이 노래를 부르는 것이 허용되는 업종입니다.</li>
+                <li>· 유흥종사자를 둘 수 없으므로 일행끼리 술과 노래를 즐기는 방식입니다.</li>
+                <li>· 문의하시면 해당 매장이 단란주점으로 신고된 곳인지와 예약 가능 시간, 요금 기준을 확인해 알려드립니다.</li>
+              </ul>
+              <Link href="/reservation/?type=danran" className="btn-gold mt-6" data-track="click_reservation_intent_danran">
+                단란주점 예약 문의
+              </Link>
+            </article>
+          </div>
+          <div className="mt-5 grid gap-4 lg:grid-cols-2">
+            <p className="rounded-xl border border-line bg-ink/60 p-5 text-sm text-mute">
+              <strong className="text-ivory">‘가라오케’·‘노래주점’이라는 이름에 대해</strong>
+              <br />
+              {NAME_NOTE}
+            </p>
+            <p className="rounded-xl border border-line bg-ink/60 p-5 text-sm text-mute">
+              <strong className="text-ivory">일반 노래방(노래연습장)·코인노래방을 찾으시나요?</strong>
+              <br />
+              “대구 노래방”으로 검색하면 함께 나오는 노래연습장은 주류를 팔지 않는 다른 업종이며, 이 서비스는 노래연습장 예약을 안내하지 않습니다.
+              두 업종 모두 만 19세 미만은 출입할 수 없습니다.
+            </p>
           </div>
         </section>
       )}
 
       <section aria-labelledby="compare" className="wrap py-16 sm:py-20">
-        <SectionHeading eyebrow="Guide" id="compare" title="노래연습장·단란주점·유흥주점 한눈에 비교">
-          주류 판매 여부와 청소년 출입 가능 여부가 가장 큰 차이입니다. 목적에 맞는 곳을 고르세요.
+        <SectionHeading eyebrow="Compare" id="compare" title="유흥주점·단란주점·노래연습장 비교">
+          식품위생법 시행령과 음악산업진흥법 기준으로 정리했습니다. 매장의 실제 업종은 영업신고(허가)증으로 확인합니다.
         </SectionHeading>
         <VenueCompare />
-        <MoreLink href="/guide/">업종별 차이와 확인 방법 자세히 보기</MoreLink>
+        <MoreLink href="/guide/">업종별 법적 영업 범위 자세히 보기</MoreLink>
       </section>
 
       <section aria-labelledby="areas" className="border-y border-line bg-ink-2/60 py-16 sm:py-20">
         <div className="wrap">
-          <SectionHeading eyebrow="Areas" id="areas" title="대구에서 노래방·주점이 모인 지역">
-            지역마다 분위기와 이용객이 다릅니다. 가까운 도시철도역을 기준으로 정리했습니다.
+          <SectionHeading eyebrow="Areas" id="areas" title="대구 주요 상권과 가까운 역">
+            제휴 매장은 수성구에 있으며, 대구 다른 상권에서 이동하실 때 참고할 수 있도록 가까운 도시철도역을 정리했습니다.
           </SectionHeading>
           <AreasPreview />
           <MoreLink href="/guide/daegu-areas/">지역별 특징과 귀가 팁 보기</MoreLink>
@@ -235,9 +270,9 @@ function InfoHome() {
       </section>
 
       <section aria-labelledby="steps" className="wrap py-16 sm:py-20">
-        <SectionHeading eyebrow="First visit" id="steps" title="처음 이용할 때 순서" />
+        <SectionHeading eyebrow="Process" id="steps" title="예약부터 이용까지 절차" />
         <VisitSteps />
-        <MoreLink href="/guide/first-visit/">요금 확인 체크리스트와 안전한 귀가 방법 보기</MoreLink>
+        <MoreLink href="/guide/first-visit/">요금 확인 체크리스트와 안전한 귀가 방법</MoreLink>
       </section>
 
       <section aria-labelledby="faq" className="wrap py-16 sm:py-20">

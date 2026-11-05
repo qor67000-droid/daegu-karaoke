@@ -214,7 +214,7 @@ async function main() {
         const body = decodeURIComponent(href.split(/[?&]body=/)[1] ?? "");
         check(
           `${vp.name} 문자 문의 링크 생성`,
-          href.startsWith(`sms:${operator.smsNumber}`) && body.includes(`날짜: ${d}`) && body.includes("시간: 21:00") && body.includes("인원: 4명") && body.includes("중형룸 희망 & 테스트") && body.includes("희망 연락 방식: 문자"),
+          href.startsWith(`sms:${operator.smsNumber}`) && body.includes(`날짜: ${d}`) && body.includes("시간: 21:00") && body.includes("인원: 4명") && body.includes("희망 업종: ") && body.includes("중형룸 희망 & 테스트") && body.includes("희망 연락 방식: 문자"),
           href.slice(0, 40) + "…",
         );
         const okAlerts = await rp.locator('form [role="alert"]').count();
@@ -232,6 +232,14 @@ async function main() {
           const preview = await rp.locator('[data-testid="rsv-preview"]').textContent();
           check(`${vp.name} 연락 방식 '${label}' 선택 → 버튼 링크`, h === want && (preview ?? "").includes(`희망 연락 방식: ${label}`), h ?? "");
         }
+        // 업종 선택 → 메시지 반영, ?type= 사전 선택
+        check(`${vp.name} 희망 업종 기본값 '상담 후 결정'`, ((await rp.locator('[data-testid="rsv-preview"]').textContent()) ?? "").includes("희망 업종: 상담 후 결정"));
+        await rp.locator('[data-testid="rsv-type"] label', { hasText: /^유흥주점$/ }).click();
+        check(`${vp.name} 희망 업종 '유흥주점' 선택 → 메시지 반영`, ((await rp.locator('[data-testid="rsv-preview"]').textContent()) ?? "").includes("희망 업종: 유흥주점"));
+        const tp = await ctx.newPage();
+        await tp.goto(root + "/reservation/?type=danran", { waitUntil: "networkidle" });
+        check(`${vp.name} ?type=danran → '단란주점' 사전 선택`, await tp.locator('[data-testid="rsv-type-danran"]').isChecked() && ((await tp.locator('[data-testid="rsv-preview"]').textContent()) ?? "").includes("희망 업종: 단란주점"));
+        await tp.close();
         const fakeDone = await rp.getByText(/예약(이)? ?(완료|접수되었습니다|확정되었습니다)|저장되었습니다/).count();
         check(`${vp.name} 예약 완료/저장 허위 표시 없음`, fakeDone === 0, String(fakeDone));
         await rp.close();
@@ -251,9 +259,13 @@ async function main() {
         const quick = await hp.locator('[data-testid="hero-quick"] a').evaluateAll((els) => els.map((e) => e.getAttribute("href")));
         const wantQuick = [`tel:${operator.phone?.replace(/[^0-9+]/g, "")}`, `sms:${operator.smsNumber}`, operator.kakaoUrl];
         check(`${vp.name} 첫 화면 전화·문자·카카오톡 빠른 문의`, JSON.stringify(quick) === JSON.stringify(wantQuick) && (await inFold('[data-testid="hero-quick"]')), quick.join(", "));
+        const types = await hp.locator('[data-testid="hero-types"] a').evaluateAll((els) => els.map((e) => e.getAttribute("href")));
+        check(`${vp.name} 첫 화면 유흥주점·단란주점 예약 안내`, JSON.stringify(types) === JSON.stringify([`${basePath}/reservation/?type=yuheung`, `${basePath}/reservation/?type=danran`]) && (await inFold('[data-testid="hero-types"]')), types.join(", "));
+        const h1Text = (await hp.locator("h1").first().textContent())?.replace(/\s+/g, " ").trim();
+        check(`${vp.name} 홈 H1 '대구 가라오케 예약 문의'`, h1Text === "대구 가라오케 예약 문의", h1Text ?? "");
         // 기존 콘텐츠 유지 + 예약 안내 아래 배치
         const order = await hp.evaluate(() => ["reservation", "intent", "compare", "areas", "steps", "faq"].map((id) => document.getElementById(id)?.getBoundingClientRect().top ?? -1));
-        check(`${vp.name} 예약 안내 → 의도 분기 → 업종 비교 → 지역 → 이용 가이드 → FAQ 순서`, order.every((v, i) => v > 0 && (i === 0 || v > order[i - 1]!)), order.map(Math.round).join(" < "));
+        check(`${vp.name} 예약 안내 → 업종별 예약 안내 → 업종 비교 → 지역 → 이용 절차 → FAQ 순서`, order.every((v, i) => v > 0 && (i === 0 || v > order[i - 1]!)), order.map(Math.round).join(" < "));
         // 실제 클릭 이동
         await hero.click();
         const movedRsv = await hp.waitForURL(`${origin}${basePath}/reservation/`, { timeout: 10_000 }).then(() => true).catch(() => false);

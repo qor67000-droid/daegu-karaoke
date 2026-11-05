@@ -15,8 +15,8 @@ function Logo() {
         </svg>
       </span>
       <span className="leading-tight">
-        <span className="h-display block text-[0.95rem] whitespace-nowrap sm:text-[1.05rem]">{brand() || (isDev ? <Pending label="상호" /> : "대구 가라오케·노래방")}</span>
-        <span className="block text-[0.66rem] tracking-[0.28em] text-mute">{brand() ? "DAEGU KARAOKE" : "DAEGU GUIDE"}</span>
+        <span className="h-display block text-[0.95rem] whitespace-nowrap sm:text-[1.05rem]">{brand() || (isDev ? <Pending label="상호" /> : operator.serviceName)}</span>
+        <span className="block text-[0.66rem] tracking-[0.28em] text-mute">DAEGU KARAOKE</span>
       </span>
     </Link>
   );
@@ -127,8 +127,8 @@ export function Footer() {
           ) : (
             <div className="mt-6 max-w-sm space-y-2 text-sm text-mute">
               <p>
-                대구에서 노래방·가라오케를 찾는 분들을 위한 이용 가이드이자 <strong className="text-ivory/85">독립 예약 안내 서비스</strong>입니다. 예약 가능한
-                제휴 매장을 연결해 드리며, 제휴 매장은 운영자의 직영점이 아닙니다.
+                대구 지역 유흥주점·단란주점의 예약 문의를 제휴 매장에 연결하는 <strong className="text-ivory/85">독립 운영 예약 문의 서비스</strong>입니다.
+                제휴 매장은 운영자의 직영점이 아니며, 노래연습장·코인노래방 예약은 안내하지 않습니다.
               </p>
               {reservationReady() && operator.phone && (
                 <p>
@@ -168,7 +168,7 @@ export function Footer() {
         </div>
       </div>
       <div className="wrap border-t border-line pt-6 text-xs text-mute">
-        © {new Date().getFullYear()} {brand() || "대구 가라오케·노래방 가이드"}. 요금·영업시간 등 업소 정보는 업소 사정에 따라 변경될 수 있으니 방문 전 확인하세요.
+        © {new Date().getFullYear()} {brand() || operator.serviceName}. 요금·영업시간 등 업소 정보는 업소 사정에 따라 변경될 수 있으니 방문 전 확인하세요.
       </div>
     </footer>
   );

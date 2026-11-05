@@ -168,6 +168,14 @@ async function main() {
     check("히어로 '예약 문의하기' → /reservation/", hrefOf(home, "hero-reservation") === rsvPath && home.includes("예약 문의하기"), String(hrefOf(home, "hero-reservation")));
     const quick = home.match(/data-testid="hero-quick"[\s\S]*?<\/ul>/)?.[0] ?? "";
     check("첫 화면 전화·문자·카카오톡 빠른 문의", quick.includes(`tel:${operator.phone?.replace(/[^0-9+]/g, "")}`) && quick.includes(`sms:${operator.smsNumber}`) && quick.includes(operator.kakaoUrl ?? "__"));
+    check("첫 화면 유흥주점 예약 문의 → /reservation/?type=yuheung", hrefOf(home, "hero-type-yuheung") === `${rsvPath}?type=yuheung`, String(hrefOf(home, "hero-type-yuheung")));
+    check("첫 화면 단란주점 예약 문의 → /reservation/?type=danran", hrefOf(home, "hero-type-danran") === `${rsvPath}?type=danran`, String(hrefOf(home, "hero-type-danran")));
+    check("홈 title '대구 가라오케 | 유흥주점·단란주점 예약 문의'", /<title>대구 가라오케 \| 유흥주점·단란주점 예약 문의<\/title>/.test(home));
+    check("홈 H1 '대구 가라오케 예약 문의'", (home.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)?.[1] ?? "").replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim() === "대구 가라오케 예약 문의");
+    check("홈 유흥주점·단란주점 업종별 안내 카드", home.includes('data-testid="type-yuheung"') && home.includes('data-testid="type-danran"'));
+    const rsvHtml = await (await get(LIVE + "/reservation/")).text();
+    check("예약 페이지 희망 업종 선택", rsvHtml.includes('data-testid="rsv-type-yuheung"') && rsvHtml.includes('data-testid="rsv-type-danran"') && rsvHtml.includes('data-testid="rsv-type-any"'));
+    check("제휴 매장 업종 '확인 중' 표시 (미확인 업종 단정 금지)", /data-testid="partner-license"[^>]*>확인 중/.test(rsvHtml));
     const bar = home.match(/aria-label="빠른 연락"[\s\S]*?<\/nav>/)?.[0] ?? "";
     check("모바일 하단 예약·전화·카카오톡 버튼", bar.includes(`href="${rsvPath}"`) && bar.includes("tel:") && bar.includes(operator.kakaoUrl ?? "__"));
     // 공개 정보 페이지 본문(main)에서 예약 페이지로 이어지는 링크
@@ -176,8 +184,8 @@ async function main() {
       const main = h.match(/<main[\s\S]*?<\/main>/)?.[0] ?? "";
       check(`${path} 본문 → 예약 페이지 내부 링크`, main.includes(`href="${rsvPath}"`));
     }
-    const ids = ["reservation", "compare", "areas", "steps", "faq"].map((id) => home.indexOf(`id="${id}"`));
-    check("홈 섹션 순서: 예약 안내 → 업종 비교 → 지역 → 이용 가이드 → FAQ", ids.every((v, i) => v > 0 && (i === 0 || v > ids[i - 1]!)));
+    const ids = ["reservation", "intent", "compare", "areas", "steps", "faq"].map((id) => home.indexOf(`id="${id}"`));
+    check("홈 섹션 순서: 예약 안내 → 업종별 예약 안내 → 업종 비교 → 지역 → 이용 절차 → FAQ", ids.every((v, i) => v > 0 && (i === 0 || v > ids[i - 1]!)));
   }
   const nf = await get(LIVE + "/__no_such_page__/", "manual");
   check("없는 경로 404", nf.status === 404, String(nf.status));

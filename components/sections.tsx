@@ -119,27 +119,27 @@ export function VenueCompare() {
         {VENUE_TYPES.map((v) => (
           <li key={v.type} className={`card p-5 ${v.type.startsWith("유흥") ? "border-gold/50" : ""}`}>
             <p className="font-semibold text-ivory">{v.type}</p>
-            <dl className="mt-3 grid grid-cols-[4.5rem_1fr] gap-x-3 gap-y-1.5 text-sm">
+            <dl className="mt-3 grid grid-cols-[5.5rem_1fr] gap-x-3 gap-y-1.5 text-sm">
               <dt className="text-mute">근거 법령</dt><dd>{v.law}</dd>
               <dt className="text-mute">주류</dt><dd>{v.alcohol}</dd>
-              <dt className="text-mute">종사자</dt><dd>{v.staff}</dd>
+              <dt className="text-mute">종사자·시설</dt><dd>{v.staff}</dd>
+              <dt className="text-mute">노래·춤</dt><dd>{v.sing}</dd>
               <dt className="text-mute">청소년</dt><dd>{v.youth}</dd>
-              <dt className="text-mute">적합</dt><dd>{v.fit}</dd>
             </dl>
           </li>
         ))}
       </ul>
     <div className="hidden sm:block">
       <table className="w-full border-separate border-spacing-0 text-left text-sm">
-        <caption className="sr-only">노래연습장, 단란주점, 유흥주점 비교</caption>
+        <caption className="sr-only">유흥주점, 단란주점, 노래연습장 비교</caption>
         <thead>
           <tr className="text-xs tracking-widest text-mute">
             <th scope="col" className="border-b border-line py-3 pr-4 font-medium">업종</th>
             <th scope="col" className="border-b border-line px-4 py-3 font-medium">근거 법령</th>
             <th scope="col" className="border-b border-line px-4 py-3 font-medium">주류</th>
-            <th scope="col" className="border-b border-line px-4 py-3 font-medium">종사자</th>
+            <th scope="col" className="border-b border-line px-4 py-3 font-medium">종사자·시설</th>
             <th scope="col" className="border-b border-line px-4 py-3 font-medium">청소년</th>
-            <th scope="col" className="border-b border-line py-3 pl-4 font-medium">이럴 때 적합</th>
+            <th scope="col" className="border-b border-line py-3 pl-4 font-medium">노래·춤</th>
           </tr>
         </thead>
         <tbody>
@@ -150,7 +150,7 @@ export function VenueCompare() {
               <td className="border-b border-line px-4 py-4">{v.alcohol}</td>
               <td className="border-b border-line px-4 py-4">{v.staff}</td>
               <td className="border-b border-line px-4 py-4">{v.youth}</td>
-              <td className="border-b border-line py-4 pl-4">{v.fit}</td>
+              <td className="border-b border-line py-4 pl-4">{v.sing}</td>
             </tr>
           ))}
         </tbody>

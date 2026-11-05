@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-05T09:58:32.425Z",
+  "generatedAt": "2026-11-05T10:42:59.399Z",
   "basePath": "/daegu-karaoke",
   "note": "로컬 실험실 측정. 실사용자(CrUX) 지표 아님",
   "results": [
@@ -11,7 +11,7 @@
     {
       "name": "/ 초기 HTML에 H1",
       "ok": true,
-      "detail": "대구 가라오케·노래방예약 안내"
+      "detail": "대구 가라오케 예약 문의"
     },
     {
       "name": "/ robots=index",
@@ -26,7 +26,7 @@
     {
       "name": "/guide/ 초기 HTML에 H1",
       "ok": true,
-      "detail": "노래방과 가라오케, 무엇이 다른가요"
+      "detail": "유흥주점과 단란주점, 노래연습장은 어떻게 다른가요"
     },
     {
       "name": "/guide/ robots=index",
@@ -86,7 +86,7 @@
     {
       "name": "/reservation/ 초기 HTML에 H1",
       "ok": true,
-      "detail": "대구 가라오케·노래방 예약 문의"
+      "detail": "대구 유흥주점·단란주점 예약 문의"
     },
     {
       "name": "/reservation/ robots=index",
@@ -501,7 +501,7 @@
     {
       "name": "mobile 푸터 링크 클릭 이동",
       "ok": true,
-      "detail": "/daegu-karaoke/guide/ → /daegu-karaoke/guide/ (h1: 노래방과 가라오케, 무엇이 다른가요)"
+      "detail": "/daegu-karaoke/guide/ → /daegu-karaoke/guide/ (h1: 유흥주점과 단란주점, 노래연습장은 어)"
     },
     {
       "name": "mobile 예약페이지 click_kakao 링크 = 제공 링크",
@@ -564,6 +564,18 @@
       "detail": "tel:01024646135"
     },
     {
+      "name": "mobile 희망 업종 기본값 '상담 후 결정'",
+      "ok": true
+    },
+    {
+      "name": "mobile 희망 업종 '유흥주점' 선택 → 메시지 반영",
+      "ok": true
+    },
+    {
+      "name": "mobile ?type=danran → '단란주점' 사전 선택",
+      "ok": true
+    },
+    {
       "name": "mobile 예약 완료/저장 허위 표시 없음",
       "ok": true,
       "detail": "0"
@@ -586,9 +598,19 @@
       "detail": "tel:01024646135, sms:01024646135, https://open.kakao.com/o/s3KS17Ui"
     },
     {
-      "name": "mobile 예약 안내 → 의도 분기 → 업종 비교 → 지역 → 이용 가이드 → FAQ 순서",
+      "name": "mobile 첫 화면 유흥주점·단란주점 예약 안내",
       "ok": true,
-      "detail": "1174 < 2492 < 3721 < 4837 < 5868 < 6941"
+      "detail": "/daegu-karaoke/reservation/?type=yuheung, /daegu-karaoke/reservation/?type=danran"
+    },
+    {
+      "name": "mobile 홈 H1 '대구 가라오케 예약 문의'",
+      "ok": true,
+      "detail": "대구 가라오케 예약 문의"
+    },
+    {
+      "name": "mobile 예약 안내 → 업종별 예약 안내 → 업종 비교 → 지역 → 이용 절차 → FAQ 순서",
+      "ok": true,
+      "detail": "1312 < 2685 < 4149 < 5352 < 6375 < 7447"
     },
     {
       "name": "mobile 예약 문의하기 클릭 → 예약 페이지 이동",
@@ -868,7 +890,7 @@
     {
       "name": "desktop 푸터 링크 클릭 이동",
       "ok": true,
-      "detail": "/daegu-karaoke/guide/ → /daegu-karaoke/guide/ (h1: 노래방과 가라오케, 무엇이 다른가요)"
+      "detail": "/daegu-karaoke/guide/ → /daegu-karaoke/guide/ (h1: 유흥주점과 단란주점, 노래연습장은 어)"
     },
     {
       "name": "desktop 예약페이지 click_kakao 링크 = 제공 링크",
@@ -931,6 +953,18 @@
       "detail": "tel:01024646135"
     },
     {
+      "name": "desktop 희망 업종 기본값 '상담 후 결정'",
+      "ok": true
+    },
+    {
+      "name": "desktop 희망 업종 '유흥주점' 선택 → 메시지 반영",
+      "ok": true
+    },
+    {
+      "name": "desktop ?type=danran → '단란주점' 사전 선택",
+      "ok": true
+    },
+    {
       "name": "desktop 예약 완료/저장 허위 표시 없음",
       "ok": true,
       "detail": "0"
@@ -953,9 +987,19 @@
       "detail": "tel:01024646135, sms:01024646135, https://open.kakao.com/o/s3KS17Ui"
     },
     {
-      "name": "desktop 예약 안내 → 의도 분기 → 업종 비교 → 지역 → 이용 가이드 → FAQ 순서",
+      "name": "desktop 첫 화면 유흥주점·단란주점 예약 안내",
       "ok": true,
-      "detail": "855 < 1612 < 2354 < 3012 < 3681 < 4245"
+      "detail": "/daegu-karaoke/reservation/?type=yuheung, /daegu-karaoke/reservation/?type=danran"
+    },
+    {
+      "name": "desktop 홈 H1 '대구 가라오케 예약 문의'",
+      "ok": true,
+      "detail": "대구 가라오케 예약 문의"
+    },
+    {
+      "name": "desktop 예약 안내 → 업종별 예약 안내 → 업종 비교 → 지역 → 이용 절차 → FAQ 순서",
+      "ok": true,
+      "detail": "944 < 1702 < 2570 < 3294 < 3991 < 4555"
     },
     {
       "name": "desktop 예약 문의하기 클릭 → 예약 페이지 이동",
@@ -974,19 +1018,19 @@
   ],
   "perf": {
     "mobile /": {
-      "lcp": 176,
+      "lcp": 160,
       "cls": 0
     },
     "mobile /guide/": {
-      "lcp": 88,
+      "lcp": 120,
       "cls": 0
     },
     "mobile /guide/first-visit/": {
-      "lcp": 128,
+      "lcp": 112,
       "cls": 0
     },
     "mobile /guide/daegu-areas/": {
-      "lcp": 108,
+      "lcp": 124,
       "cls": 0
     },
     "mobile /reservation/": {
@@ -994,63 +1038,63 @@
       "cls": 0
     },
     "mobile /about/": {
-      "lcp": 76,
+      "lcp": 120,
       "cls": 0
     },
     "mobile /rooms/": {
-      "lcp": 104,
-      "cls": 0
-    },
-    "mobile /price/": {
-      "lcp": 100,
-      "cls": 0
-    },
-    "mobile /location/": {
       "lcp": 80,
       "cls": 0
     },
-    "mobile /contact/": {
-      "lcp": 76,
+    "mobile /price/": {
+      "lcp": 124,
       "cls": 0
     },
-    "desktop /": {
-      "lcp": 132,
-      "cls": 0
-    },
-    "desktop /guide/": {
-      "lcp": 144,
-      "cls": 0
-    },
-    "desktop /guide/first-visit/": {
-      "lcp": 128,
-      "cls": 0
-    },
-    "desktop /guide/daegu-areas/": {
-      "lcp": 132,
-      "cls": 0
-    },
-    "desktop /reservation/": {
-      "lcp": 152,
-      "cls": 0.247
-    },
-    "desktop /about/": {
-      "lcp": 136,
-      "cls": 0
-    },
-    "desktop /rooms/": {
-      "lcp": 116,
-      "cls": 0
-    },
-    "desktop /price/": {
+    "mobile /location/": {
       "lcp": 112,
       "cls": 0
     },
+    "mobile /contact/": {
+      "lcp": 80,
+      "cls": 0
+    },
+    "desktop /": {
+      "lcp": 188,
+      "cls": 0
+    },
+    "desktop /guide/": {
+      "lcp": 120,
+      "cls": 0
+    },
+    "desktop /guide/first-visit/": {
+      "lcp": 116,
+      "cls": 0
+    },
+    "desktop /guide/daegu-areas/": {
+      "lcp": 112,
+      "cls": 0
+    },
+    "desktop /reservation/": {
+      "lcp": 164,
+      "cls": 0.145
+    },
+    "desktop /about/": {
+      "lcp": 108,
+      "cls": 0
+    },
+    "desktop /rooms/": {
+      "lcp": 108,
+      "cls": 0
+    },
+    "desktop /price/": {
+      "lcp": 108,
+      "cls": 0
+    },
     "desktop /location/": {
-      "lcp": 136,
+      "lcp": 76,
       "cls": 0
     },
     "desktop /contact/": {
-      "lcp": 140,
+      "lcp": 128,
       "cls": 0
     }
   }
