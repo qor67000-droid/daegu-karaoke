@@ -29,6 +29,12 @@
     overflow-wrap: anywhere;
     min-height: 100dvh;
   }
+  /* 일본어·중국어는 띄어쓰기가 없어 keep-all 이면 문장부호에서만 줄이 바뀐다 → 일반 줄바꿈 + 금칙 처리 */
+  :lang(ja),
+  :lang(zh) {
+    word-break: normal;
+    line-break: strict;
+  }
   a {
     color: inherit;
   }

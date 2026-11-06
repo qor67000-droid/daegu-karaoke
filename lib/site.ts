@@ -78,6 +78,9 @@ export function baseUrl(): string {
 export const absoluteUrl = (path: string) => baseUrl() + (path.startsWith("/") ? path : `/${path}`);
 
 /** public/ 정적 파일 경로에 basePath 적용 (<img>, <source>, 아이콘 등 next/link가 아닌 곳) */
+/** 국내 표기(010-…) → 국제 표기(+82 10-…). 해외 번호로 거는 방문객 안내용 (링크는 기존 tel: 그대로) */
+export const intlPhone = (p: string | null | undefined) => (p ? p.replace(/^0(\d)/, "+82 $1") : "");
+
 export const asset = (path: string) => `${basePath}${path.startsWith("/") ? path : `/${path}`}`;
 
 export const brand = () => (businessReady() || isDev ? site.name ?? "" : "");

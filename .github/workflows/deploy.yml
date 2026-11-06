@@ -105,13 +105,13 @@ jobs:
       - name: Verify public URL (pages, CSS, images, links, sitemap, robots, canonical)
         run: npm run verify:live -- "${{ needs.deploy.outputs.page_url }}"
       # 모바일 Lighthouse (실험실 측정, 실패해도 배포 결과에는 영향 없음)
-      - name: Lighthouse mobile (home, reservation)
+      - name: Lighthouse mobile (home, reservation, ja, en-reservation, zh-tw)
         continue-on-error: true
         run: |
           URL="${{ needs.deploy.outputs.page_url }}"
           export CHROME_PATH="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || true)"
-          for P in "" "reservation/"; do
-            L=$([ -z "$P" ] && echo home || echo reservation)
+          for P in "" "reservation/" "ja/" "en/reservation/" "zh-tw/"; do
+            L=$([ -z "$P" ] && echo home || echo "${P%/}" | tr '/' '-')
             npx --yes lighthouse@12 "${URL}${P}" --quiet --form-factor=mobile --only-categories=performance,accessibility,best-practices,seo \
               --chrome-flags="--headless=new --no-sandbox" --output=json --output-path="lh-$L.json" || true
             node scripts/lighthouse-summary.mjs "$L" "lh-$L.json"

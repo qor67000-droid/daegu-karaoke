@@ -5,9 +5,9 @@ declare module "next" {
     description?: string;
     metadataBase?: URL;
     applicationName?: string;
-    alternates?: { canonical?: string };
+    alternates?: { canonical?: string; languages?: Record<string, string> };
     robots?: { index?: boolean; follow?: boolean };
-    openGraph?: { type?: "website"; locale?: string; url?: string; siteName?: string; title?: string; description?: string; images?: { url: string; width?: number; height?: number; alt?: string }[] };
+    openGraph?: { type?: "website"; locale?: string; alternateLocale?: string[]; url?: string; siteName?: string; title?: string; description?: string; images?: { url: string; width?: number; height?: number; alt?: string }[] };
     twitter?: { card?: "summary" | "summary_large_image"; title?: string; description?: string };
     verification?: { google?: string; other?: Record<string, string> };
     formatDetection?: { telephone?: boolean };
@@ -24,4 +24,8 @@ declare module "next" {
 declare module "next/link" {
   const Link: (p: { href: string; className?: string; children?: any; [k: string]: any }) => any;
   export default Link;
+}
+declare module "next/navigation" {
+  export function usePathname(): string;
+  export function notFound(): never;
 }

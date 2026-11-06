@@ -11,6 +11,8 @@ import { createServer, type Server } from "node:http";
 import { readFileSync, readdirSync, existsSync, statSync, mkdirSync, writeFileSync } from "node:fs";
 import { join, extname } from "node:path";
 import { routes, isIndexable } from "@/lib/routes";
+import { localePath, publishedIntlLocales } from "@/lib/i18n/locales";
+import { FORM_TEXT } from "@/lib/i18n/form-text";
 import { basePath, operator, reservationReady } from "@/lib/site";
 
 const OUT = process.argv[2] || "out";
@@ -285,6 +287,88 @@ async function main() {
           check(`desktop 하단 바 숨김`, !barVisible);
         }
         await hp.close();
+      }
+      // ── 다국어: 언어별 홈·예약 페이지, 언어 전환 ──
+      if (reservationReady()) {
+        const vh = vp.height;
+        const telWant = operator.phone ? `tel:${operator.phone.replace(/[^0-9+]/g, "")}` : null;
+        for (const l of publishedIntlLocales()) {
+          const t = FORM_TEXT[l.key];
+          const homeP = localePath(l.key, "home");
+          const rsvP = localePath(l.key, "reservation");
+          const lp = await ctx.newPage();
+          await lp.goto(root + homeP, { waitUntil: "networkidle" });
+          const lang = await lp.evaluate(() => document.documentElement.lang);
+          check(`${vp.name} ${homeP} html lang="${l.htmlLang}"`, lang === l.htmlLang, lang);
+          const hero = lp.locator('[data-testid="hero-reservation"]');
+          const heroBox = await hero.boundingBox();
+          check(`${vp.name} ${homeP} 히어로 예약 버튼 → ${rsvP} (첫 화면)`, (await hero.getAttribute("href")) === basePath + rsvP && heroBox !== null && heroBox.y + heroBox.height <= vh);
+          check(`${vp.name} ${homeP} 상단 예약 버튼 → ${rsvP}`, (await lp.locator('[data-testid="header-reservation"]').getAttribute("href")) === basePath + rsvP);
+          const types = await lp.locator('[data-testid="hero-types"] a').evaluateAll((els) => els.map((e) => e.getAttribute("href")));
+          check(`${vp.name} ${homeP} 업종별 예약 링크`, JSON.stringify(types) === JSON.stringify([`${basePath}${rsvP}?type=yuheung`, `${basePath}${rsvP}?type=danran`]), types.join(", "));
+          if (vp.isMobile) {
+            const bar = await lp.locator("nav.fixed a").evaluateAll((els) => els.map((e) => e.getAttribute("href")));
+            check(`mobile ${homeP} 하단 예약·전화·카카오톡`, JSON.stringify(bar) === JSON.stringify([basePath + rsvP, telWant, operator.kakaoUrl]), bar.join(", "));
+          }
+          await lp.close();
+
+          // 예약 페이지: 현지어 폼 + 정확한 링크 + 메시지(선택 언어·예약 정보 병기)
+          const rp = await ctx.newPage();
+          await rp.goto(root + rsvP + "?type=danran", { waitUntil: "networkidle" });
+          check(`${vp.name} ${rsvP} html lang="${l.htmlLang}"`, (await rp.evaluate(() => document.documentElement.lang)) === l.htmlLang);
+          const formText = (await rp.locator("form").first().textContent()) ?? "";
+          const missing = [t.typeLegend, t.date, t.time, t.people, t.note, t.methodLegend, t.preview, t.notice[1], t.notice[3]].filter((x) => !formText.includes(x));
+          check(`${vp.name} ${rsvP} 폼 문구 현지어 표시 (날짜·시간·인원·업종·요청사항)`, missing.length === 0, missing.join(" | "));
+          check(`${vp.name} ${rsvP} ?type=danran → ${t.typeLabels.danran} 사전 선택`, await rp.locator('[data-testid="rsv-type-danran"]').isChecked());
+          for (const [track, want] of [["click_kakao", operator.kakaoUrl], ["click_line", operator.lineUrl], ["click_telegram", operator.telegramUrl], ["click_call", telWant]] as const) {
+            if (!want) continue;
+            const hrefs = await rp.locator(`main a[data-track="${track}"]`).evaluateAll((els) => els.map((e) => e.getAttribute("href")));
+            check(`${vp.name} ${rsvP} ${track} 링크 = 제공 링크`, hrefs.length > 0 && hrefs.every((h) => h === want), hrefs.join(", "));
+          }
+          await rp.evaluate(() => document.addEventListener("click", (e) => { const a = (e.target as HTMLElement).closest("a"); if (a && /^(sms|tel):|^https?:\/\/(open\.kakao|line\.me|t\.me)/.test(a.getAttribute("href") ?? "")) e.preventDefault(); }, true));
+          await rp.locator('[data-testid="rsv-submit"]').click();
+          check(`${vp.name} ${rsvP} 필수값 검증 (현지어 오류)`, (await rp.locator('form [role="alert"]').allTextContents()).includes(t.errDate));
+          const d = new Date(Date.now() + 4 * 86400_000 + 9 * 3600_000).toISOString().slice(0, 10);
+          await rp.fill('input[name="date"]', d);
+          await rp.selectOption('select[name="time"]', "22:30");
+          await rp.selectOption('select[name="people"]', t.peopleUnit(3));
+          await rp.fill('textarea[name="note"]', "test note");
+          await rp.check('input[name="adult"]');
+          const href = (await rp.locator('[data-testid="rsv-submit"]').getAttribute("href")) ?? "";
+          const body = decodeURIComponent(href.split(/[?&]body=/)[1] ?? "");
+          const wantLines = [`${t.msg.language} / 언어: ${t.languageName}`, `/ 희망 업종: ${t.typeLabels.danran} / 단란주점`, `/ 날짜: ${d} (`, "/ 시간: 22:30", `/ 인원: ${t.peopleUnit(3)} / 3명`, "/ 요청사항: test note", "예약 가능 여부 확인 후 연락 부탁드립니다."];
+          const miss = wantLines.filter((w) => !body.includes(w));
+          check(`${vp.name} ${rsvP} 문자 본문 = 선택 언어 + 예약 정보(한국어 병기)`, href.startsWith(`sms:${operator.smsNumber}`) && miss.length === 0, miss.join(" | ") || body.split("\n")[0]);
+          await rp.locator('[data-testid="rsv-type"] label', { hasText: t.typeLabels.yuheung }).click();
+          await rp.locator("form fieldset label", { hasText: new RegExp(`^${t.methods.line}$`) }).click();
+          const lineHref = await rp.locator('[data-testid="rsv-submit"]').getAttribute("href");
+          const lineLabel = (await rp.locator('[data-testid="rsv-submit"]').textContent()) ?? "";
+          check(`${vp.name} ${rsvP} LINE 선택 → 제공 링크 + '복사 후 열기' 안내(자동 전송 아님)`, lineHref === operator.lineUrl && lineLabel.includes(t.submitMessenger(t.methods.line)), `${lineHref} ${lineLabel}`);
+          check(`${vp.name} ${rsvP} 업종 변경 → 메시지 반영`, ((await rp.locator('[data-testid="rsv-preview"]').textContent()) ?? "").includes(`${t.typeLabels.yuheung} / 유흥주점`));
+          await rp.close();
+        }
+
+        // 언어 전환: 같은 페이지의 다른 언어로 이동 (번역 없는 페이지는 그 언어 홈)
+        const sw = await ctx.newPage();
+        const go = async (from: string, testid: string, to: string, label: string) => {
+          await sw.goto(root + from, { waitUntil: "networkidle" });
+          if (vp.isMobile) {
+            await sw.locator("header details.md\\:hidden > summary").click();
+            await sw.locator(`[data-testid="m${testid}"]`).click();
+          } else {
+            await sw.locator('[data-testid="lang-menu"] > summary').click();
+            await sw.locator(`[data-testid="${testid}"]`).click();
+          }
+          const ok = await sw.waitForURL(`${origin}${basePath}${to}`, { timeout: 10_000 }).then(() => true).catch(() => false);
+          const lang = ok ? await sw.evaluate(() => document.documentElement.lang) : "";
+          check(`${vp.name} 언어 전환 ${label}: ${from} → ${to}`, ok, `${sw.url().slice(origin.length)} lang=${lang}`);
+        };
+        await go("/", "lang-ja", "/ja/", "한국어 홈 → 日本語");
+        await go("/reservation/", "lang-en", "/en/reservation/", "예약 페이지 유지");
+        await go("/zh-cn/reservation/", "lang-zh-hk", "/zh-hk/reservation/", "简体 → 香港");
+        await go("/zh-tw/", "lang-ko", "/", "→ 한국어");
+        await go("/guide/", "lang-zh-tw", "/zh-tw/", "번역 없는 페이지 → 해당 언어 홈");
+        await sw.close();
       }
       // 클릭 추적
       const hasTel = await page.goto(root + "/contact/").then(() => page.locator('a[data-track="click_call"]:visible').count());

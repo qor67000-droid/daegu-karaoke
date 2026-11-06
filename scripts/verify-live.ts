@@ -12,7 +12,9 @@
  */
 import { writeFileSync, mkdirSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import { routes, isIndexable } from "@/lib/routes";
+import { routes, isIndexable, routeLocale } from "@/lib/routes";
+import { hreflangMap } from "@/lib/seo";
+import { getLocale, localePath, publishedIntlLocales } from "@/lib/i18n/locales";
 import { absoluteUrl, baseUrl, operator, reservationReady } from "@/lib/site";
 import { isTestHost } from "@/lib/env";
 
@@ -50,6 +52,7 @@ async function main() {
   if (baseUrl() !== LIVE) console.log(`  (빌드 기준 URL ${baseUrl()} — canonical 비교는 빌드 기준 URL로 수행)`);
   check("공개 URL 응답", await waitLive());
 
+  const hreflangLive = new Map<string, Record<string, string>>();
   const assetRefs = new Set<string>();
   const linkRefs = new Set<string>();
   for (const r of routes) {
@@ -61,6 +64,21 @@ async function main() {
     const canon = (html.match(/<link\s[^>]*rel="canonical"[^>]*>/i)?.[0] && attr(html.match(/<link\s[^>]*rel="canonical"[^>]*>/i)![0], "href")) || null;
     check(`${r.path} canonical`, canon === absoluteUrl(r.path), canon ?? "(없음)");
     check(`${r.path} og:url = canonical`, meta(html, "og:url", "property") === canon);
+    // 다국어: html lang · hreflang 상호 참조 집합 (기대값은 빌드와 같은 lib/seo.hreflangMap)
+    const l = getLocale(routeLocale(r));
+    const lang = html.match(/<html[^>]*\slang="([^"]+)"/i)?.[1];
+    check(`${r.path} html lang="${l.htmlLang}"`, lang === l.htmlLang, lang ?? "(없음)");
+    const alts: Record<string, string> = {};
+    for (const t of html.match(/<link\s[^>]*>/gi) ?? [])
+      if (attr(t, "rel") === "alternate" && (attr(t, "hreflang") || attr(t, "hrefLang"))) alts[(attr(t, "hreflang") || attr(t, "hrefLang"))!] = attr(t, "href") ?? "";
+    const wantAlts = isIndexable(r) ? hreflangMap(r) : undefined;
+    if (wantAlts || Object.keys(alts).length)
+      check(
+        `${r.path} hreflang ${wantAlts ? Object.keys(wantAlts).length : 0}개 (자기 참조·x-default 포함)`,
+        JSON.stringify(Object.entries(alts).sort()) === JSON.stringify(Object.entries(wantAlts ?? {}).sort()),
+        Object.keys(alts).join(","),
+      );
+    hreflangLive.set(r.path, alts);
     const robots = meta(html, "robots") ?? "";
     check(`${r.path} robots ${isIndexable(r) ? "index" : "noindex"}`, isIndexable(r) ? !robots.includes("noindex") : robots.includes("noindex"), robots);
     if (r.path !== "/") {
@@ -82,6 +100,17 @@ async function main() {
       }
     }
   }
+  // hreflang 상호 참조: A 가 B 를 가리키면 B 도 A 를 같은 코드로 가리켜야 한다
+  const notReturned: string[] = [];
+  for (const [path, alts] of hreflangLive) {
+    const self = getLocale(routeLocale(routes.find((x) => x.path === path)!)).hreflang;
+    for (const [hl, url] of Object.entries(alts)) {
+      if (hl === "x-default") continue;
+      const target = [...hreflangLive.keys()].find((p) => absoluteUrl(p) === url);
+      if (!target || hreflangLive.get(target)![self] !== absoluteUrl(path)) notReturned.push(`${path}→${hl}`);
+    }
+  }
+  check(`hreflang 상호 참조 (${[...hreflangLive.values()].filter((a) => Object.keys(a).length).length}개 페이지)`, notReturned.length === 0, notReturned.slice(0, 5).join(", "));
   const sameOrigin = [...assetRefs].filter((u) => u.startsWith(new URL(LIVE).origin));
   let assetFail: string[] = [];
   for (const u of sameOrigin) {
@@ -183,6 +212,18 @@ async function main() {
       const h = await (await get(LIVE + path)).text();
       const main = h.match(/<main[\s\S]*?<\/main>/)?.[0] ?? "";
       check(`${path} 본문 → 예약 페이지 내부 링크`, main.includes(`href="${rsvPath}"`));
+    }
+    for (const l of publishedIntlLocales()) {
+      const hp = localePath(l.key, "home");
+      const rp = localePath(l.key, "reservation");
+      const h = await (await get(LIVE + hp)).text();
+      check(`${hp} 히어로 예약 → ${rp}`, hrefOf(h, "hero-reservation") === new URL(absoluteUrl(rp)).pathname, String(hrefOf(h, "hero-reservation")));
+      check(`${hp} 언어 선택기(PC·모바일) 6개 언어 링크`, ["ko", "ja", "en", "zh-cn", "zh-tw", "zh-hk"].every((k) => h.includes(`data-testid="lang-${k}"`) && h.includes(`data-testid="mlang-${k}"`)));
+      const rh = await (await get(LIVE + rp)).text();
+      const main = rh.match(/<main[\s\S]*?<\/main>/)?.[0] ?? "";
+      const links = [`tel:${operator.phone?.replace(/[^0-9+]/g, "")}`, `sms:${operator.smsNumber}`, operator.kakaoUrl, operator.lineUrl, operator.telegramUrl];
+      check(`${rp} 전화·문자·카카오톡·LINE·텔레그램 링크 그대로`, links.every((x) => x && main.includes(`href="${x}"`)));
+      check(`${rp} 업종 선택·제휴 매장 업종 '확인 중'`, rh.includes('data-testid="rsv-type-danran"') && /data-testid="partner-license"[^>]*>[^<]*(確認中|確認中|确认中|Being verified|確認中)/.test(rh));
     }
     const ids = ["reservation", "intent", "compare", "areas", "steps", "faq"].map((id) => home.indexOf(`id="${id}"`));
     check("홈 섹션 순서: 예약 안내 → 업종별 예약 안내 → 업종 비교 → 지역 → 이용 절차 → FAQ", ids.every((v, i) => v > 0 && (i === 0 || v > ids[i - 1]!)));

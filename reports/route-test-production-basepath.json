@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-05T10:42:59.399Z",
+  "generatedAt": "2026-11-06T10:07:52.423Z",
   "basePath": "/daegu-karaoke",
   "note": "로컬 실험실 측정. 실사용자(CrUX) 지표 아님",
   "results": [
@@ -197,6 +197,206 @@
       "name": "/contact → 301 /contact/",
       "ok": true,
       "detail": "301 /daegu-karaoke/contact/"
+    },
+    {
+      "name": "GET /ja/ → 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "/ja/ 초기 HTML에 H1",
+      "ok": true,
+      "detail": "大邱カラオケ 予約のお問い合わせ"
+    },
+    {
+      "name": "/ja/ robots=index",
+      "ok": true,
+      "detail": "index, follow"
+    },
+    {
+      "name": "/ja → 301 /ja/",
+      "ok": true,
+      "detail": "301 /daegu-karaoke/ja/"
+    },
+    {
+      "name": "GET /ja/reservation/ → 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "/ja/reservation/ 초기 HTML에 H1",
+      "ok": true,
+      "detail": "大邱カラオケ 予約問い合わせフォーム"
+    },
+    {
+      "name": "/ja/reservation/ robots=index",
+      "ok": true,
+      "detail": "index, follow"
+    },
+    {
+      "name": "/ja/reservation → 301 /ja/reservation/",
+      "ok": true,
+      "detail": "301 /daegu-karaoke/ja/reservation/"
+    },
+    {
+      "name": "GET /en/ → 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "/en/ 초기 HTML에 H1",
+      "ok": true,
+      "detail": "Daegu karaoke bar reservation "
+    },
+    {
+      "name": "/en/ robots=index",
+      "ok": true,
+      "detail": "index, follow"
+    },
+    {
+      "name": "/en → 301 /en/",
+      "ok": true,
+      "detail": "301 /daegu-karaoke/en/"
+    },
+    {
+      "name": "GET /en/reservation/ → 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "/en/reservation/ 초기 HTML에 H1",
+      "ok": true,
+      "detail": "Reservation inquiry — Daegu ka"
+    },
+    {
+      "name": "/en/reservation/ robots=index",
+      "ok": true,
+      "detail": "index, follow"
+    },
+    {
+      "name": "/en/reservation → 301 /en/reservation/",
+      "ok": true,
+      "detail": "301 /daegu-karaoke/en/reservation/"
+    },
+    {
+      "name": "GET /zh-cn/ → 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "/zh-cn/ 초기 HTML에 H1",
+      "ok": true,
+      "detail": "大邱卡拉OK 预订咨询"
+    },
+    {
+      "name": "/zh-cn/ robots=index",
+      "ok": true,
+      "detail": "index, follow"
+    },
+    {
+      "name": "/zh-cn → 301 /zh-cn/",
+      "ok": true,
+      "detail": "301 /daegu-karaoke/zh-cn/"
+    },
+    {
+      "name": "GET /zh-cn/reservation/ → 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "/zh-cn/reservation/ 초기 HTML에 H1",
+      "ok": true,
+      "detail": "大邱卡拉OK 预订咨询表"
+    },
+    {
+      "name": "/zh-cn/reservation/ robots=index",
+      "ok": true,
+      "detail": "index, follow"
+    },
+    {
+      "name": "/zh-cn/reservation → 301 /zh-cn/reservation/",
+      "ok": true,
+      "detail": "301 /daegu-karaoke/zh-cn/reservation/"
+    },
+    {
+      "name": "GET /zh-tw/ → 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "/zh-tw/ 초기 HTML에 H1",
+      "ok": true,
+      "detail": "大邱卡拉OK 預約諮詢"
+    },
+    {
+      "name": "/zh-tw/ robots=index",
+      "ok": true,
+      "detail": "index, follow"
+    },
+    {
+      "name": "/zh-tw → 301 /zh-tw/",
+      "ok": true,
+      "detail": "301 /daegu-karaoke/zh-tw/"
+    },
+    {
+      "name": "GET /zh-tw/reservation/ → 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "/zh-tw/reservation/ 초기 HTML에 H1",
+      "ok": true,
+      "detail": "大邱卡拉OK 預約諮詢表單"
+    },
+    {
+      "name": "/zh-tw/reservation/ robots=index",
+      "ok": true,
+      "detail": "index, follow"
+    },
+    {
+      "name": "/zh-tw/reservation → 301 /zh-tw/reservation/",
+      "ok": true,
+      "detail": "301 /daegu-karaoke/zh-tw/reservation/"
+    },
+    {
+      "name": "GET /zh-hk/ → 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "/zh-hk/ 초기 HTML에 H1",
+      "ok": true,
+      "detail": "大邱卡拉OK 預約查詢"
+    },
+    {
+      "name": "/zh-hk/ robots=index",
+      "ok": true,
+      "detail": "index, follow"
+    },
+    {
+      "name": "/zh-hk → 301 /zh-hk/",
+      "ok": true,
+      "detail": "301 /daegu-karaoke/zh-hk/"
+    },
+    {
+      "name": "GET /zh-hk/reservation/ → 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "/zh-hk/reservation/ 초기 HTML에 H1",
+      "ok": true,
+      "detail": "大邱卡拉OK 預約查詢表格"
+    },
+    {
+      "name": "/zh-hk/reservation/ robots=index",
+      "ok": true,
+      "detail": "index, follow"
+    },
+    {
+      "name": "/zh-hk/reservation → 301 /zh-hk/reservation/",
+      "ok": true,
+      "detail": "301 /daegu-karaoke/zh-hk/reservation/"
     },
     {
       "name": "GET /no-such-page/ → 404",
@@ -499,6 +699,256 @@
       "detail": "0개 미달"
     },
     {
+      "name": "mobile /ja/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "mobile /ja/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /ja/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /ja/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "mobile /ja/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "mobile /ja/reservation/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "mobile /ja/reservation/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /ja/reservation/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /ja/reservation/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "mobile /ja/reservation/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "mobile /en/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "mobile /en/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /en/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /en/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "mobile /en/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "mobile /en/reservation/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "mobile /en/reservation/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /en/reservation/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /en/reservation/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "mobile /en/reservation/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "mobile /zh-cn/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "mobile /zh-cn/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /zh-cn/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /zh-cn/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "mobile /zh-cn/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "mobile /zh-cn/reservation/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "mobile /zh-cn/reservation/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /zh-cn/reservation/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /zh-cn/reservation/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "mobile /zh-cn/reservation/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "mobile /zh-tw/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "mobile /zh-tw/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /zh-tw/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /zh-tw/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "mobile /zh-tw/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "mobile /zh-tw/reservation/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "mobile /zh-tw/reservation/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /zh-tw/reservation/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /zh-tw/reservation/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "mobile /zh-tw/reservation/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "mobile /zh-hk/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "mobile /zh-hk/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /zh-hk/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /zh-hk/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "mobile /zh-hk/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "mobile /zh-hk/reservation/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "mobile /zh-hk/reservation/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /zh-hk/reservation/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /zh-hk/reservation/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "mobile /zh-hk/reservation/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
       "name": "mobile 푸터 링크 클릭 이동",
       "ok": true,
       "detail": "/daegu-karaoke/guide/ → /daegu-karaoke/guide/ (h1: 유흥주점과 단란주점, 노래연습장은 어)"
@@ -531,7 +981,7 @@
     {
       "name": "mobile 빠른 날짜 '내일' 선택",
       "ok": true,
-      "detail": "2026-11-06"
+      "detail": "2026-11-07"
     },
     {
       "name": "mobile 문자 문의 링크 생성",
@@ -631,6 +1081,401 @@
       "name": "mobile 하단 예약 버튼 클릭 → 예약 페이지 이동",
       "ok": true,
       "detail": "/daegu-karaoke/reservation/"
+    },
+    {
+      "name": "mobile /ja/ html lang=\"ja\"",
+      "ok": true,
+      "detail": "ja"
+    },
+    {
+      "name": "mobile /ja/ 히어로 예약 버튼 → /ja/reservation/ (첫 화면)",
+      "ok": true
+    },
+    {
+      "name": "mobile /ja/ 상단 예약 버튼 → /ja/reservation/",
+      "ok": true
+    },
+    {
+      "name": "mobile /ja/ 업종별 예약 링크",
+      "ok": true,
+      "detail": "/daegu-karaoke/ja/reservation/?type=yuheung, /daegu-karaoke/ja/reservation/?type=danran"
+    },
+    {
+      "name": "mobile /ja/ 하단 예약·전화·카카오톡",
+      "ok": true,
+      "detail": "/daegu-karaoke/ja/reservation/, tel:01024646135, https://open.kakao.com/o/s3KS17Ui"
+    },
+    {
+      "name": "mobile /ja/reservation/ html lang=\"ja\"",
+      "ok": true
+    },
+    {
+      "name": "mobile /ja/reservation/ 폼 문구 현지어 표시 (날짜·시간·인원·업종·요청사항)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /ja/reservation/ ?type=danran → 団欒酒店 사전 선택",
+      "ok": true
+    },
+    {
+      "name": "mobile /ja/reservation/ click_kakao 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://open.kakao.com/o/s3KS17Ui"
+    },
+    {
+      "name": "mobile /ja/reservation/ click_line 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://line.me/ti/p/8DDtc6maE9"
+    },
+    {
+      "name": "mobile /ja/reservation/ click_telegram 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://t.me/+821024646135"
+    },
+    {
+      "name": "mobile /ja/reservation/ click_call 링크 = 제공 링크",
+      "ok": true,
+      "detail": "tel:01024646135"
+    },
+    {
+      "name": "mobile /ja/reservation/ 필수값 검증 (현지어 오류)",
+      "ok": true
+    },
+    {
+      "name": "mobile /ja/reservation/ 문자 본문 = 선택 언어 + 예약 정보(한국어 병기)",
+      "ok": true,
+      "detail": "[대구 가라오케 예약 문의 · 日本語]"
+    },
+    {
+      "name": "mobile /ja/reservation/ LINE 선택 → 제공 링크 + '복사 후 열기' 안내(자동 전송 아님)",
+      "ok": true,
+      "detail": "https://line.me/ti/p/8DDtc6maE9 内容をコピーしてLINEを開く"
+    },
+    {
+      "name": "mobile /ja/reservation/ 업종 변경 → 메시지 반영",
+      "ok": true
+    },
+    {
+      "name": "mobile /en/ html lang=\"en\"",
+      "ok": true,
+      "detail": "en"
+    },
+    {
+      "name": "mobile /en/ 히어로 예약 버튼 → /en/reservation/ (첫 화면)",
+      "ok": true
+    },
+    {
+      "name": "mobile /en/ 상단 예약 버튼 → /en/reservation/",
+      "ok": true
+    },
+    {
+      "name": "mobile /en/ 업종별 예약 링크",
+      "ok": true,
+      "detail": "/daegu-karaoke/en/reservation/?type=yuheung, /daegu-karaoke/en/reservation/?type=danran"
+    },
+    {
+      "name": "mobile /en/ 하단 예약·전화·카카오톡",
+      "ok": true,
+      "detail": "/daegu-karaoke/en/reservation/, tel:01024646135, https://open.kakao.com/o/s3KS17Ui"
+    },
+    {
+      "name": "mobile /en/reservation/ html lang=\"en\"",
+      "ok": true
+    },
+    {
+      "name": "mobile /en/reservation/ 폼 문구 현지어 표시 (날짜·시간·인원·업종·요청사항)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /en/reservation/ ?type=danran → Danran jujeom 사전 선택",
+      "ok": true
+    },
+    {
+      "name": "mobile /en/reservation/ click_kakao 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://open.kakao.com/o/s3KS17Ui"
+    },
+    {
+      "name": "mobile /en/reservation/ click_line 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://line.me/ti/p/8DDtc6maE9"
+    },
+    {
+      "name": "mobile /en/reservation/ click_telegram 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://t.me/+821024646135"
+    },
+    {
+      "name": "mobile /en/reservation/ click_call 링크 = 제공 링크",
+      "ok": true,
+      "detail": "tel:01024646135"
+    },
+    {
+      "name": "mobile /en/reservation/ 필수값 검증 (현지어 오류)",
+      "ok": true
+    },
+    {
+      "name": "mobile /en/reservation/ 문자 본문 = 선택 언어 + 예약 정보(한국어 병기)",
+      "ok": true,
+      "detail": "[대구 가라오케 예약 문의 · English]"
+    },
+    {
+      "name": "mobile /en/reservation/ LINE 선택 → 제공 링크 + '복사 후 열기' 안내(자동 전송 아님)",
+      "ok": true,
+      "detail": "https://line.me/ti/p/8DDtc6maE9 Copy message & open LINE"
+    },
+    {
+      "name": "mobile /en/reservation/ 업종 변경 → 메시지 반영",
+      "ok": true
+    },
+    {
+      "name": "mobile /zh-cn/ html lang=\"zh-CN\"",
+      "ok": true,
+      "detail": "zh-CN"
+    },
+    {
+      "name": "mobile /zh-cn/ 히어로 예약 버튼 → /zh-cn/reservation/ (첫 화면)",
+      "ok": true
+    },
+    {
+      "name": "mobile /zh-cn/ 상단 예약 버튼 → /zh-cn/reservation/",
+      "ok": true
+    },
+    {
+      "name": "mobile /zh-cn/ 업종별 예약 링크",
+      "ok": true,
+      "detail": "/daegu-karaoke/zh-cn/reservation/?type=yuheung, /daegu-karaoke/zh-cn/reservation/?type=danran"
+    },
+    {
+      "name": "mobile /zh-cn/ 하단 예약·전화·카카오톡",
+      "ok": true,
+      "detail": "/daegu-karaoke/zh-cn/reservation/, tel:01024646135, https://open.kakao.com/o/s3KS17Ui"
+    },
+    {
+      "name": "mobile /zh-cn/reservation/ html lang=\"zh-CN\"",
+      "ok": true
+    },
+    {
+      "name": "mobile /zh-cn/reservation/ 폼 문구 현지어 표시 (날짜·시간·인원·업종·요청사항)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /zh-cn/reservation/ ?type=danran → 团栾酒店 사전 선택",
+      "ok": true
+    },
+    {
+      "name": "mobile /zh-cn/reservation/ click_kakao 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://open.kakao.com/o/s3KS17Ui"
+    },
+    {
+      "name": "mobile /zh-cn/reservation/ click_line 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://line.me/ti/p/8DDtc6maE9"
+    },
+    {
+      "name": "mobile /zh-cn/reservation/ click_telegram 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://t.me/+821024646135"
+    },
+    {
+      "name": "mobile /zh-cn/reservation/ click_call 링크 = 제공 링크",
+      "ok": true,
+      "detail": "tel:01024646135"
+    },
+    {
+      "name": "mobile /zh-cn/reservation/ 필수값 검증 (현지어 오류)",
+      "ok": true
+    },
+    {
+      "name": "mobile /zh-cn/reservation/ 문자 본문 = 선택 언어 + 예약 정보(한국어 병기)",
+      "ok": true,
+      "detail": "[대구 가라오케 예약 문의 · 简体中文]"
+    },
+    {
+      "name": "mobile /zh-cn/reservation/ LINE 선택 → 제공 링크 + '복사 후 열기' 안내(자동 전송 아님)",
+      "ok": true,
+      "detail": "https://line.me/ti/p/8DDtc6maE9 复制内容并打开LINE"
+    },
+    {
+      "name": "mobile /zh-cn/reservation/ 업종 변경 → 메시지 반영",
+      "ok": true
+    },
+    {
+      "name": "mobile /zh-tw/ html lang=\"zh-TW\"",
+      "ok": true,
+      "detail": "zh-TW"
+    },
+    {
+      "name": "mobile /zh-tw/ 히어로 예약 버튼 → /zh-tw/reservation/ (첫 화면)",
+      "ok": true
+    },
+    {
+      "name": "mobile /zh-tw/ 상단 예약 버튼 → /zh-tw/reservation/",
+      "ok": true
+    },
+    {
+      "name": "mobile /zh-tw/ 업종별 예약 링크",
+      "ok": true,
+      "detail": "/daegu-karaoke/zh-tw/reservation/?type=yuheung, /daegu-karaoke/zh-tw/reservation/?type=danran"
+    },
+    {
+      "name": "mobile /zh-tw/ 하단 예약·전화·카카오톡",
+      "ok": true,
+      "detail": "/daegu-karaoke/zh-tw/reservation/, tel:01024646135, https://open.kakao.com/o/s3KS17Ui"
+    },
+    {
+      "name": "mobile /zh-tw/reservation/ html lang=\"zh-TW\"",
+      "ok": true
+    },
+    {
+      "name": "mobile /zh-tw/reservation/ 폼 문구 현지어 표시 (날짜·시간·인원·업종·요청사항)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /zh-tw/reservation/ ?type=danran → 團欒酒店 사전 선택",
+      "ok": true
+    },
+    {
+      "name": "mobile /zh-tw/reservation/ click_kakao 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://open.kakao.com/o/s3KS17Ui"
+    },
+    {
+      "name": "mobile /zh-tw/reservation/ click_line 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://line.me/ti/p/8DDtc6maE9"
+    },
+    {
+      "name": "mobile /zh-tw/reservation/ click_telegram 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://t.me/+821024646135"
+    },
+    {
+      "name": "mobile /zh-tw/reservation/ click_call 링크 = 제공 링크",
+      "ok": true,
+      "detail": "tel:01024646135"
+    },
+    {
+      "name": "mobile /zh-tw/reservation/ 필수값 검증 (현지어 오류)",
+      "ok": true
+    },
+    {
+      "name": "mobile /zh-tw/reservation/ 문자 본문 = 선택 언어 + 예약 정보(한국어 병기)",
+      "ok": true,
+      "detail": "[대구 가라오케 예약 문의 · 繁體中文（台灣）]"
+    },
+    {
+      "name": "mobile /zh-tw/reservation/ LINE 선택 → 제공 링크 + '복사 후 열기' 안내(자동 전송 아님)",
+      "ok": true,
+      "detail": "https://line.me/ti/p/8DDtc6maE9 複製內容並開啟LINE"
+    },
+    {
+      "name": "mobile /zh-tw/reservation/ 업종 변경 → 메시지 반영",
+      "ok": true
+    },
+    {
+      "name": "mobile /zh-hk/ html lang=\"zh-HK\"",
+      "ok": true,
+      "detail": "zh-HK"
+    },
+    {
+      "name": "mobile /zh-hk/ 히어로 예약 버튼 → /zh-hk/reservation/ (첫 화면)",
+      "ok": true
+    },
+    {
+      "name": "mobile /zh-hk/ 상단 예약 버튼 → /zh-hk/reservation/",
+      "ok": true
+    },
+    {
+      "name": "mobile /zh-hk/ 업종별 예약 링크",
+      "ok": true,
+      "detail": "/daegu-karaoke/zh-hk/reservation/?type=yuheung, /daegu-karaoke/zh-hk/reservation/?type=danran"
+    },
+    {
+      "name": "mobile /zh-hk/ 하단 예약·전화·카카오톡",
+      "ok": true,
+      "detail": "/daegu-karaoke/zh-hk/reservation/, tel:01024646135, https://open.kakao.com/o/s3KS17Ui"
+    },
+    {
+      "name": "mobile /zh-hk/reservation/ html lang=\"zh-HK\"",
+      "ok": true
+    },
+    {
+      "name": "mobile /zh-hk/reservation/ 폼 문구 현지어 표시 (날짜·시간·인원·업종·요청사항)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /zh-hk/reservation/ ?type=danran → 團欒酒店 사전 선택",
+      "ok": true
+    },
+    {
+      "name": "mobile /zh-hk/reservation/ click_kakao 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://open.kakao.com/o/s3KS17Ui"
+    },
+    {
+      "name": "mobile /zh-hk/reservation/ click_line 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://line.me/ti/p/8DDtc6maE9"
+    },
+    {
+      "name": "mobile /zh-hk/reservation/ click_telegram 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://t.me/+821024646135"
+    },
+    {
+      "name": "mobile /zh-hk/reservation/ click_call 링크 = 제공 링크",
+      "ok": true,
+      "detail": "tel:01024646135"
+    },
+    {
+      "name": "mobile /zh-hk/reservation/ 필수값 검증 (현지어 오류)",
+      "ok": true
+    },
+    {
+      "name": "mobile /zh-hk/reservation/ 문자 본문 = 선택 언어 + 예약 정보(한국어 병기)",
+      "ok": true,
+      "detail": "[대구 가라오케 예약 문의 · 繁體中文（香港）]"
+    },
+    {
+      "name": "mobile /zh-hk/reservation/ LINE 선택 → 제공 링크 + '복사 후 열기' 안내(자동 전송 아님)",
+      "ok": true,
+      "detail": "https://line.me/ti/p/8DDtc6maE9 複製內容並開啟LINE"
+    },
+    {
+      "name": "mobile /zh-hk/reservation/ 업종 변경 → 메시지 반영",
+      "ok": true
+    },
+    {
+      "name": "mobile 언어 전환 한국어 홈 → 日本語: / → /ja/",
+      "ok": true,
+      "detail": "/daegu-karaoke/ja/ lang=ja"
+    },
+    {
+      "name": "mobile 언어 전환 예약 페이지 유지: /reservation/ → /en/reservation/",
+      "ok": true,
+      "detail": "/daegu-karaoke/en/reservation/ lang=en"
+    },
+    {
+      "name": "mobile 언어 전환 简体 → 香港: /zh-cn/reservation/ → /zh-hk/reservation/",
+      "ok": true,
+      "detail": "/daegu-karaoke/zh-hk/reservation/ lang=zh-HK"
+    },
+    {
+      "name": "mobile 언어 전환 → 한국어: /zh-tw/ → /",
+      "ok": true,
+      "detail": "/daegu-karaoke/ lang=ko"
+    },
+    {
+      "name": "mobile 언어 전환 번역 없는 페이지 → 해당 언어 홈: /guide/ → /zh-tw/",
+      "ok": true,
+      "detail": "/daegu-karaoke/zh-tw/ lang=zh-TW"
     },
     {
       "name": "mobile 전화 클릭 → dataLayer click_call",
@@ -888,6 +1733,256 @@
       "detail": "0개 미달"
     },
     {
+      "name": "desktop /ja/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "desktop /ja/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /ja/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /ja/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "desktop /ja/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "desktop /ja/reservation/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "desktop /ja/reservation/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /ja/reservation/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /ja/reservation/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "desktop /ja/reservation/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "desktop /en/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "desktop /en/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /en/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /en/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "desktop /en/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "desktop /en/reservation/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "desktop /en/reservation/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /en/reservation/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /en/reservation/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "desktop /en/reservation/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "desktop /zh-cn/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "desktop /zh-cn/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /zh-cn/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /zh-cn/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "desktop /zh-cn/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "desktop /zh-cn/reservation/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "desktop /zh-cn/reservation/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /zh-cn/reservation/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /zh-cn/reservation/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "desktop /zh-cn/reservation/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "desktop /zh-tw/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "desktop /zh-tw/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /zh-tw/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /zh-tw/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "desktop /zh-tw/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "desktop /zh-tw/reservation/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "desktop /zh-tw/reservation/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /zh-tw/reservation/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /zh-tw/reservation/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "desktop /zh-tw/reservation/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "desktop /zh-hk/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "desktop /zh-hk/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /zh-hk/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /zh-hk/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "desktop /zh-hk/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "desktop /zh-hk/reservation/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "desktop /zh-hk/reservation/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /zh-hk/reservation/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /zh-hk/reservation/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "desktop /zh-hk/reservation/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
       "name": "desktop 푸터 링크 클릭 이동",
       "ok": true,
       "detail": "/daegu-karaoke/guide/ → /daegu-karaoke/guide/ (h1: 유흥주점과 단란주점, 노래연습장은 어)"
@@ -920,7 +2015,7 @@
     {
       "name": "desktop 빠른 날짜 '내일' 선택",
       "ok": true,
-      "detail": "2026-11-06"
+      "detail": "2026-11-07"
     },
     {
       "name": "desktop 문자 문의 링크 생성",
@@ -1011,6 +2106,376 @@
       "ok": true
     },
     {
+      "name": "desktop /ja/ html lang=\"ja\"",
+      "ok": true,
+      "detail": "ja"
+    },
+    {
+      "name": "desktop /ja/ 히어로 예약 버튼 → /ja/reservation/ (첫 화면)",
+      "ok": true
+    },
+    {
+      "name": "desktop /ja/ 상단 예약 버튼 → /ja/reservation/",
+      "ok": true
+    },
+    {
+      "name": "desktop /ja/ 업종별 예약 링크",
+      "ok": true,
+      "detail": "/daegu-karaoke/ja/reservation/?type=yuheung, /daegu-karaoke/ja/reservation/?type=danran"
+    },
+    {
+      "name": "desktop /ja/reservation/ html lang=\"ja\"",
+      "ok": true
+    },
+    {
+      "name": "desktop /ja/reservation/ 폼 문구 현지어 표시 (날짜·시간·인원·업종·요청사항)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /ja/reservation/ ?type=danran → 団欒酒店 사전 선택",
+      "ok": true
+    },
+    {
+      "name": "desktop /ja/reservation/ click_kakao 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://open.kakao.com/o/s3KS17Ui"
+    },
+    {
+      "name": "desktop /ja/reservation/ click_line 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://line.me/ti/p/8DDtc6maE9"
+    },
+    {
+      "name": "desktop /ja/reservation/ click_telegram 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://t.me/+821024646135"
+    },
+    {
+      "name": "desktop /ja/reservation/ click_call 링크 = 제공 링크",
+      "ok": true,
+      "detail": "tel:01024646135"
+    },
+    {
+      "name": "desktop /ja/reservation/ 필수값 검증 (현지어 오류)",
+      "ok": true
+    },
+    {
+      "name": "desktop /ja/reservation/ 문자 본문 = 선택 언어 + 예약 정보(한국어 병기)",
+      "ok": true,
+      "detail": "[대구 가라오케 예약 문의 · 日本語]"
+    },
+    {
+      "name": "desktop /ja/reservation/ LINE 선택 → 제공 링크 + '복사 후 열기' 안내(자동 전송 아님)",
+      "ok": true,
+      "detail": "https://line.me/ti/p/8DDtc6maE9 内容をコピーしてLINEを開く"
+    },
+    {
+      "name": "desktop /ja/reservation/ 업종 변경 → 메시지 반영",
+      "ok": true
+    },
+    {
+      "name": "desktop /en/ html lang=\"en\"",
+      "ok": true,
+      "detail": "en"
+    },
+    {
+      "name": "desktop /en/ 히어로 예약 버튼 → /en/reservation/ (첫 화면)",
+      "ok": true
+    },
+    {
+      "name": "desktop /en/ 상단 예약 버튼 → /en/reservation/",
+      "ok": true
+    },
+    {
+      "name": "desktop /en/ 업종별 예약 링크",
+      "ok": true,
+      "detail": "/daegu-karaoke/en/reservation/?type=yuheung, /daegu-karaoke/en/reservation/?type=danran"
+    },
+    {
+      "name": "desktop /en/reservation/ html lang=\"en\"",
+      "ok": true
+    },
+    {
+      "name": "desktop /en/reservation/ 폼 문구 현지어 표시 (날짜·시간·인원·업종·요청사항)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /en/reservation/ ?type=danran → Danran jujeom 사전 선택",
+      "ok": true
+    },
+    {
+      "name": "desktop /en/reservation/ click_kakao 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://open.kakao.com/o/s3KS17Ui"
+    },
+    {
+      "name": "desktop /en/reservation/ click_line 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://line.me/ti/p/8DDtc6maE9"
+    },
+    {
+      "name": "desktop /en/reservation/ click_telegram 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://t.me/+821024646135"
+    },
+    {
+      "name": "desktop /en/reservation/ click_call 링크 = 제공 링크",
+      "ok": true,
+      "detail": "tel:01024646135"
+    },
+    {
+      "name": "desktop /en/reservation/ 필수값 검증 (현지어 오류)",
+      "ok": true
+    },
+    {
+      "name": "desktop /en/reservation/ 문자 본문 = 선택 언어 + 예약 정보(한국어 병기)",
+      "ok": true,
+      "detail": "[대구 가라오케 예약 문의 · English]"
+    },
+    {
+      "name": "desktop /en/reservation/ LINE 선택 → 제공 링크 + '복사 후 열기' 안내(자동 전송 아님)",
+      "ok": true,
+      "detail": "https://line.me/ti/p/8DDtc6maE9 Copy message & open LINE"
+    },
+    {
+      "name": "desktop /en/reservation/ 업종 변경 → 메시지 반영",
+      "ok": true
+    },
+    {
+      "name": "desktop /zh-cn/ html lang=\"zh-CN\"",
+      "ok": true,
+      "detail": "zh-CN"
+    },
+    {
+      "name": "desktop /zh-cn/ 히어로 예약 버튼 → /zh-cn/reservation/ (첫 화면)",
+      "ok": true
+    },
+    {
+      "name": "desktop /zh-cn/ 상단 예약 버튼 → /zh-cn/reservation/",
+      "ok": true
+    },
+    {
+      "name": "desktop /zh-cn/ 업종별 예약 링크",
+      "ok": true,
+      "detail": "/daegu-karaoke/zh-cn/reservation/?type=yuheung, /daegu-karaoke/zh-cn/reservation/?type=danran"
+    },
+    {
+      "name": "desktop /zh-cn/reservation/ html lang=\"zh-CN\"",
+      "ok": true
+    },
+    {
+      "name": "desktop /zh-cn/reservation/ 폼 문구 현지어 표시 (날짜·시간·인원·업종·요청사항)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /zh-cn/reservation/ ?type=danran → 团栾酒店 사전 선택",
+      "ok": true
+    },
+    {
+      "name": "desktop /zh-cn/reservation/ click_kakao 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://open.kakao.com/o/s3KS17Ui"
+    },
+    {
+      "name": "desktop /zh-cn/reservation/ click_line 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://line.me/ti/p/8DDtc6maE9"
+    },
+    {
+      "name": "desktop /zh-cn/reservation/ click_telegram 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://t.me/+821024646135"
+    },
+    {
+      "name": "desktop /zh-cn/reservation/ click_call 링크 = 제공 링크",
+      "ok": true,
+      "detail": "tel:01024646135"
+    },
+    {
+      "name": "desktop /zh-cn/reservation/ 필수값 검증 (현지어 오류)",
+      "ok": true
+    },
+    {
+      "name": "desktop /zh-cn/reservation/ 문자 본문 = 선택 언어 + 예약 정보(한국어 병기)",
+      "ok": true,
+      "detail": "[대구 가라오케 예약 문의 · 简体中文]"
+    },
+    {
+      "name": "desktop /zh-cn/reservation/ LINE 선택 → 제공 링크 + '복사 후 열기' 안내(자동 전송 아님)",
+      "ok": true,
+      "detail": "https://line.me/ti/p/8DDtc6maE9 复制内容并打开LINE"
+    },
+    {
+      "name": "desktop /zh-cn/reservation/ 업종 변경 → 메시지 반영",
+      "ok": true
+    },
+    {
+      "name": "desktop /zh-tw/ html lang=\"zh-TW\"",
+      "ok": true,
+      "detail": "zh-TW"
+    },
+    {
+      "name": "desktop /zh-tw/ 히어로 예약 버튼 → /zh-tw/reservation/ (첫 화면)",
+      "ok": true
+    },
+    {
+      "name": "desktop /zh-tw/ 상단 예약 버튼 → /zh-tw/reservation/",
+      "ok": true
+    },
+    {
+      "name": "desktop /zh-tw/ 업종별 예약 링크",
+      "ok": true,
+      "detail": "/daegu-karaoke/zh-tw/reservation/?type=yuheung, /daegu-karaoke/zh-tw/reservation/?type=danran"
+    },
+    {
+      "name": "desktop /zh-tw/reservation/ html lang=\"zh-TW\"",
+      "ok": true
+    },
+    {
+      "name": "desktop /zh-tw/reservation/ 폼 문구 현지어 표시 (날짜·시간·인원·업종·요청사항)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /zh-tw/reservation/ ?type=danran → 團欒酒店 사전 선택",
+      "ok": true
+    },
+    {
+      "name": "desktop /zh-tw/reservation/ click_kakao 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://open.kakao.com/o/s3KS17Ui"
+    },
+    {
+      "name": "desktop /zh-tw/reservation/ click_line 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://line.me/ti/p/8DDtc6maE9"
+    },
+    {
+      "name": "desktop /zh-tw/reservation/ click_telegram 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://t.me/+821024646135"
+    },
+    {
+      "name": "desktop /zh-tw/reservation/ click_call 링크 = 제공 링크",
+      "ok": true,
+      "detail": "tel:01024646135"
+    },
+    {
+      "name": "desktop /zh-tw/reservation/ 필수값 검증 (현지어 오류)",
+      "ok": true
+    },
+    {
+      "name": "desktop /zh-tw/reservation/ 문자 본문 = 선택 언어 + 예약 정보(한국어 병기)",
+      "ok": true,
+      "detail": "[대구 가라오케 예약 문의 · 繁體中文（台灣）]"
+    },
+    {
+      "name": "desktop /zh-tw/reservation/ LINE 선택 → 제공 링크 + '복사 후 열기' 안내(자동 전송 아님)",
+      "ok": true,
+      "detail": "https://line.me/ti/p/8DDtc6maE9 複製內容並開啟LINE"
+    },
+    {
+      "name": "desktop /zh-tw/reservation/ 업종 변경 → 메시지 반영",
+      "ok": true
+    },
+    {
+      "name": "desktop /zh-hk/ html lang=\"zh-HK\"",
+      "ok": true,
+      "detail": "zh-HK"
+    },
+    {
+      "name": "desktop /zh-hk/ 히어로 예약 버튼 → /zh-hk/reservation/ (첫 화면)",
+      "ok": true
+    },
+    {
+      "name": "desktop /zh-hk/ 상단 예약 버튼 → /zh-hk/reservation/",
+      "ok": true
+    },
+    {
+      "name": "desktop /zh-hk/ 업종별 예약 링크",
+      "ok": true,
+      "detail": "/daegu-karaoke/zh-hk/reservation/?type=yuheung, /daegu-karaoke/zh-hk/reservation/?type=danran"
+    },
+    {
+      "name": "desktop /zh-hk/reservation/ html lang=\"zh-HK\"",
+      "ok": true
+    },
+    {
+      "name": "desktop /zh-hk/reservation/ 폼 문구 현지어 표시 (날짜·시간·인원·업종·요청사항)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /zh-hk/reservation/ ?type=danran → 團欒酒店 사전 선택",
+      "ok": true
+    },
+    {
+      "name": "desktop /zh-hk/reservation/ click_kakao 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://open.kakao.com/o/s3KS17Ui"
+    },
+    {
+      "name": "desktop /zh-hk/reservation/ click_line 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://line.me/ti/p/8DDtc6maE9"
+    },
+    {
+      "name": "desktop /zh-hk/reservation/ click_telegram 링크 = 제공 링크",
+      "ok": true,
+      "detail": "https://t.me/+821024646135"
+    },
+    {
+      "name": "desktop /zh-hk/reservation/ click_call 링크 = 제공 링크",
+      "ok": true,
+      "detail": "tel:01024646135"
+    },
+    {
+      "name": "desktop /zh-hk/reservation/ 필수값 검증 (현지어 오류)",
+      "ok": true
+    },
+    {
+      "name": "desktop /zh-hk/reservation/ 문자 본문 = 선택 언어 + 예약 정보(한국어 병기)",
+      "ok": true,
+      "detail": "[대구 가라오케 예약 문의 · 繁體中文（香港）]"
+    },
+    {
+      "name": "desktop /zh-hk/reservation/ LINE 선택 → 제공 링크 + '복사 후 열기' 안내(자동 전송 아님)",
+      "ok": true,
+      "detail": "https://line.me/ti/p/8DDtc6maE9 複製內容並開啟LINE"
+    },
+    {
+      "name": "desktop /zh-hk/reservation/ 업종 변경 → 메시지 반영",
+      "ok": true
+    },
+    {
+      "name": "desktop 언어 전환 한국어 홈 → 日本語: / → /ja/",
+      "ok": true,
+      "detail": "/daegu-karaoke/ja/ lang=ja"
+    },
+    {
+      "name": "desktop 언어 전환 예약 페이지 유지: /reservation/ → /en/reservation/",
+      "ok": true,
+      "detail": "/daegu-karaoke/en/reservation/ lang=en"
+    },
+    {
+      "name": "desktop 언어 전환 简体 → 香港: /zh-cn/reservation/ → /zh-hk/reservation/",
+      "ok": true,
+      "detail": "/daegu-karaoke/zh-hk/reservation/ lang=zh-HK"
+    },
+    {
+      "name": "desktop 언어 전환 → 한국어: /zh-tw/ → /",
+      "ok": true,
+      "detail": "/daegu-karaoke/ lang=ko"
+    },
+    {
+      "name": "desktop 언어 전환 번역 없는 페이지 → 해당 언어 홈: /guide/ → /zh-tw/",
+      "ok": true,
+      "detail": "/daegu-karaoke/zh-tw/ lang=zh-TW"
+    },
+    {
       "name": "desktop 전화 클릭 → dataLayer click_call",
       "ok": true,
       "detail": "[\"click_call\"]"
@@ -1018,83 +2483,163 @@
   ],
   "perf": {
     "mobile /": {
-      "lcp": 160,
+      "lcp": 152,
       "cls": 0
     },
     "mobile /guide/": {
-      "lcp": 120,
+      "lcp": 156,
       "cls": 0
     },
     "mobile /guide/first-visit/": {
-      "lcp": 112,
+      "lcp": 104,
       "cls": 0
     },
     "mobile /guide/daegu-areas/": {
-      "lcp": 124,
+      "lcp": 88,
       "cls": 0
     },
     "mobile /reservation/": {
-      "lcp": 124,
+      "lcp": 144,
       "cls": 0
     },
     "mobile /about/": {
-      "lcp": 120,
+      "lcp": 84,
       "cls": 0
     },
     "mobile /rooms/": {
-      "lcp": 80,
-      "cls": 0
-    },
-    "mobile /price/": {
-      "lcp": 124,
-      "cls": 0
-    },
-    "mobile /location/": {
-      "lcp": 112,
-      "cls": 0
-    },
-    "mobile /contact/": {
-      "lcp": 80,
-      "cls": 0
-    },
-    "desktop /": {
-      "lcp": 188,
-      "cls": 0
-    },
-    "desktop /guide/": {
       "lcp": 120,
       "cls": 0
     },
-    "desktop /guide/first-visit/": {
-      "lcp": 116,
+    "mobile /price/": {
+      "lcp": 100,
       "cls": 0
     },
-    "desktop /guide/daegu-areas/": {
-      "lcp": 112,
+    "mobile /location/": {
+      "lcp": 80,
       "cls": 0
     },
-    "desktop /reservation/": {
-      "lcp": 164,
-      "cls": 0.145
-    },
-    "desktop /about/": {
-      "lcp": 108,
-      "cls": 0
-    },
-    "desktop /rooms/": {
-      "lcp": 108,
-      "cls": 0
-    },
-    "desktop /price/": {
-      "lcp": 108,
-      "cls": 0
-    },
-    "desktop /location/": {
+    "mobile /contact/": {
       "lcp": 76,
       "cls": 0
     },
-    "desktop /contact/": {
+    "mobile /ja/": {
+      "lcp": 124,
+      "cls": 0
+    },
+    "mobile /ja/reservation/": {
       "lcp": 128,
+      "cls": 0
+    },
+    "mobile /en/": {
+      "lcp": 108,
+      "cls": 0
+    },
+    "mobile /en/reservation/": {
+      "lcp": 104,
+      "cls": 0
+    },
+    "mobile /zh-cn/": {
+      "lcp": 124,
+      "cls": 0
+    },
+    "mobile /zh-cn/reservation/": {
+      "lcp": 124,
+      "cls": 0
+    },
+    "mobile /zh-tw/": {
+      "lcp": 124,
+      "cls": 0
+    },
+    "mobile /zh-tw/reservation/": {
+      "lcp": 116,
+      "cls": 0
+    },
+    "mobile /zh-hk/": {
+      "lcp": 120,
+      "cls": 0
+    },
+    "mobile /zh-hk/reservation/": {
+      "lcp": 128,
+      "cls": 0
+    },
+    "desktop /": {
+      "lcp": 180,
+      "cls": 0
+    },
+    "desktop /guide/": {
+      "lcp": 128,
+      "cls": 0
+    },
+    "desktop /guide/first-visit/": {
+      "lcp": 124,
+      "cls": 0
+    },
+    "desktop /guide/daegu-areas/": {
+      "lcp": 128,
+      "cls": 0
+    },
+    "desktop /reservation/": {
+      "lcp": 132,
+      "cls": 0
+    },
+    "desktop /about/": {
+      "lcp": 104,
+      "cls": 0
+    },
+    "desktop /rooms/": {
+      "lcp": 128,
+      "cls": 0
+    },
+    "desktop /price/": {
+      "lcp": 116,
+      "cls": 0
+    },
+    "desktop /location/": {
+      "lcp": 108,
+      "cls": 0
+    },
+    "desktop /contact/": {
+      "lcp": 112,
+      "cls": 0
+    },
+    "desktop /ja/": {
+      "lcp": 188,
+      "cls": 0
+    },
+    "desktop /ja/reservation/": {
+      "lcp": 152,
+      "cls": 0.004
+    },
+    "desktop /en/": {
+      "lcp": 172,
+      "cls": 0
+    },
+    "desktop /en/reservation/": {
+      "lcp": 116,
+      "cls": 0.003
+    },
+    "desktop /zh-cn/": {
+      "lcp": 168,
+      "cls": 0
+    },
+    "desktop /zh-cn/reservation/": {
+      "lcp": 152,
+      "cls": 0.004
+    },
+    "desktop /zh-tw/": {
+      "lcp": 176,
+      "cls": 0
+    },
+    "desktop /zh-tw/reservation/": {
+      "lcp": 132,
+      "cls": 0.004
+    },
+    "desktop /zh-hk/": {
+      "lcp": 160,
+      "cls": 0
+    },
+    "desktop /zh-hk/reservation/": {
+      "lcp": 184,
       "cls": 0
     }
   }

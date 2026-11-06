@@ -17,18 +17,23 @@ import { join, dirname } from "node:path";
 import type { Metadata, Viewport, MetadataRoute } from "next";
 
 import RootLayout, { metadata as layoutMeta, viewport } from "@/app/layout";
-import * as Home from "@/app/page";
-import * as Guide from "@/app/guide/page";
-import * as FirstVisit from "@/app/guide/first-visit/page";
-import * as Areas from "@/app/guide/daegu-areas/page";
-import * as About from "@/app/about/page";
-import * as Rooms from "@/app/rooms/page";
-import * as Price from "@/app/price/page";
-import * as Location from "@/app/location/page";
-import * as Contact from "@/app/contact/page";
-import * as Reservation from "@/app/reservation/page";
+import KoLayout from "@/app/(ko)/layout";
+import * as Home from "@/app/(ko)/page";
+import * as Guide from "@/app/(ko)/guide/page";
+import * as FirstVisit from "@/app/(ko)/guide/first-visit/page";
+import * as Areas from "@/app/(ko)/guide/daegu-areas/page";
+import * as About from "@/app/(ko)/about/page";
+import * as Rooms from "@/app/(ko)/rooms/page";
+import * as Price from "@/app/(ko)/price/page";
+import * as Location from "@/app/(ko)/location/page";
+import * as Contact from "@/app/(ko)/contact/page";
+import * as Reservation from "@/app/(ko)/reservation/page";
+import LocaleLayout, { generateStaticParams as localeParams } from "@/app/[locale]/layout";
+import * as LocaleHomePage from "@/app/[locale]/page";
+import * as LocaleRsvPage from "@/app/[locale]/reservation/page";
 import NotFound, { metadata as nfMeta } from "@/app/not-found";
-import { routes } from "@/lib/routes";
+import { routes, routeLocale } from "@/lib/routes";
+import { getLocale } from "@/lib/i18n/locales";
 import { basePath } from "@/lib/site";
 import sitemap from "@/app/sitemap";
 import robots from "@/app/robots";
@@ -51,6 +56,9 @@ function headTags(m: Metadata, v: Viewport): string {
   if (m.applicationName) t.push(meta("application-name", m.applicationName));
   const canon = m.alternates?.canonical;
   if (canon) t.push(`<link rel="canonical" href="${esc(abs(String(canon)))}"/>`);
+  // Next metadata alternates.languages → <link rel="alternate" hreflang>
+  for (const [lang, href] of Object.entries(m.alternates?.languages ?? {}))
+    t.push(`<link rel="alternate" hreflang="${esc(lang)}" href="${esc(abs(String(href)))}"/>`);
   if (m.robots && typeof m.robots === "object") {
     const r = m.robots as { index?: boolean; follow?: boolean };
     t.push(meta("robots", `${r.index === false ? "noindex" : "index"}, ${r.follow === false ? "nofollow" : "follow"}`));
@@ -67,6 +75,7 @@ function headTags(m: Metadata, v: Viewport): string {
     if (og.url) t.push(meta("og:url", abs(og.url), "property"));
     if (og.siteName) t.push(meta("og:site_name", og.siteName, "property"));
     if (og.locale) t.push(meta("og:locale", og.locale, "property"));
+    for (const al of og.alternateLocale ?? []) t.push(meta("og:locale:alternate", al, "property"));
     for (const img of og.images ?? []) {
       t.push(meta("og:image", abs(img.url), "property"));
       if (img.width) t.push(meta("og:image:width", String(img.width), "property"));
@@ -89,8 +98,8 @@ function headTags(m: Metadata, v: Viewport): string {
   return t.join("");
 }
 
-function renderPage(file: string, Page: () => React.ReactNode, pageMeta: Metadata) {
-  const body = renderToString(<RootLayout>{<Page />}</RootLayout>);
+function renderPage(file: string, tree: React.ReactNode, pageMeta: Metadata) {
+  const body = renderToString(<RootLayout>{tree}</RootLayout>);
   const merged: Metadata = { ...layoutMeta, ...pageMeta };
   // 레이아웃이 <head>(CSP meta)를 렌더링하므로 그 안에 metadata 태그를 합친다
   const html =
@@ -146,14 +155,37 @@ const MODULES: Record<string, { default: () => React.ReactNode; metadata: Metada
   "/contact/": Contact,
   "/reservation/": Reservation,
 };
+async function main() {
+const g = globalThis as { __OFFLINE_PATHNAME__?: string };
+const localeSegs = new Set(localeParams().map((p) => p.locale));
 for (const r of routes) {
+  g.__OFFLINE_PATHNAME__ = r.path;
+  const file = join(r.path.slice(1), "index.html");
+  if (r.locale) {
+    // 실제 Next 와 같이 async 서버 컴포넌트를 await 한 뒤 렌더링 (params 는 Promise)
+    const seg = getLocale(routeLocale(r)).segment!;
+    if (!localeSegs.has(seg)) throw new Error(`offline render: generateStaticParams 에 ${seg} 없음`);
+    const params = Promise.resolve({ locale: seg });
+    const mod = r.group === "reservation" ? LocaleRsvPage : LocaleHomePage;
+    const page = await mod.default({ params });
+    const tree = await LocaleLayout({ children: page, params });
+    renderPage(file, tree, await mod.generateMetadata({ params }));
+    continue;
+  }
   const mod = MODULES[r.path];
   if (!mod) throw new Error(`offline render: ${r.path} 모듈 매핑 없음`);
-  renderPage(join(r.path.slice(1), "index.html"), mod.default, mod.metadata);
+  const Page = mod.default;
+  renderPage(file, <KoLayout>{<Page />}</KoLayout>, mod.metadata);
 }
-renderPage("404.html", NotFound, nfMeta);
+g.__OFFLINE_PATHNAME__ = "/";
+renderPage("404.html", <NotFound />, nfMeta);
 writeFileSync(join(OUT, "sitemap.xml"), sitemapXml(sitemap()));
 writeFileSync(join(OUT, "robots.txt"), robotsTxt(robots()));
 
 // CSS · client JS 는 run.sh 가 out/_next/static 에 생성
 console.log(`[offline-render] ${OUT}/ basePath="${basePath}" : ${routes.length + 1} html + sitemap.xml + robots.txt (${readFileSync(join(OUT, "robots.txt"), "utf8").split("\n")[1]})`);
+}
+main().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});

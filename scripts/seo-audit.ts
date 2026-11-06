@@ -10,11 +10,15 @@
  *  - JSON-LD 파싱·필수 속성·리뷰/별점 금지·FAQ 화면 일치·미공개 업체 정보 노출 금지
  *  - .nojekyll / CNAME / CSP meta / Netlify 잔재
  *  - 임시 문구·테스트 값·허위 최상급 표현
+ *  - 다국어: 페이지별 html lang, self-canonical, hreflang 상호 참조·x-default, 번역 누락(빈 문구·한글 잔존)
  */
 import { readFileSync, readdirSync, statSync, existsSync, writeFileSync, mkdirSync } from "node:fs";
 import { join, relative } from "node:path";
 import { mode, baseUrl, absoluteUrl, basePath, site, operator, partners, businessReady, isProduction, urlKind } from "@/lib/site";
-import { routes, isIndexable, isPublished } from "@/lib/routes";
+import { routes, isIndexable, isPublished, routeLocale } from "@/lib/routes";
+import { hreflangMap } from "@/lib/seo";
+import { CONTENT } from "@/lib/i18n";
+import { LOCALES, getLocale, publishedIntlLocales } from "@/lib/i18n/locales";
 import { useFixture } from "@/lib/env";
 
 const OUT = process.argv[2] || "out";
@@ -105,6 +109,17 @@ const titles = new Map<string, string[]>();
 const descs = new Map<string, string[]>();
 const indexableOut = new Set<string>();
 const canonicals = new Map<string, string>();
+/** 페이지별 출력된 hreflang 링크 (route → {hreflang: url}) */
+const hreflangOut = new Map<string, Record<string, string>>();
+/** 외국어 페이지에서 제휴 매장 주소 옆에 있어야 하는 고지 문구 */
+const PARTNER_DISCLAIMERS = [/사업장 주소가 아닙니다|직영점이 아닙니다/, ...Object.values(CONTENT).map((c) => c.rsv.partnerDisclaimer)];
+/** 서버 없이 예약 접수·확정 완료로 표시하는 문구 (언어별) */
+const FAKE_DONE = [
+  /예약(이)?\s?(완료|접수\s?완료|접수되었습니다|확정되었습니다)|저장되었습니다|접수되었습니다/,
+  /your (reservation|booking|inquiry) (has been|is) (confirmed|received|saved)|booking confirmed/i,
+  /予約(が|を)?(完了|確定)しました|受け付けました/,
+  /预订成功|预约成功|预订已确认|預約成功|預訂成功|預約已確認|已收到您的預約/,
+];
 
 const PLACEHOLDER = [/data-pending=/i, /\[미정/, /\bTODO\b/, /lorem ipsum/i, /example\.(com|kr|org)/i, /localhost(:\d+)?/i, /127\.0\.0\.1/, /\[object Object\]/, /010-0000-0000|000-0000/];
 const FIXTURE = [/fixture[.-]test/i, /053-000-0001|010-0000-0001/, /테스트용 가라오케|테스트구|테스트동/];
@@ -122,7 +137,19 @@ for (const file of pages) {
   const text = visibleText(html);
   const scan = html.replace(/<script(?![^>]*application\/ld\+json)[^>]*>[\s\S]*?<\/script>/gi, "");
 
-  if (!/<html[^>]*\slang="ko"/i.test(html)) add("error", route, "lang", 'html lang="ko" 없음');
+  const expectLang = getLocale(def ? routeLocale(def) : "ko").htmlLang;
+  const gotLang = html.match(/<html[^>]*\slang="([^"]+)"/i)?.[1];
+  if (gotLang !== expectLang) add("error", route, "lang", `html lang="${gotLang ?? "(없음)"}" ≠ 기대값 "${expectLang}"`);
+  // hreflang 수집 (검증은 전체 페이지를 읽은 뒤 상호 참조로)
+  const alts: Record<string, string> = {};
+  for (const t of html.match(/<link\s[^>]*>/gi) ?? []) {
+    if ((attr(t, "rel") ?? "").toLowerCase() !== "alternate") continue;
+    const hl = attr(t, "hreflang") ?? attr(t, "hrefLang");
+    if (!hl) continue;
+    if (alts[hl]) add("error", route, "hreflang", `hreflang="${hl}" 중복`);
+    alts[hl] = attr(t, "href") ?? "";
+  }
+  hreflangOut.set(route, alts);
   if (!metaContent(html, "viewport")) add("error", route, "viewport", "meta viewport 없음");
   if (isProduction && !metaContent(html, "Content-Security-Policy", "http-equiv")) add("error", route, "security", "CSP meta 없음 (GitHub Pages는 헤더 설정 불가)");
   if (!metaContent(html, "referrer")) add("warn", route, "security", "referrer meta 없음");
@@ -259,21 +286,93 @@ for (const file of pages) {
     }
   }
 
+  // 번역 누락 검사: 외국어 페이지 본문에 한국어가 남아 있으면 안 됨 (병기한 법정 명칭·주소 등 소량은 허용)
+  if (def && routeLocale(def) !== "ko") {
+    const main = visibleText(html.match(/<main[\s\S]*?<\/main>/i)?.[0] ?? "").replace(/\s/g, "");
+    const hangul = (main.match(/[\uac00-\ud7a3]/g) ?? []).length;
+    const ratio = main.length ? hangul / main.length : 0;
+    if (ratio > 0.08) add("error", route, "i18n-untranslated", `본문 한글 비율 ${(ratio * 100).toFixed(1)}% (>8%) — 번역 누락 의심`);
+  }
   for (const re of PLACEHOLDER) if (re.test(scan)) add(ph, route, "placeholder", `임시 문구/테스트 값 감지: ${re}`);
   if (!useFixture()) for (const re of FIXTURE) if (re.test(scan)) add("error", route, "placeholder", `테스트 fixture 값 노출: ${re}`);
   if (/\{\{|\}\}/.test(text)) add(ph, route, "placeholder", "템플릿 문법 {{ }} 노출");
   for (const re of SUPERLATIVE) if (re.test(text)) add("error", route, "claim", `근거 없는 최상급 표현: ${re}`);
   // 서버가 없으므로 예약 접수·저장·확정을 완료한 것처럼 표시하면 안 됨
-  if (/예약(이)?\s?(완료|접수\s?완료|접수되었습니다|확정되었습니다)|저장되었습니다|접수되었습니다/.test(text))
-    add("error", route, "claim", "서버 없이 예약 접수/저장/확정 완료로 표시");
+  for (const re of FAKE_DONE) if (re.test(text)) add("error", route, "claim", `서버 없이 예약 접수/저장/확정 완료로 표시: ${re}`);
   // 제휴 매장 주소를 표시하면 운영자 사업장이 아니라는 고지가 함께 있어야 함
   for (const pv of partners)
-    if (text.includes(pv.address) && !/사업장 주소가 아닙니다|직영점이 아닙니다/.test(text))
+    if (text.includes(pv.address) && !PARTNER_DISCLAIMERS.some((d) => (typeof d === "string" ? text.includes(d) : d.test(text))))
       add("error", route, "partner-address", `제휴 매장 주소(${pv.address})가 운영자 사업장이 아니라는 고지 없이 표시됨`);
 }
 
 for (const [t, rs] of titles) if (rs.length > 1) add("error", rs.join(", "), "title-dup", `중복 title: ${t}`);
 for (const [d, rs] of descs) if (rs.length > 1) add("error", rs.join(", "), "desc-dup", `중복 description: ${d.slice(0, 40)}…`);
+
+/* ───── hreflang 상호 참조 ───── */
+{
+  for (const [route, alts] of hreflangOut) {
+    const def = routes.find((r) => r.path === route);
+    if (!def) continue;
+    const expected = isIndexable(def) ? hreflangMap(def) : undefined;
+    const got = Object.keys(alts).length ? alts : undefined;
+    if (!expected) {
+      if (got) add("error", route, "hreflang", `번역 묶음이 아닌(또는 noindex) 페이지에 hreflang 출력: ${Object.keys(got).join(",")}`);
+      continue;
+    }
+    if (JSON.stringify(Object.entries(got ?? {}).sort()) !== JSON.stringify(Object.entries(expected).sort())) {
+      add("error", route, "hreflang", `hreflang 집합 불일치\n        기대: ${JSON.stringify(expected)}\n        실제: ${JSON.stringify(got ?? {})}`);
+      continue;
+    }
+    const self = getLocale(routeLocale(def)).hreflang;
+    if (alts[self] !== absoluteUrl(route)) add("error", route, "hreflang", `자기 자신(${self}) 참조 없음/불일치`);
+    if (!alts["x-default"]) add("error", route, "hreflang", "x-default 없음");
+    for (const [hl, url] of Object.entries(alts)) {
+      if (!/^https:\/\//.test(url) && isProduction) add("error", route, "hreflang", `hreflang URL이 https 절대 URL이 아님: ${url}`);
+      if (hl !== "x-default" && !LOCALES.some((l) => l.hreflang === hl)) add("error", route, "hreflang", `레지스트리에 없는 hreflang 코드: ${hl}`);
+      const sp = sitePath(url);
+      const target = sp && basePath ? sp.slice(basePath.length) : sp;
+      if (!target || !hreflangOut.has(target)) {
+        add("error", route, "hreflang", `hreflang 대상 페이지 없음: ${hl} → ${url}`);
+        continue;
+      }
+      // 상호 참조: 대상 페이지도 이 페이지를 같은 코드로 가리켜야 함
+      if (hreflangOut.get(target)![self] !== absoluteUrl(route)) add("error", route, "hreflang-return", `${hl} 페이지(${target})가 이 페이지(${self})를 되돌려 참조하지 않음`);
+      if (canonicals.get(target) !== url) add("error", route, "hreflang", `hreflang 대상의 canonical이 대상 URL과 다름: ${url}`);
+      if (!indexableOut.has(target)) add("error", route, "hreflang", `hreflang 대상이 noindex: ${url}`);
+    }
+  }
+}
+
+/* ───── 번역 콘텐츠 완결성 (공개 언어) ───── */
+{
+  const walkStrings = (v: unknown, path: string, out: [string, string][]) => {
+    if (typeof v === "string") out.push([path, v]);
+    else if (Array.isArray(v)) v.forEach((x, i) => walkStrings(x, `${path}[${i}]`, out));
+    else if (v && typeof v === "object") for (const [k, x] of Object.entries(v)) walkStrings(x, `${path}.${k}`, out);
+  };
+  const shape = (v: unknown): string =>
+    Array.isArray(v) ? `[${v.length ? shape(v[0]) : ""}]` : v && typeof v === "object" ? `{${Object.keys(v).sort().map((k) => `${k}:${shape((v as Record<string, unknown>)[k])}`).join(",")}}` : typeof v;
+  const ref = CONTENT.en;
+  for (const l of publishedIntlLocales()) {
+    const c = CONTENT[l.key];
+    if (!c) {
+      add("error", `/${l.segment}/`, "i18n-missing", "공개 언어인데 콘텐츠 없음");
+      continue;
+    }
+    if (shape(c) !== shape(ref)) add("error", `/${l.segment}/`, "i18n-missing", "콘텐츠 구조가 기준(en)과 다름 — 항목 누락 의심");
+    const strs: [string, string][] = [];
+    walkStrings(c, l.key, strs);
+    for (const [k, v] of strs) {
+      if (!v.trim()) add("error", `/${l.segment}/`, "i18n-missing", `빈 번역 문구: ${k}`);
+      // 한국어 병기 필드(korean)·주소 외 문구에 한글이 섞이면 번역 누락
+      if (!/\.korean$/.test(k) && /[\uac00-\ud7a3]{4,}/.test(v.replace(/\(([^)]*[\uac00-\ud7a3][^)]*)\)|（[^）]*）|「[^」]*」|“[^”]*”/g, "")))
+        add("warn", `/${l.segment}/`, "i18n-hangul", `한국어가 남은 문구(병기 아님?): ${k} = ${v.slice(0, 40)}`);
+    }
+    // 같은 언어의 다른 지역판(zh-tw/zh-hk)이 글자 그대로 같으면 지역화가 안 된 것
+    for (const o of publishedIntlLocales())
+      if (o.key < l.key && JSON.stringify(CONTENT[o.key]) === JSON.stringify(c)) add("error", `/${l.segment}/`, "i18n-duplicate", `${o.key} 와 콘텐츠가 완전히 같음`);
+  }
+}
 
 /* ───── 404 ───── */
 const nf = notFoundFiles.find((f) => /(^|\/)404\.html$/.test(relative(OUT, f)));
@@ -358,6 +457,7 @@ const summary = {
   pages: [...outRoutes],
   indexable: [...indexableOut],
   noindex: [...outRoutes].filter((r) => !indexableOut.has(r)),
+  hreflang: Object.fromEntries(hreflangOut),
   sitemap: sitemapUrls,
   errors: errors.length,
   warnings: warns.length,

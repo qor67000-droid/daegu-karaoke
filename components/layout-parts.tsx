@@ -1,12 +1,15 @@
 import Link from "next/link";
-import { site, operator, brand, businessReady, reservationReady, fullAddress, telHref, isDev, formatDays, formatHours } from "@/lib/site";
+import { site, operator, intlPhone, brand, businessReady, reservationReady, fullAddress, telHref, isDev, formatDays, formatHours } from "@/lib/site";
 import { navRoutes } from "@/lib/routes";
 import { legalNotice, DRINK_NOTICE } from "@/lib/content";
 import { Pending } from "@/components/ui";
+import { LanguageList, LanguageMenu } from "@/components/language-switcher";
+import { CONTENT } from "@/lib/i18n";
+import { getLocale, localePath, type IntlLocaleKey } from "@/lib/i18n/locales";
 
-function Logo() {
+function Logo({ href = "/", name }: { href?: string; name?: string }) {
   return (
-    <Link href="/" className="group flex shrink-0 items-center gap-2 sm:gap-3">
+    <Link href={href} className="group flex shrink-0 items-center gap-2 sm:gap-3">
       <span aria-hidden="true" className="grid h-9 w-9 place-items-center rounded-full border border-gold/60 text-gold">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
           <path d="M9 18V6l10-2v12" stroke="currentColor" strokeWidth="1.6" />
@@ -15,7 +18,7 @@ function Logo() {
         </svg>
       </span>
       <span className="leading-tight">
-        <span className="h-display block text-[0.95rem] whitespace-nowrap sm:text-[1.05rem]">{brand() || (isDev ? <Pending label="상호" /> : operator.serviceName)}</span>
+        <span className="h-display block text-[0.95rem] whitespace-nowrap sm:text-[1.05rem]">{name ?? (brand() || (isDev ? <Pending label="상호" /> : operator.serviceName))}</span>
         <span className="block text-[0.66rem] tracking-[0.28em] text-mute">DAEGU KARAOKE</span>
       </span>
     </Link>
@@ -41,6 +44,8 @@ export function Header() {
               ))}
             </ul>
           </nav>
+          {/* 언어 선택 (PC) — 예약 버튼 위치는 그대로 오른쪽 끝 */}
+          <LanguageMenu current="ko" label="언어 선택 (Language)" />
           {/* 핵심 동선: 예약 문의 — PC·모바일 모두 상단에 항상 노출 */}
           {rsv && (
             <Link
@@ -60,7 +65,7 @@ export function Header() {
                 <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" strokeWidth="1.6" />
               </svg>
             </summary>
-            <nav aria-label="모바일 메뉴" className="card absolute right-0 mt-2 w-52 p-2 shadow-2xl">
+            <nav aria-label="모바일 메뉴" className="card absolute right-0 mt-2 w-64 p-2 shadow-2xl">
               <ul>
                 {navRoutes(isDev).map((r) => (
                   <li key={r.path}>
@@ -70,6 +75,7 @@ export function Header() {
                   </li>
                 ))}
               </ul>
+              <LanguageList current="ko" label="언어 · Language" />
             </nav>
           </details>
         </div>
@@ -169,6 +175,117 @@ export function Footer() {
       </div>
       <div className="wrap border-t border-line pt-6 text-xs text-mute">
         © {new Date().getFullYear()} {brand() || operator.serviceName}. 요금·영업시간 등 업소 정보는 업소 사정에 따라 변경될 수 있으니 방문 전 확인하세요.
+      </div>
+    </footer>
+  );
+}
+
+/* ───────────────────────── 다국어 페이지용 머리글·바닥글 ───────────────────────── */
+
+/** 외국어 페이지 머리글: 로고(→ 해당 언어 홈) · 언어 선택 · 예약 문의 */
+export function LocaleHeader({ locale }: { locale: IntlLocaleKey }) {
+  const c = CONTENT[locale];
+  const rsv = reservationReady();
+  return (
+    <header className="absolute inset-x-0 top-0 z-30">
+      <div className="wrap flex h-20 items-center justify-between gap-3">
+        <Logo href={localePath(locale, "home")} name={c.meta.siteName} />
+        <div className="flex shrink-0 items-center gap-2 md:gap-4">
+          <LanguageMenu current={locale} label={c.ui.language} />
+          {rsv && (
+            <Link
+              href={localePath(locale, "reservation")}
+              className="inline-flex min-h-11 items-center rounded-full bg-gold px-3.5 text-sm font-semibold whitespace-nowrap text-ink hover:bg-gold-2 md:px-5"
+              data-track="click_reservation_header"
+              data-testid="header-reservation"
+            >
+              {c.ui.reservation}
+            </Link>
+          )}
+          <details className="relative md:hidden">
+            <summary className="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-full border border-line [&::-webkit-details-marker]:hidden">
+              <span className="sr-only">{c.ui.menuOpen}</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" strokeWidth="1.6" />
+              </svg>
+            </summary>
+            <nav aria-label={c.ui.mobileMenu} className="card absolute right-0 mt-2 w-64 p-2 shadow-2xl">
+              <ul>
+                <li>
+                  <Link href={localePath(locale, "home")} className="block rounded-lg px-4 py-3 text-sm hover:bg-ink-3">
+                    {c.ui.home}
+                  </Link>
+                </li>
+                {rsv && (
+                  <li>
+                    <Link href={localePath(locale, "reservation")} className="block rounded-lg px-4 py-3 text-sm hover:bg-ink-3">
+                      {c.ui.reservation}
+                    </Link>
+                  </li>
+                )}
+              </ul>
+              <LanguageList current={locale} label={c.ui.language} />
+            </nav>
+          </details>
+        </div>
+      </div>
+    </header>
+  );
+}
+
+export function LocaleFooter({ locale }: { locale: IntlLocaleKey }) {
+  const c = CONTENT[locale];
+  return (
+    <footer className="mt-24 border-t border-line bg-ink-2 pb-24 md:pb-10" lang={getLocale(locale).htmlLang}>
+      <div className="wrap grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
+        <div>
+          <Logo href={localePath(locale, "home")} name={c.meta.siteName} />
+          <div className="mt-6 max-w-sm space-y-2 text-sm text-mute">
+            <p>{c.ui.footerAbout}</p>
+            {reservationReady() && operator.phone && (
+              <p>
+                <span className="text-ivory/80">{c.ui.reservation}</span>{" "}
+                <a href={telHref(operator.phone)} data-track="click_call" className="hover:text-gold-2">
+                  {operator.phone}
+                </a>{" "}
+                <span className="whitespace-nowrap">({intlPhone(operator.phone)})</span>
+              </p>
+            )}
+          </div>
+        </div>
+        <nav aria-label={c.ui.mainMenu}>
+          <p className="eyebrow mb-4">Menu</p>
+          <ul className="space-y-2 text-sm text-mute">
+            <li>
+              <Link href={localePath(locale, "home")} className="hover:text-ivory">
+                {c.ui.home}
+              </Link>
+            </li>
+            {reservationReady() && (
+              <li>
+                <Link href={localePath(locale, "reservation")} className="hover:text-ivory">
+                  {c.ui.reservation}
+                </Link>
+              </li>
+            )}
+          </ul>
+        </nav>
+        <div>
+          <p className="eyebrow mb-4">Notice</p>
+          <p className="flex items-start gap-3 text-sm text-mute">
+            <span
+              aria-hidden="true"
+              className="grid h-9 w-9 shrink-0 place-items-center rounded-full border-2 border-red-500 text-xs font-bold text-red-400"
+            >
+              19
+            </span>
+            <span>{c.ui.legalNotice}</span>
+          </p>
+          <p className="mt-3 text-xs text-mute">{c.ui.drinkNotice}</p>
+        </div>
+      </div>
+      <div className="wrap border-t border-line pt-6 text-xs text-mute">
+        © {new Date().getFullYear()} {c.meta.siteName}. {c.ui.copyright}
       </div>
     </footer>
   );

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { SiteDocument } from "@/components/document";
 
 export const metadata: Metadata = {
   title: { absolute: "페이지를 찾을 수 없습니다" },
@@ -8,6 +9,7 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
+    <SiteDocument locale="ko">
     <section className="wrap grain flex min-h-[70vh] flex-col items-start justify-center pt-28">
       <p className="eyebrow mb-4">404</p>
       <h1 className="h-display text-4xl sm:text-5xl">페이지를 찾을 수 없습니다</h1>
@@ -16,5 +18,6 @@ export default function NotFound() {
         홈으로
       </Link>
     </section>
+    </SiteDocument>
   );
 }

@@ -1,30 +1,56 @@
 import type { Metadata } from "next";
 import { site, operator, absoluteUrl, brand, fullAddress, SCHEMA_DAY, baseUrl, businessReady } from "@/lib/site";
-import { getRoute, isIndexable, routes, type RouteDef } from "@/lib/routes";
+import { getRoute, groupRoutes, isIndexable, routeLocale, routes, type RouteDef } from "@/lib/routes";
+import { CONTENT } from "@/lib/i18n";
+import { getLocale, type LocaleKey } from "@/lib/i18n/locales";
 import type { FaqItem } from "@/lib/types";
 
 /**
  * 모든 URL은 절대 URL로 만든다.
  * (metadataBase 상대 해석은 /repo 하위 경로를 잃을 수 있어 GitHub Pages 프로젝트 사이트에서 위험)
  */
+/**
+ * hreflang: 같은 묶음(group)의 공개 언어 버전 전체 + x-default(한국어 버전).
+ * 모든 언어 버전이 자기 자신과 다른 버전을 모두 나열하므로 상호 참조가 성립한다.
+ * 묶음이 없는 페이지(한국어 전용 가이드 등)는 hreflang 을 내지 않는다.
+ */
+export function hreflangMap(r: RouteDef): Record<string, string> | undefined {
+  if (!r.group) return undefined;
+  const alts = groupRoutes(r.group);
+  if (alts.length < 2) return undefined;
+  const map: Record<string, string> = {};
+  for (const a of alts) map[getLocale(routeLocale(a)).hreflang] = absoluteUrl(a.path);
+  const ko = alts.find((a) => routeLocale(a) === "ko");
+  if (ko) map["x-default"] = absoluteUrl(ko.path);
+  return map;
+}
+
+const siteNameOf = (locale: LocaleKey) => (locale === "ko" ? brand() || operator.serviceName : CONTENT[locale].meta.siteName);
+
 export function buildMetadata(path: string): Metadata {
   const r = getRoute(path);
   const url = absoluteUrl(path);
   const index = isIndexable(r);
+  const locale = routeLocale(r);
+  const languages = hreflangMap(r);
+  const ogAlternates = languages
+    ? groupRoutes(r.group!).map((a) => getLocale(routeLocale(a)).ogLocale).filter((l) => l !== getLocale(locale).ogLocale)
+    : undefined;
   const ogImage = site.heroPhoto && businessReady() ? absoluteUrl(`/images/${site.heroPhoto.file}.jpg`) : absoluteUrl("/og-default.png");
   return {
     title: { absolute: r.title() },
     description: r.description(),
-    alternates: { canonical: url },
+    alternates: { canonical: url, ...(languages ? { languages } : {}) },
     robots: index ? { index: true, follow: true } : { index: false, follow: true },
     openGraph: {
       type: "website",
-      locale: "ko_KR",
+      locale: getLocale(locale).ogLocale,
+      ...(ogAlternates?.length ? { alternateLocale: ogAlternates } : {}),
       url,
-      siteName: brand() || operator.serviceName,
+      siteName: siteNameOf(locale),
       title: r.title(),
       description: r.description(),
-      images: [{ url: ogImage, width: 1200, height: 630, alt: brand() || operator.serviceName }],
+      images: [{ url: ogImage, width: 1200, height: 630, alt: siteNameOf(locale) }],
     },
     twitter: { card: "summary_large_image", title: r.title(), description: r.description() },
   };
@@ -34,14 +60,24 @@ export function buildMetadata(path: string): Metadata {
 
 type Json = Record<string, unknown>;
 
-export function websiteLd(): Json {
+export function websiteLd(locale: LocaleKey = "ko"): Json {
+  if (locale === "ko")
+    return {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": `${baseUrl()}/#website`,
+      url: absoluteUrl("/"),
+      name: brand() || operator.serviceName,
+      inLanguage: "ko-KR",
+    };
+  const home = groupRoutes("home").find((r) => routeLocale(r) === locale)!;
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "@id": `${baseUrl()}/#website`,
-    url: absoluteUrl("/"),
-    name: brand() || operator.serviceName,
-    inLanguage: "ko-KR",
+    "@id": `${absoluteUrl(home.path)}#website`,
+    url: absoluteUrl(home.path),
+    name: siteNameOf(locale),
+    inLanguage: getLocale(locale).hreflang,
   };
 }
 

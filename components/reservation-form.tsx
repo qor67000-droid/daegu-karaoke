@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState, type MouseEvent } from "react";
+import type { LocaleKey } from "@/lib/i18n/locales";
+import { FORM_TEXT, buildInquiry, type FormText, type Method, type VenueTypeKey } from "@/lib/i18n/form-text";
 
 /**
  * 예약 문의 작성기 (GitHub Pages — 서버 없음)
@@ -16,15 +18,15 @@ export interface ReservationFormProps {
   kakaoUrl: string | null;
   lineUrl: string | null;
   telegramUrl: string | null;
+  /** 화면·메시지 언어 (기본 ko = 기존 /reservation/ 그대로) */
+  locale?: LocaleKey;
 }
 
-const DAY = ["일", "월", "화", "수", "목", "금", "토"];
 const TIMES = (() => {
   const t: string[] = [];
   for (let h = 17; h <= 28; h++) for (const m of [0, 30]) t.push(`${String(h % 24).padStart(2, "0")}:${m ? "30" : "00"}`);
   return t;
 })();
-const PEOPLE = [...Array.from({ length: 15 }, (_, i) => `${i + 1}명`), "16명 이상"];
 
 function todayISO() {
   const d = new Date();
@@ -32,11 +34,8 @@ function todayISO() {
   return d.toISOString().slice(0, 10);
 }
 
-type Method = "sms" | "kakao" | "line" | "telegram" | "call";
-const METHOD_LABEL: Record<Method, string> = { sms: "문자", kakao: "카카오톡", line: "LINE", telegram: "텔레그램", call: "전화" };
-
 /** 오늘·내일·이번 토요일(오늘이 토요일이면 다음 토요일) */
-function quickDates(today: string) {
+function quickDates(today: string, t: FormText) {
   const base = new Date(`${today}T00:00:00`);
   const fmt = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
   const add = (n: number) => {
@@ -46,36 +45,17 @@ function quickDates(today: string) {
   };
   const toSat = (6 - base.getDay() + 7) % 7 || 7;
   return [
-    { key: "today", label: "오늘", value: fmt(base) },
-    { key: "tomorrow", label: "내일", value: fmt(add(1)) },
-    { key: "saturday", label: `토요일 ${add(toSat).getMonth() + 1}/${add(toSat).getDate()}`, value: fmt(add(toSat)) },
+    { key: "today", label: t.today, value: fmt(base) },
+    { key: "tomorrow", label: t.tomorrow, value: fmt(add(1)) },
+    { key: "saturday", label: `${t.saturday} ${add(toSat).getMonth() + 1}/${add(toSat).getDate()}`, value: fmt(add(toSat)) },
   ];
 }
 
-export const VENUE_TYPE_OPTIONS = [
-  { key: "yuheung", label: "유흥주점" },
-  { key: "danran", label: "단란주점" },
-  { key: "any", label: "상담 후 결정" },
-] as const;
-export type VenueTypeKey = (typeof VENUE_TYPE_OPTIONS)[number]["key"];
-const typeLabel = (k: VenueTypeKey) => VENUE_TYPE_OPTIONS.find((o) => o.key === k)?.label ?? "상담 후 결정";
+export const VENUE_TYPE_KEYS: VenueTypeKey[] = ["yuheung", "danran", "any"];
 
-export function buildMessage(v: { venueType?: VenueTypeKey; date: string; time: string; people: string; note: string; method?: Method }) {
-  const d = v.date ? new Date(`${v.date}T00:00:00`) : null;
-  const dateLabel = d && !Number.isNaN(d.getTime()) ? `${v.date} (${DAY[d.getDay()]})` : v.date;
-  return [
-    "[대구 가라오케 예약 문의]",
-    `희망 업종: ${typeLabel(v.venueType ?? "any")}`,
-    `날짜: ${dateLabel}`,
-    `시간: ${v.time}`,
-    `인원: ${v.people}`,
-    `요청사항: ${v.note.trim() || "없음"}`,
-    ...(v.method ? [`희망 연락 방식: ${METHOD_LABEL[v.method]}`] : []),
-    "예약 가능 여부 확인 후 연락 부탁드립니다.",
-  ].join("\n");
-}
-
-export function ReservationForm({ smsNumber, phone, kakaoUrl, lineUrl, telegramUrl }: ReservationFormProps) {
+export function ReservationForm({ smsNumber, phone, kakaoUrl, lineUrl, telegramUrl, locale = "ko" }: ReservationFormProps) {
+  const t = FORM_TEXT[locale];
+  const PEOPLE = useMemo(() => [...Array.from({ length: 15 }, (_, i) => t.peopleUnit(i + 1)), t.peopleMax], [t]);
   const [method, setMethod] = useState<Method>("sms");
   const [venueType, setVenueType] = useState<VenueTypeKey>("any");
   const [date, setDate] = useState("");
@@ -96,13 +76,13 @@ export function ReservationForm({ smsNumber, phone, kakaoUrl, lineUrl, telegramU
   }, []);
 
   const errors = {
-    date: !date ? "방문 날짜를 선택하세요." : minDate && date < minDate ? "오늘 이후 날짜를 선택하세요." : "",
-    time: !time ? "방문 시간을 선택하세요." : "",
-    people: !people ? "인원을 선택하세요." : "",
-    adult: !adult ? "만 19세 이상만 문의할 수 있습니다." : "",
+    date: !date ? t.errDate : minDate && date < minDate ? t.errDateFuture : "",
+    time: !time ? t.errTime : "",
+    people: !people ? t.errPeople : "",
+    adult: !adult ? t.errAdult : "",
   };
   const valid = !Object.values(errors).some(Boolean);
-  const message = useMemo(() => buildMessage({ venueType, date, time, people, note, method }), [venueType, date, time, people, note, method]);
+  const message = useMemo(() => buildInquiry(locale, { venueType, date, time, people, note, method }), [locale, venueType, date, time, people, note, method]);
   // iOS는 sms:번호&body=, 그 외(안드로이드 등)는 sms:번호?body=
   const smsHref = `sms:${smsNumber}${ios ? "&" : "?"}body=${encodeURIComponent(message)}`;
 
@@ -116,12 +96,12 @@ export function ReservationForm({ smsNumber, phone, kakaoUrl, lineUrl, telegramU
   const methods: Method[] = ["sms", ...(["kakao", "line", "telegram"] as const).filter((m) => messengerUrl[m]), ...(phone ? (["call"] as const) : [])];
   const primary: { href: string; label: string; track: string; external?: boolean; onClick?: (e: MouseEvent) => void } =
     method === "sms"
-      ? { href: smsHref, label: "문자 앱에서 예약 문의 보내기", track: "click_sms_reservation", onClick: (e) => guard(e) }
+      ? { href: smsHref, label: t.submitSms, track: "click_sms_reservation", onClick: (e) => guard(e) }
       : method === "call"
-        ? { href: `tel:${(phone ?? "").replace(/[^0-9+]/g, "")}`, label: `전화로 예약 문의 (${phone})`, track: "click_call_reservation" }
+        ? { href: `tel:${(phone ?? "").replace(/[^0-9+]/g, "")}`, label: t.submitCall(phone ?? ""), track: "click_call_reservation" }
         : {
             href: messengerUrl[method] ?? "#",
-            label: `내용 복사 후 ${METHOD_LABEL[method]} 열기`,
+            label: t.submitMessenger(t.methods[method]),
             track: `click_${method}_reservation`,
             external: true,
             onClick: (e) => {
@@ -150,13 +130,13 @@ export function ReservationForm({ smsNumber, phone, kakaoUrl, lineUrl, telegramU
   const err = (m: string) => showErrors && m ? <p className="mt-1.5 text-sm text-red-300" role="alert">{m}</p> : null;
 
   return (
-    <form className="card space-y-6 p-6 sm:p-8" onSubmit={(e) => e.preventDefault()} noValidate aria-describedby="rsv-notice">
+    <form className="card space-y-6 p-6 sm:p-8" onSubmit={(e) => e.preventDefault()} noValidate aria-describedby="rsv-notice" data-locale={locale}>
       <fieldset>
         <legend className="text-sm">
-          희망 업종 <span className="text-gold">*</span>
+          {t.typeLegend} <span className="text-gold">*</span>
         </legend>
         <div className="mt-2 flex flex-wrap gap-2" role="radiogroup" data-testid="rsv-type">
-          {VENUE_TYPE_OPTIONS.map((o) => (
+          {VENUE_TYPE_KEYS.map((key) => ({ key, label: t.typeLabels[key] })).map((o) => (
             <label
               key={o.key}
               className={`inline-flex min-h-11 cursor-pointer items-center rounded-full border px-4 text-sm ${
@@ -177,17 +157,16 @@ export function ReservationForm({ smsNumber, phone, kakaoUrl, lineUrl, telegramU
           ))}
         </div>
         <p className="mt-2 text-xs text-mute">
-          유흥주점과 단란주점은 영업 범위가 다른 업종입니다. 선택하신 업종으로 영업신고된 제휴 매장이 있는지 확인해 안내하며, 잘 모르시면 ‘상담 후
-          결정’을 선택하세요.
+          {t.typeHelp}
         </p>
       </fieldset>
       <div className="grid gap-5 sm:grid-cols-3">
         <label className="block text-sm">
-          방문 날짜 <span className="text-gold">*</span>
+          {t.date} <span className="text-gold">*</span>
           <input type="date" name="date" className={field} value={date} min={minDate} onChange={(e) => setDate(e.target.value)} required />
           {minDate && (
-            <span className="mt-2 flex gap-2" role="group" aria-label="빠른 날짜 선택">
-              {quickDates(minDate).map((q) => (
+            <span className="mt-2 flex gap-2" role="group" aria-label={t.quickDates}>
+              {quickDates(minDate, t).map((q) => (
                 <button
                   key={q.label}
                   type="button"
@@ -203,9 +182,9 @@ export function ReservationForm({ smsNumber, phone, kakaoUrl, lineUrl, telegramU
           {err(errors.date)}
         </label>
         <label className="block text-sm">
-          방문 시간 <span className="text-gold">*</span>
+          {t.time} <span className="text-gold">*</span>
           <select name="time" className={field} value={time} onChange={(e) => setTime(e.target.value)} required>
-            <option value="">시간 선택</option>
+            <option value="">{t.timePlaceholder}</option>
             {TIMES.map((t) => (
               <option key={t} value={t}>
                 {t}
@@ -215,9 +194,9 @@ export function ReservationForm({ smsNumber, phone, kakaoUrl, lineUrl, telegramU
           {err(errors.time)}
         </label>
         <label className="block text-sm">
-          인원 <span className="text-gold">*</span>
+          {t.people} <span className="text-gold">*</span>
           <select name="people" className={field} value={people} onChange={(e) => setPeople(e.target.value)} required>
-            <option value="">인원 선택</option>
+            <option value="">{t.peoplePlaceholder}</option>
             {PEOPLE.map((p) => (
               <option key={p} value={p}>
                 {p}
@@ -228,26 +207,26 @@ export function ReservationForm({ smsNumber, phone, kakaoUrl, lineUrl, telegramU
         </label>
       </div>
       <label className="block text-sm">
-        요청사항 <span className="text-mute">(선택, 300자 이내)</span>
+        {t.note} <span className="text-mute">{t.noteOptional}</span>
         <textarea
           name="note"
           maxLength={300}
           rows={3}
           className={`${field} py-3`}
-          placeholder="예: 룸 크기, 도착 예정 시간 변동 가능성 등"
+          placeholder={t.notePlaceholder}
           value={note}
           onChange={(e) => setNote(e.target.value)}
         />
       </label>
       <label className="flex min-h-11 items-center gap-3 text-sm">
         <input type="checkbox" name="adult" className="h-5 w-5 accent-[#c9a96b]" checked={adult} onChange={(e) => setAdult(e.target.checked)} />
-        방문 인원 모두 만 19세 이상입니다.
+        {t.adult}
       </label>
       {err(errors.adult)}
 
       <fieldset>
         <legend className="text-sm">
-          연락 방식 <span className="text-gold">*</span>
+          {t.methodLegend} <span className="text-gold">*</span>
         </legend>
         <div className="mt-2 flex flex-wrap gap-2" role="radiogroup">
           {methods.map((m) => (
@@ -258,14 +237,14 @@ export function ReservationForm({ smsNumber, phone, kakaoUrl, lineUrl, telegramU
               }`}
             >
               <input type="radio" name="method" value={m} checked={method === m} onChange={() => setMethod(m)} className="sr-only" />
-              {METHOD_LABEL[m]}
+              {t.methods[m]}
             </label>
           ))}
         </div>
       </fieldset>
 
       <div>
-        <p className="text-sm text-mute">보낼 문의 내용 미리보기</p>
+        <p className="text-sm text-mute">{t.preview}</p>
         <pre className="mt-2 rounded-xl border border-line bg-ink p-4 text-sm whitespace-pre-wrap text-ivory/90" data-testid="rsv-preview">
           {message}
         </pre>
@@ -284,27 +263,30 @@ export function ReservationForm({ smsNumber, phone, kakaoUrl, lineUrl, telegramU
           {primary.label}
         </a>
         <button type="button" onClick={copy} className="btn-ghost" data-testid="rsv-copy">
-          문의 내용 복사
+          {t.copy}
         </button>
       </div>
       {method === "call" && (
         <p className="text-sm text-mute" role="note">
-          통화 연결 후 위 미리보기의 날짜·시간·인원·요청사항을 말씀해 주세요.
+          {t.callNote}
         </p>
       )}
       {copied === "ok" && (
         <p className="text-sm text-gold-2" role="status">
-          문의 내용을 복사했습니다. {method === "sms" || method === "call" ? "메신저" : METHOD_LABEL[method]} 대화창에 붙여넣어 보내 주세요.
+          {t.copied(method === "sms" || method === "call" ? t.messengerWord : t.methods[method])}
         </p>
       )}
       {copied === "fail" && (
         <p className="text-sm text-red-300" role="status">
-          자동 복사가 되지 않았습니다. 미리보기 내용을 길게 눌러 직접 복사해 주세요.
+          {t.copyFail}
         </p>
       )}
       <p id="rsv-notice" className="rounded-xl border border-gold/30 bg-gold/5 p-4 text-sm text-ivory/85">
-        이 화면은 입력 내용을 저장하거나 전송하지 않습니다. 버튼을 누르면 문자 앱·메신저·전화가 열리며, <strong>직접 전송하거나 통화하셔야 문의가 전달</strong>
-        됩니다. 예약은 운영자가 제휴 매장의 예약 가능 여부를 확인한 뒤 연락드려 <strong>고객님과 확인 후 확정</strong>됩니다.
+        {t.notice[0]}
+        <strong>{t.notice[1]}</strong>
+        {t.notice[2]}
+        <strong>{t.notice[3]}</strong>
+        {t.notice[4]}
       </p>
     </form>
   );

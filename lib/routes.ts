@@ -1,4 +1,6 @@
 import { site, brand, businessReady, isProduction, reservationReady } from "@/lib/site";
+import { CONTENT } from "@/lib/i18n";
+import { localePath, publishedIntlLocales, type LocaleKey, type PageGroup } from "@/lib/i18n/locales";
 
 /**
  * 라우트 두 종류
@@ -19,6 +21,10 @@ export interface RouteDef {
   /** 페이지가 독자적으로 유용한 실제 정보를 갖고 있는지 */
   hasContent: () => boolean;
   priority: number;
+  /** 페이지 언어 (기본 ko) */
+  locale?: LocaleKey;
+  /** 다른 언어 버전이 있는 페이지 묶음 → hreflang 상호 참조 대상 */
+  group?: PageGroup;
 }
 
 const b = () => (brand() ? ` | ${brand()}` : "");
@@ -30,6 +36,7 @@ export const routes: RouteDef[] = [
     path: "/",
     kind: "info",
     nav: "홈",
+    group: "home",
     title: () =>
       businessReady()
         ? `대구 가라오케·노래방 | ${brand()} 공식 안내`
@@ -90,6 +97,7 @@ export const routes: RouteDef[] = [
     path: "/reservation/",
     kind: "service",
     nav: "예약 문의",
+    group: "reservation",
     title: () => "대구 유흥주점·단란주점 예약 문의 방법 | 대구 가라오케",
     description: () =>
       "희망 업종(유흥주점·단란주점)과 날짜·시간·인원을 남기면 대구 수성구 제휴 매장의 이용 가능 여부를 확인해 연락드립니다. 전화·문자·카카오톡·LINE·텔레그램으로 문의할 수 있습니다.",
@@ -154,6 +162,41 @@ export const routes: RouteDef[] = [
   },
 ];
 
+/* ───────── 다국어 페이지 (lib/i18n/locales.ts 에서 published 인 언어만) ───────── */
+for (const l of publishedIntlLocales()) {
+  const c = CONTENT[l.key];
+  routes.push(
+    {
+      path: localePath(l.key, "home"),
+      kind: "info",
+      nav: c.ui.home,
+      title: () => c.meta.homeTitle,
+      description: () => c.meta.homeDescription,
+      h1: () => c.home.h1.join(" "),
+      hasContent: () => true,
+      priority: 0.8,
+      locale: l.key,
+      group: "home",
+    },
+    {
+      path: localePath(l.key, "reservation"),
+      kind: "service",
+      nav: c.ui.reservation,
+      title: () => c.meta.rsvTitle,
+      description: () => c.meta.rsvDescription,
+      h1: () => c.rsv.h1,
+      hasContent: () => reservationReady(),
+      priority: 0.7,
+      locale: l.key,
+      group: "reservation",
+    },
+  );
+}
+
+/** 같은 페이지 묶음의 언어별 라우트 (hreflang) */
+export const groupRoutes = (group: PageGroup) => routes.filter((r) => r.group === group && isPublished(r));
+export const routeLocale = (r: RouteDef): LocaleKey => r.locale ?? "ko";
+
 export const getRoute = (path: string) => {
   const r = routes.find((x) => x.path === path);
   if (!r) throw new Error(`unknown route ${path}`);
@@ -168,4 +211,4 @@ export const isPublished = (r: RouteDef) =>
 export const isIndexable = (r: RouteDef) => isProduction && isPublished(r);
 
 /** 내비게이션: 공개 페이지만 (개발 모드는 전부 노출해 작업 확인) */
-export const navRoutes = (dev: boolean) => routes.filter((r) => dev || isPublished(r));
+export const navRoutes = (dev: boolean) => routes.filter((r) => !r.locale && (dev || isPublished(r)));

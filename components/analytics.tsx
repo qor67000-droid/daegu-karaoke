@@ -20,7 +20,8 @@ export function ClickTracker() {
       const el = (e.target as HTMLElement | null)?.closest<HTMLElement>("[data-track]");
       if (!el) return;
       const name = el.dataset.track!;
-      const params = { link_url: el.getAttribute("href") ?? "", page_path: location.pathname };
+      // page_language: 한국어/외국어 페이지 성과를 GA4에서 나눠 보기 위한 값 (<html lang>)
+      const params = { link_url: el.getAttribute("href") ?? "", page_path: location.pathname, page_language: document.documentElement.lang };
       if (typeof window.gtag === "function") window.gtag("event", name, params);
       else (window.dataLayer ||= []).push({ event: name, ...params });
     };
