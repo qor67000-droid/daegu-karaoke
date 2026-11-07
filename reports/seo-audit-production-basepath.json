@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-06T10:06:25.275Z",
+  "generatedAt": "2026-11-07T11:22:11.448Z",
   "mode": "production",
   "fixture": false,
   "base": "https://qor67000-droid.github.io/daegu-karaoke",
@@ -9,6 +9,7 @@
   "pages": [
     "/about/",
     "/contact/",
+    "/danran-jujeom/",
     "/en/",
     "/en/reservation/",
     "/guide/daegu-areas/",
@@ -21,6 +22,7 @@
     "/price/",
     "/reservation/",
     "/rooms/",
+    "/yuheung-jujeom/",
     "/zh-cn/",
     "/zh-cn/reservation/",
     "/zh-hk/",
@@ -29,6 +31,7 @@
     "/zh-tw/reservation/"
   ],
   "indexable": [
+    "/danran-jujeom/",
     "/en/",
     "/en/reservation/",
     "/guide/daegu-areas/",
@@ -38,6 +41,7 @@
     "/ja/",
     "/ja/reservation/",
     "/reservation/",
+    "/yuheung-jujeom/",
     "/zh-cn/",
     "/zh-cn/reservation/",
     "/zh-hk/",
@@ -55,6 +59,7 @@
   "hreflang": {
     "/about/": {},
     "/contact/": {},
+    "/danran-jujeom/": {},
     "/en/": {
       "ko-KR": "https://qor67000-droid.github.io/daegu-karaoke/",
       "ja-JP": "https://qor67000-droid.github.io/daegu-karaoke/ja/",
@@ -115,6 +120,7 @@
       "x-default": "https://qor67000-droid.github.io/daegu-karaoke/reservation/"
     },
     "/rooms/": {},
+    "/yuheung-jujeom/": {},
     "/zh-cn/": {
       "ko-KR": "https://qor67000-droid.github.io/daegu-karaoke/",
       "ja-JP": "https://qor67000-droid.github.io/daegu-karaoke/ja/",
@@ -176,6 +182,8 @@
     "https://qor67000-droid.github.io/daegu-karaoke/guide/first-visit/",
     "https://qor67000-droid.github.io/daegu-karaoke/guide/daegu-areas/",
     "https://qor67000-droid.github.io/daegu-karaoke/reservation/",
+    "https://qor67000-droid.github.io/daegu-karaoke/yuheung-jujeom/",
+    "https://qor67000-droid.github.io/daegu-karaoke/danran-jujeom/",
     "https://qor67000-droid.github.io/daegu-karaoke/ja/",
     "https://qor67000-droid.github.io/daegu-karaoke/ja/reservation/",
     "https://qor67000-droid.github.io/daegu-karaoke/en/",

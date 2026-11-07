@@ -28,6 +28,8 @@ import * as Price from "@/app/(ko)/price/page";
 import * as Location from "@/app/(ko)/location/page";
 import * as Contact from "@/app/(ko)/contact/page";
 import * as Reservation from "@/app/(ko)/reservation/page";
+import * as Yuheung from "@/app/(ko)/yuheung-jujeom/page";
+import * as Danran from "@/app/(ko)/danran-jujeom/page";
 import LocaleLayout, { generateStaticParams as localeParams } from "@/app/[locale]/layout";
 import * as LocaleHomePage from "@/app/[locale]/page";
 import * as LocaleRsvPage from "@/app/[locale]/reservation/page";
@@ -154,6 +156,8 @@ const MODULES: Record<string, { default: () => React.ReactNode; metadata: Metada
   "/location/": Location,
   "/contact/": Contact,
   "/reservation/": Reservation,
+  "/yuheung-jujeom/": Yuheung,
+  "/danran-jujeom/": Danran,
 };
 async function main() {
 const g = globalThis as { __OFFLINE_PATHNAME__?: string };

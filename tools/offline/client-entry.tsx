@@ -20,7 +20,7 @@ if (form?.parentElement && operator.smsNumber) {
   const root = createRoot(host);
   flushSync(() =>
     root.render(
-      <ReservationForm locale={locale} smsNumber={operator.smsNumber} phone={operator.phone} kakaoUrl={operator.kakaoUrl} lineUrl={operator.lineUrl} telegramUrl={operator.telegramUrl} />,
+      <ReservationForm locale={locale} defaultType={(form.getAttribute("data-default-type") || "any") as "yuheung" | "danran" | "any"} smsNumber={operator.smsNumber} phone={operator.phone} kakaoUrl={operator.kakaoUrl} lineUrl={operator.lineUrl} telegramUrl={operator.telegramUrl} />,
     ),
   );
   form.replaceWith(host);

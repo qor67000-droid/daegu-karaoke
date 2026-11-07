@@ -36,8 +36,8 @@ export function Header() {
           <nav aria-label="주요 메뉴" className="hidden md:block">
             <ul className="flex items-center gap-7 text-sm text-ivory/85">
               {nav.map((r) => (
-                <li key={r.path}>
-                  <Link href={r.path} className="hover:text-gold-2">
+                <li key={r.path} className={r.headerFrom === "xl" ? "hidden xl:block" : undefined}>
+                  <Link href={r.path} className="whitespace-nowrap hover:text-gold-2">
                     {r.nav}
                   </Link>
                 </li>

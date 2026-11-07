@@ -58,6 +58,9 @@ export default function GuidePage() {
               시행령 제22조에서 유흥종사자는 손님과 함께 술을 마시거나 노래·춤으로 흥을 돋우는 부녀자인 유흥접객원을, 유흥시설은 춤을 출 수
               있도록 설치한 무도장을 말합니다.
             </p>
+            <Link href="/yuheung-jujeom/" className="mt-4 inline-block text-sm text-gold-2 underline-offset-4 hover:underline">
+              대구 유흥주점 예약 문의·확인 사항 →
+            </Link>
           </article>
           <article className="card p-6">
             <h3 className="h-display text-xl">단란주점영업</h3>
@@ -68,6 +71,9 @@ export default function GuidePage() {
               유흥종사자를 두거나 유흥시설을 설치할 수 있는 것은 유흥주점뿐이므로, 단란주점에서는 유흥접객원이 동석할 수 없습니다. 객실 구조 등
               시설기준은 관할 구청 안내를 따릅니다.
             </p>
+            <Link href="/danran-jujeom/" className="mt-4 inline-block text-sm text-gold-2 underline-offset-4 hover:underline">
+              대구 단란주점 시설기준·예약 문의 →
+            </Link>
           </article>
         </div>
         <p className="mt-5 text-sm text-mute">

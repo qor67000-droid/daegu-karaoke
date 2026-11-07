@@ -213,6 +213,12 @@ async function main() {
       const main = h.match(/<main[\s\S]*?<\/main>/)?.[0] ?? "";
       check(`${path} 본문 → 예약 페이지 내부 링크`, main.includes(`href="${rsvPath}"`));
     }
+    check("홈 → 대구 유흥주점·단란주점 상세 링크", hrefOf(home, "detail-yuheung") === new URL(absoluteUrl("/yuheung-jujeom/")).pathname && hrefOf(home, "detail-danran") === new URL(absoluteUrl("/danran-jujeom/")).pathname);
+    for (const dp of ["/yuheung-jujeom/", "/danran-jujeom/"]) {
+      const h = await (await get(LIVE + dp)).text();
+      check(`${dp} 희망 업종 사전 선택·제휴 매장 업종 '확인 중'`, h.includes('data-default-type="' + (dp.startsWith("/yuheung") ? "yuheung" : "danran") + '"') && /data-testid="type-partner-status"[\s\S]{0,300}확인 중/.test(h));
+      check(`${dp} hreflang 없음 (한국어 전용 페이지)`, !/<link[^>]*hreflang/i.test(h));
+    }
     for (const l of publishedIntlLocales()) {
       const hp = localePath(l.key, "home");
       const rp = localePath(l.key, "reservation");

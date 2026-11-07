@@ -20,6 +20,8 @@ export interface ReservationFormProps {
   telegramUrl: string | null;
   /** 화면·메시지 언어 (기본 ko = 기존 /reservation/ 그대로) */
   locale?: LocaleKey;
+  /** 업종 상세 페이지에서 미리 선택할 희망 업종 (?type= 이 있으면 그쪽이 우선) */
+  defaultType?: VenueTypeKey;
 }
 
 const TIMES = (() => {
@@ -53,11 +55,11 @@ function quickDates(today: string, t: FormText) {
 
 export const VENUE_TYPE_KEYS: VenueTypeKey[] = ["yuheung", "danran", "any"];
 
-export function ReservationForm({ smsNumber, phone, kakaoUrl, lineUrl, telegramUrl, locale = "ko" }: ReservationFormProps) {
+export function ReservationForm({ smsNumber, phone, kakaoUrl, lineUrl, telegramUrl, locale = "ko", defaultType = "any" }: ReservationFormProps) {
   const t = FORM_TEXT[locale];
   const PEOPLE = useMemo(() => [...Array.from({ length: 15 }, (_, i) => t.peopleUnit(i + 1)), t.peopleMax], [t]);
   const [method, setMethod] = useState<Method>("sms");
-  const [venueType, setVenueType] = useState<VenueTypeKey>("any");
+  const [venueType, setVenueType] = useState<VenueTypeKey>(defaultType);
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [people, setPeople] = useState("");
@@ -130,7 +132,7 @@ export function ReservationForm({ smsNumber, phone, kakaoUrl, lineUrl, telegramU
   const err = (m: string) => showErrors && m ? <p className="mt-1.5 text-sm text-red-300" role="alert">{m}</p> : null;
 
   return (
-    <form className="card space-y-6 p-6 sm:p-8" onSubmit={(e) => e.preventDefault()} noValidate aria-describedby="rsv-notice" data-locale={locale}>
+    <form className="card space-y-6 p-6 sm:p-8" onSubmit={(e) => e.preventDefault()} noValidate aria-describedby="rsv-notice" data-locale={locale} data-default-type={defaultType}>
       <fieldset>
         <legend className="text-sm">
           {t.typeLegend} <span className="text-gold">*</span>

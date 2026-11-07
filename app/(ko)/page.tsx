@@ -218,9 +218,14 @@ function InfoHome() {
                 <li>· 손님이 노래를 부르거나 춤을 추는 것이 허용됩니다.</li>
                 <li>· 문의하시면 해당 매장이 유흥주점으로 신고된 곳인지와 예약 가능 시간, 요금 기준을 확인해 알려드립니다.</li>
               </ul>
-              <Link href="/reservation/?type=yuheung" className="btn-gold mt-6" data-track="click_reservation_intent_yuheung">
-                유흥주점 예약 문의
-              </Link>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Link href="/reservation/?type=yuheung" className="btn-gold" data-track="click_reservation_intent_yuheung">
+                  유흥주점 예약 문의
+                </Link>
+                <Link href="/yuheung-jujeom/" className="btn-ghost" data-testid="detail-yuheung">
+                  대구 유흥주점 자세히 보기
+                </Link>
+              </div>
             </article>
             <article className="card border-gold/40 p-6 sm:p-8" data-testid="type-danran">
               <p className="eyebrow mb-2">식품위생법 · 단란주점영업</p>
@@ -230,9 +235,14 @@ function InfoHome() {
                 <li>· 유흥종사자를 둘 수 없으므로 일행끼리 술과 노래를 즐기는 방식입니다.</li>
                 <li>· 문의하시면 해당 매장이 단란주점으로 신고된 곳인지와 예약 가능 시간, 요금 기준을 확인해 알려드립니다.</li>
               </ul>
-              <Link href="/reservation/?type=danran" className="btn-gold mt-6" data-track="click_reservation_intent_danran">
-                단란주점 예약 문의
-              </Link>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Link href="/reservation/?type=danran" className="btn-gold" data-track="click_reservation_intent_danran">
+                  단란주점 예약 문의
+                </Link>
+                <Link href="/danran-jujeom/" className="btn-ghost" data-testid="detail-danran">
+                  대구 단란주점 자세히 보기
+                </Link>
+              </div>
             </article>
           </div>
           <div className="mt-5 grid gap-4 lg:grid-cols-2">

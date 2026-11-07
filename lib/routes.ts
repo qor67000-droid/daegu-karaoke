@@ -23,6 +23,8 @@ export interface RouteDef {
   priority: number;
   /** 페이지 언어 (기본 ko) */
   locale?: LocaleKey;
+  /** 데스크톱 상단 메뉴 노출 시작 폭 (기존 메뉴 배치를 밀지 않도록 넓은 화면에서만) */
+  headerFrom?: "xl";
   /** 다른 언어 버전이 있는 페이지 묶음 → hreflang 상호 참조 대상 */
   group?: PageGroup;
 }
@@ -104,6 +106,32 @@ export const routes: RouteDef[] = [
     h1: () => "대구 유흥주점·단란주점 예약 문의",
     hasContent: () => reservationReady(),
     priority: 0.9,
+  },
+
+  /* ───────── 업종별 상세 (한국어 전용 → hreflang 없음) ───────── */
+  {
+    path: "/yuheung-jujeom/",
+    kind: "service",
+    nav: "유흥주점",
+    headerFrom: "xl",
+    title: () => "대구 유흥주점 예약 문의 | 허가 업종 확인·이용 전 체크리스트",
+    description: () =>
+      "대구 유흥주점 예약 문의 방법과 운영자가 실제로 확인해 드리는 항목, 식품위생법상 영업 범위, 개별소비세 포함 여부 등 예약 전 확인할 점을 정리했습니다.",
+    h1: () => "대구 유흥주점 예약 문의",
+    hasContent: () => reservationReady(),
+    priority: 0.8,
+  },
+  {
+    path: "/danran-jujeom/",
+    kind: "service",
+    nav: "단란주점",
+    headerFrom: "xl",
+    title: () => "대구 단란주점 예약 문의 | 유흥주점과 차이·시설기준·이용 안내",
+    description: () =>
+      "대구 단란주점 예약 문의 방법, 유흥주점과 다른 영업 범위, 구청이 안내하는 단란주점 시설기준, 모임·회식 때 확인할 점을 정리했습니다.",
+    h1: () => "대구 단란주점 예약 문의",
+    hasContent: () => reservationReady(),
+    priority: 0.8,
   },
 
   /* ───────── 업체 페이지 (실제 정보 확인 후 공개) ───────── */

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-06T10:07:52.423Z",
+  "generatedAt": "2026-11-07T11:23:59.263Z",
   "basePath": "/daegu-karaoke",
   "note": "로컬 실험실 측정. 실사용자(CrUX) 지표 아님",
   "results": [
@@ -97,6 +97,46 @@
       "name": "/reservation → 301 /reservation/",
       "ok": true,
       "detail": "301 /daegu-karaoke/reservation/"
+    },
+    {
+      "name": "GET /yuheung-jujeom/ → 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "/yuheung-jujeom/ 초기 HTML에 H1",
+      "ok": true,
+      "detail": "대구 유흥주점 예약 문의"
+    },
+    {
+      "name": "/yuheung-jujeom/ robots=index",
+      "ok": true,
+      "detail": "index, follow"
+    },
+    {
+      "name": "/yuheung-jujeom → 301 /yuheung-jujeom/",
+      "ok": true,
+      "detail": "301 /daegu-karaoke/yuheung-jujeom/"
+    },
+    {
+      "name": "GET /danran-jujeom/ → 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "/danran-jujeom/ 초기 HTML에 H1",
+      "ok": true,
+      "detail": "대구 단란주점 예약 문의"
+    },
+    {
+      "name": "/danran-jujeom/ robots=index",
+      "ok": true,
+      "detail": "index, follow"
+    },
+    {
+      "name": "/danran-jujeom → 301 /danran-jujeom/",
+      "ok": true,
+      "detail": "301 /daegu-karaoke/danran-jujeom/"
     },
     {
       "name": "GET /about/ → 200",
@@ -574,6 +614,56 @@
       "detail": "0개 미달"
     },
     {
+      "name": "mobile /yuheung-jujeom/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "mobile /yuheung-jujeom/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /yuheung-jujeom/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /yuheung-jujeom/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "mobile /yuheung-jujeom/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "mobile /danran-jujeom/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "mobile /danran-jujeom/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /danran-jujeom/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /danran-jujeom/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "mobile /danran-jujeom/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
       "name": "mobile /about/ CSS 적용(basePath 경로)",
       "ok": true,
       "detail": "1 sheets, bg rgb(11, 10, 13)"
@@ -981,7 +1071,7 @@
     {
       "name": "mobile 빠른 날짜 '내일' 선택",
       "ok": true,
-      "detail": "2026-11-07"
+      "detail": "2026-11-08"
     },
     {
       "name": "mobile 문자 문의 링크 생성",
@@ -1060,7 +1150,7 @@
     {
       "name": "mobile 예약 안내 → 업종별 예약 안내 → 업종 비교 → 지역 → 이용 절차 → FAQ 순서",
       "ok": true,
-      "detail": "1312 < 2685 < 4149 < 5352 < 6375 < 7447"
+      "detail": "1312 < 2685 < 4269 < 5472 < 6495 < 7567"
     },
     {
       "name": "mobile 예약 문의하기 클릭 → 예약 페이지 이동",
@@ -1081,6 +1171,44 @@
       "name": "mobile 하단 예약 버튼 클릭 → 예약 페이지 이동",
       "ok": true,
       "detail": "/daegu-karaoke/reservation/"
+    },
+    {
+      "name": "mobile /yuheung-jujeom/ 희망 업종 '유흥주점' 사전 선택",
+      "ok": true
+    },
+    {
+      "name": "mobile /yuheung-jujeom/ 제휴 매장 업종 미확인 표시",
+      "ok": true
+    },
+    {
+      "name": "mobile /yuheung-jujeom/ 문자 본문에 '희망 업종: 유흥주점'",
+      "ok": true,
+      "detail": "희망 업종: 유흥주점"
+    },
+    {
+      "name": "mobile /yuheung-jujeom/ → /danran-jujeom/ 상호 링크",
+      "ok": true
+    },
+    {
+      "name": "mobile /danran-jujeom/ 희망 업종 '단란주점' 사전 선택",
+      "ok": true
+    },
+    {
+      "name": "mobile /danran-jujeom/ 제휴 매장 업종 미확인 표시",
+      "ok": true
+    },
+    {
+      "name": "mobile /danran-jujeom/ 문자 본문에 '희망 업종: 단란주점'",
+      "ok": true,
+      "detail": "희망 업종: 단란주점"
+    },
+    {
+      "name": "mobile /danran-jujeom/ → /yuheung-jujeom/ 상호 링크",
+      "ok": true
+    },
+    {
+      "name": "mobile 홈 업종 카드 → 상세 페이지 링크",
+      "ok": true
     },
     {
       "name": "mobile /ja/ html lang=\"ja\"",
@@ -1608,6 +1736,56 @@
       "detail": "0개 미달"
     },
     {
+      "name": "desktop /yuheung-jujeom/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "desktop /yuheung-jujeom/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /yuheung-jujeom/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /yuheung-jujeom/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "desktop /yuheung-jujeom/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
+      "name": "desktop /danran-jujeom/ CSS 적용(basePath 경로)",
+      "ok": true,
+      "detail": "1 sheets, bg rgb(11, 10, 13)"
+    },
+    {
+      "name": "desktop /danran-jujeom/ 하위 리소스 4xx 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /danran-jujeom/ 깨진 이미지 없음",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /danran-jujeom/ 가로 넘침 없음",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "desktop /danran-jujeom/ CTA 터치 영역 ≥ 44px",
+      "ok": true,
+      "detail": "0개 미달"
+    },
+    {
       "name": "desktop /about/ CSS 적용(basePath 경로)",
       "ok": true,
       "detail": "1 sheets, bg rgb(11, 10, 13)"
@@ -2015,7 +2193,7 @@
     {
       "name": "desktop 빠른 날짜 '내일' 선택",
       "ok": true,
-      "detail": "2026-11-07"
+      "detail": "2026-11-08"
     },
     {
       "name": "desktop 문자 문의 링크 생성",
@@ -2103,6 +2281,44 @@
     },
     {
       "name": "desktop 하단 바 숨김",
+      "ok": true
+    },
+    {
+      "name": "desktop /yuheung-jujeom/ 희망 업종 '유흥주점' 사전 선택",
+      "ok": true
+    },
+    {
+      "name": "desktop /yuheung-jujeom/ 제휴 매장 업종 미확인 표시",
+      "ok": true
+    },
+    {
+      "name": "desktop /yuheung-jujeom/ 문자 본문에 '희망 업종: 유흥주점'",
+      "ok": true,
+      "detail": "희망 업종: 유흥주점"
+    },
+    {
+      "name": "desktop /yuheung-jujeom/ → /danran-jujeom/ 상호 링크",
+      "ok": true
+    },
+    {
+      "name": "desktop /danran-jujeom/ 희망 업종 '단란주점' 사전 선택",
+      "ok": true
+    },
+    {
+      "name": "desktop /danran-jujeom/ 제휴 매장 업종 미확인 표시",
+      "ok": true
+    },
+    {
+      "name": "desktop /danran-jujeom/ 문자 본문에 '희망 업종: 단란주점'",
+      "ok": true,
+      "detail": "희망 업종: 단란주점"
+    },
+    {
+      "name": "desktop /danran-jujeom/ → /yuheung-jujeom/ 상호 링크",
+      "ok": true
+    },
+    {
+      "name": "desktop 홈 업종 카드 → 상세 페이지 링크",
       "ok": true
     },
     {
@@ -2483,63 +2699,71 @@
   ],
   "perf": {
     "mobile /": {
-      "lcp": 152,
+      "lcp": 256,
       "cls": 0
     },
     "mobile /guide/": {
-      "lcp": 156,
-      "cls": 0
-    },
-    "mobile /guide/first-visit/": {
-      "lcp": 104,
-      "cls": 0
-    },
-    "mobile /guide/daegu-areas/": {
-      "lcp": 88,
-      "cls": 0
-    },
-    "mobile /reservation/": {
-      "lcp": 144,
-      "cls": 0
-    },
-    "mobile /about/": {
-      "lcp": 84,
-      "cls": 0
-    },
-    "mobile /rooms/": {
-      "lcp": 120,
-      "cls": 0
-    },
-    "mobile /price/": {
-      "lcp": 100,
-      "cls": 0
-    },
-    "mobile /location/": {
-      "lcp": 80,
-      "cls": 0
-    },
-    "mobile /contact/": {
-      "lcp": 76,
-      "cls": 0
-    },
-    "mobile /ja/": {
-      "lcp": 124,
-      "cls": 0
-    },
-    "mobile /ja/reservation/": {
       "lcp": 128,
       "cls": 0
     },
-    "mobile /en/": {
-      "lcp": 108,
+    "mobile /guide/first-visit/": {
+      "lcp": 96,
       "cls": 0
     },
-    "mobile /en/reservation/": {
+    "mobile /guide/daegu-areas/": {
       "lcp": 104,
       "cls": 0
     },
+    "mobile /reservation/": {
+      "lcp": 128,
+      "cls": 0
+    },
+    "mobile /yuheung-jujeom/": {
+      "lcp": 132,
+      "cls": 0
+    },
+    "mobile /danran-jujeom/": {
+      "lcp": 112,
+      "cls": 0
+    },
+    "mobile /about/": {
+      "lcp": 80,
+      "cls": 0
+    },
+    "mobile /rooms/": {
+      "lcp": 80,
+      "cls": 0
+    },
+    "mobile /price/": {
+      "lcp": 96,
+      "cls": 0
+    },
+    "mobile /location/": {
+      "lcp": 84,
+      "cls": 0
+    },
+    "mobile /contact/": {
+      "lcp": 100,
+      "cls": 0
+    },
+    "mobile /ja/": {
+      "lcp": 192,
+      "cls": 0
+    },
+    "mobile /ja/reservation/": {
+      "lcp": 160,
+      "cls": 0
+    },
+    "mobile /en/": {
+      "lcp": 84,
+      "cls": 0
+    },
+    "mobile /en/reservation/": {
+      "lcp": 128,
+      "cls": 0
+    },
     "mobile /zh-cn/": {
-      "lcp": 124,
+      "lcp": 580,
       "cls": 0
     },
     "mobile /zh-cn/reservation/": {
@@ -2547,100 +2771,108 @@
       "cls": 0
     },
     "mobile /zh-tw/": {
-      "lcp": 124,
+      "lcp": 148,
       "cls": 0
     },
     "mobile /zh-tw/reservation/": {
-      "lcp": 116,
-      "cls": 0
-    },
-    "mobile /zh-hk/": {
-      "lcp": 120,
-      "cls": 0
-    },
-    "mobile /zh-hk/reservation/": {
-      "lcp": 128,
-      "cls": 0
-    },
-    "desktop /": {
-      "lcp": 180,
-      "cls": 0
-    },
-    "desktop /guide/": {
-      "lcp": 128,
-      "cls": 0
-    },
-    "desktop /guide/first-visit/": {
-      "lcp": 124,
-      "cls": 0
-    },
-    "desktop /guide/daegu-areas/": {
-      "lcp": 128,
-      "cls": 0
-    },
-    "desktop /reservation/": {
-      "lcp": 132,
-      "cls": 0
-    },
-    "desktop /about/": {
       "lcp": 104,
       "cls": 0
     },
-    "desktop /rooms/": {
-      "lcp": 128,
+    "mobile /zh-hk/": {
+      "lcp": 156,
       "cls": 0
     },
-    "desktop /price/": {
-      "lcp": 116,
+    "mobile /zh-hk/reservation/": {
+      "lcp": 156,
       "cls": 0
     },
-    "desktop /location/": {
-      "lcp": 108,
+    "desktop /": {
+      "lcp": 144,
       "cls": 0
     },
-    "desktop /contact/": {
+    "desktop /guide/": {
       "lcp": 112,
       "cls": 0
     },
-    "desktop /ja/": {
-      "lcp": 188,
+    "desktop /guide/first-visit/": {
+      "lcp": 144,
       "cls": 0
     },
-    "desktop /ja/reservation/": {
-      "lcp": 152,
-      "cls": 0.004
+    "desktop /guide/daegu-areas/": {
+      "lcp": 108,
+      "cls": 0
     },
-    "desktop /en/": {
+    "desktop /reservation/": {
+      "lcp": 140,
+      "cls": 0
+    },
+    "desktop /yuheung-jujeom/": {
+      "lcp": 156,
+      "cls": 0
+    },
+    "desktop /danran-jujeom/": {
+      "lcp": 164,
+      "cls": 0
+    },
+    "desktop /about/": {
+      "lcp": 144,
+      "cls": 0
+    },
+    "desktop /rooms/": {
+      "lcp": 108,
+      "cls": 0
+    },
+    "desktop /price/": {
+      "lcp": 100,
+      "cls": 0
+    },
+    "desktop /location/": {
+      "lcp": 148,
+      "cls": 0
+    },
+    "desktop /contact/": {
+      "lcp": 96,
+      "cls": 0
+    },
+    "desktop /ja/": {
       "lcp": 172,
       "cls": 0
     },
+    "desktop /ja/reservation/": {
+      "lcp": 128,
+      "cls": 0.004
+    },
+    "desktop /en/": {
+      "lcp": 152,
+      "cls": 0
+    },
     "desktop /en/reservation/": {
-      "lcp": 116,
+      "lcp": 120,
       "cls": 0.003
     },
     "desktop /zh-cn/": {
-      "lcp": 168,
+      "lcp": 140,
       "cls": 0
     },
     "desktop /zh-cn/reservation/": {
-      "lcp": 152,
-      "cls": 0.004
+      "lcp": 108,
+      "cls": 0
     },
     "desktop /zh-tw/": {
-      "lcp": 176,
+      "lcp": 172,
       "cls": 0
     },
     "desktop /zh-tw/reservation/": {
-      "lcp": 132,
+      "lcp": 168,
       "cls": 0.004
     },
     "desktop /zh-hk/": {
-      "lcp": 160,
+      "lcp": 156,
       "cls": 0
     },
     "desktop /zh-hk/reservation/": {
-      "lcp": 184,
-      "cls": 0
+      "lcp": 148,
+      "cls": 0.004
     }
   }
 }

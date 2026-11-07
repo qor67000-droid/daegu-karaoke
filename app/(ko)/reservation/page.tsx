@@ -73,6 +73,16 @@ export default function ReservationPage() {
       </section>
 
       <section aria-labelledby="model">
+        <p className="mb-8 text-sm text-mute" data-testid="type-detail-links">
+          업종별 영업 범위와 예약 전 확인할 점:{" "}
+          <Link href="/yuheung-jujeom/" className="text-gold-2 underline-offset-4 hover:underline">
+            대구 유흥주점 안내
+          </Link>
+          {" · "}
+          <Link href="/danran-jujeom/" className="text-gold-2 underline-offset-4 hover:underline">
+            대구 단란주점 안내
+          </Link>
+        </p>
         <SectionHeading id="model" title="운영 방식">
           이 서비스는 매장과 별개로 운영되는 예약 안내 서비스입니다. 운영자가 하는 일과 하지 않는 일을 구분해 안내합니다.
         </SectionHeading>

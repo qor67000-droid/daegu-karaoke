@@ -288,6 +288,30 @@ async function main() {
         }
         await hp.close();
       }
+      // ── 업종 상세 페이지: 희망 업종 사전 선택, 문자 본문, 제휴 매장 업종 '확인 중', 내부 링크 ──
+      if (reservationReady()) {
+        for (const [path, key, label] of [["/yuheung-jujeom/", "yuheung", "유흥주점"], ["/danran-jujeom/", "danran", "단란주점"]] as const) {
+          const dp = await ctx.newPage();
+          await dp.goto(root + path, { waitUntil: "networkidle" });
+          check(`${vp.name} ${path} 희망 업종 '${label}' 사전 선택`, await dp.locator(`[data-testid="rsv-type-${key}"]`).isChecked());
+          check(`${vp.name} ${path} 제휴 매장 업종 미확인 표시`, ((await dp.locator('[data-testid="type-partner-status"]').textContent()) ?? "").includes("확인 중"));
+          const d = new Date(Date.now() + 3 * 86400_000 + 9 * 3600_000).toISOString().slice(0, 10);
+          await dp.fill('input[name="date"]', d);
+          await dp.selectOption('select[name="time"]', "21:00");
+          await dp.selectOption('select[name="people"]', "5명");
+          await dp.check('input[name="adult"]');
+          const href = (await dp.locator('[data-testid="rsv-submit"]').getAttribute("href")) ?? "";
+          const body = decodeURIComponent(href.split(/[?&]body=/)[1] ?? "");
+          check(`${vp.name} ${path} 문자 본문에 '희망 업종: ${label}'`, href.startsWith(`sms:${operator.smsNumber}`) && body.includes(`희망 업종: ${label}`) && body.includes("인원: 5명"), body.split("\n")[1] ?? "");
+          const other = key === "yuheung" ? "/danran-jujeom/" : "/yuheung-jujeom/";
+          check(`${vp.name} ${path} → ${other} 상호 링크`, (await dp.locator(`main a[href="${basePath}${other}"]`).count()) > 0);
+          await dp.close();
+        }
+        const hp2 = await ctx.newPage();
+        await hp2.goto(root + "/", { waitUntil: "domcontentloaded" });
+        check(`${vp.name} 홈 업종 카드 → 상세 페이지 링크`, (await hp2.locator('[data-testid="detail-yuheung"]').getAttribute("href")) === `${basePath}/yuheung-jujeom/` && (await hp2.locator('[data-testid="detail-danran"]').getAttribute("href")) === `${basePath}/danran-jujeom/`);
+        await hp2.close();
+      }
       // ── 다국어: 언어별 홈·예약 페이지, 언어 전환 ──
       if (reservationReady()) {
         const vh = vp.height;
