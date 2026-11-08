@@ -231,8 +231,10 @@ async function main() {
       check(`${rp} 전화·문자·카카오톡·LINE·텔레그램 링크 그대로`, links.every((x) => x && main.includes(`href="${x}"`)));
       check(`${rp} 업종 선택·제휴 매장 업종 '확인 중'`, rh.includes('data-testid="rsv-type-danran"') && /data-testid="partner-license"[^>]*>[^<]*(確認中|確認中|确认中|Being verified|確認中)/.test(rh));
     }
-    const ids = ["reservation", "intent", "compare", "areas", "steps", "faq"].map((id) => home.indexOf(`id="${id}"`));
-    check("홈 섹션 순서: 예약 안내 → 업종별 예약 안내 → 업종 비교 → 지역 → 이용 절차 → FAQ", ids.every((v, i) => v > 0 && (i === 0 || v > ids[i - 1]!)));
+    const ids = ["reservation", "intent", "partner", "steps", "compare", "areas", "faq"].map((id) => home.indexOf(`id="${id}"`));
+    check("홈 제휴 매장: 위치·운영자 주소 아님 고지·미확인 항목 '확인 중'", home.includes('data-testid="partner-facts"') && home.includes("사업장 주소가 아닙니다") && (home.match(/확인 중 — 확인되면 게시합니다/g) ?? []).length >= 1);
+    check("홈 긴 비교표 제거 → 요약 + 상세 링크", !home.includes("<caption") && home.includes('data-testid="compare-summary"'));
+    check("홈 섹션 순서: 예약 안내 → 업종 선택 → 제휴 매장 → 이용 절차 → 업종 요약 → 지역 → FAQ", ids.every((v, i) => v > 0 && (i === 0 || v > ids[i - 1]!)));
   }
   const nf = await get(LIVE + "/__no_such_page__/", "manual");
   check("없는 경로 404", nf.status === 404, String(nf.status));

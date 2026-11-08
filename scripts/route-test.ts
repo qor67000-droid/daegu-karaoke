@@ -266,8 +266,8 @@ async function main() {
         const h1Text = (await hp.locator("h1").first().textContent())?.replace(/\s+/g, " ").trim();
         check(`${vp.name} 홈 H1 '대구 가라오케 예약 문의'`, h1Text === "대구 가라오케 예약 문의", h1Text ?? "");
         // 기존 콘텐츠 유지 + 예약 안내 아래 배치
-        const order = await hp.evaluate(() => ["reservation", "intent", "compare", "areas", "steps", "faq"].map((id) => document.getElementById(id)?.getBoundingClientRect().top ?? -1));
-        check(`${vp.name} 예약 안내 → 업종별 예약 안내 → 업종 비교 → 지역 → 이용 절차 → FAQ 순서`, order.every((v, i) => v > 0 && (i === 0 || v > order[i - 1]!)), order.map(Math.round).join(" < "));
+        const order = await hp.evaluate(() => ["reservation", "intent", "partner", "steps", "compare", "areas", "faq"].map((id) => document.getElementById(id)?.getBoundingClientRect().top ?? -1));
+        check(`${vp.name} 예약 안내 → 업종 선택 → 제휴 매장 → 이용 절차 → 업종 요약 → 지역 → FAQ 순서`, order.every((v, i) => v > 0 && (i === 0 || v > order[i - 1]!)), order.map(Math.round).join(" < "));
         // 실제 클릭 이동
         await hero.click();
         const movedRsv = await hp.waitForURL(`${origin}${basePath}/reservation/`, { timeout: 10_000 }).then(() => true).catch(() => false);

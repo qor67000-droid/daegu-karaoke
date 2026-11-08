@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { site, brand, fullAddress, isDev, businessReady, reservationReady } from "@/lib/site";
+import { site, partners, brand, fullAddress, isDev, businessReady, reservationReady } from "@/lib/site";
 import { buildMetadata, businessLd, faqLd, websiteLd } from "@/lib/seo";
 import { GENERAL_FAQ, NAME_NOTE, SERVICE_FAQ, businessFaq } from "@/lib/content";
 import { DAEGU_AREAS } from "@/lib/guides";
@@ -60,6 +60,47 @@ function AreasPreview() {
         </li>
       ))}
     </ul>
+  );
+}
+
+/**
+ * 제휴 매장: 실제 확인된 정보(위치)만 표시하고, 미확인 항목은 '확인 중'으로 둔다.
+ * 상호·허가 업종·객실·가격·영업시간은 config/site.ts 의 partners 에 확인된 값이 들어올 때만 표시된다.
+ */
+function PartnerSection() {
+  const p = partners[0];
+  if (!p) return null;
+  const mapUrl = `https://map.kakao.com/?q=${encodeURIComponent(p.mapQuery)}`;
+  const rows: [string, string | null][] = [
+    ["매장명", p.name],
+    ["허가 업종", p.licenseVerified ? p.licenseType : null],
+    ["영업시간", p.hours],
+    ["요금", p.priceNote],
+  ];
+  return (
+    <section aria-labelledby="partner" className="wrap py-16 sm:py-20">
+      <SectionHeading eyebrow="Partner venue" id="partner" title="제휴 매장 정보">
+        예약 문의를 연결하는 제휴 매장의 확인된 정보입니다. 확인되지 않은 항목은 지어내지 않고 ‘확인 중’으로 표시합니다.
+      </SectionHeading>
+      <div className="card grid gap-6 p-6 sm:p-8 lg:grid-cols-[1.2fr_1fr]">
+        <div>
+          <p className="eyebrow mb-1">위치 (확인됨)</p>
+          <p className="text-lg">{p.address}</p>
+          <p className="mt-2 text-sm text-mute">제휴 매장 위치이며 예약 안내 서비스 운영자의 사업장 주소가 아닙니다. 제휴 매장은 운영자의 직영점이 아닙니다.</p>
+          <a href={mapUrl} target="_blank" rel="noopener" className="btn-ghost mt-5" data-track="click_directions">
+            카카오맵에서 위치 보기
+          </a>
+        </div>
+        <dl className="grid grid-cols-[6rem_1fr] gap-x-4 gap-y-3 text-sm" data-testid="partner-facts">
+          {rows.map(([k, v]) => (
+            <div key={k} className="contents">
+              <dt className="text-mute">{k}</dt>
+              <dd className={v ? "text-ivory" : "text-mute"}>{v ?? "확인 중 — 확인되면 게시합니다"}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
   );
 }
 
@@ -205,18 +246,17 @@ function InfoHome() {
 
       {rsv && (
         <section aria-labelledby="intent" className="wrap py-16 sm:py-20">
-          <SectionHeading eyebrow="Reservation by type" id="intent" title="유흥주점·단란주점 예약 안내">
-            두 업종은 법에서 허용하는 영업 범위가 다릅니다. 문의하실 때 희망 업종을 알려 주시면 그 업종으로 영업신고된 제휴 매장만 확인해
-            안내합니다.
+          <SectionHeading eyebrow="Choose a type" id="intent" title="업종을 고르고 예약 문의하기">
+            유흥주점과 단란주점은 법에서 허용하는 영업 범위가 다른 업종입니다. 희망 업종을 고르면 그 업종으로 허가된 제휴 매장인지부터 확인해 안내하며,
+            잘 모르시면 ‘상담 후 결정’으로 문의하셔도 됩니다.
           </SectionHeading>
           <div className="grid gap-5 lg:grid-cols-2">
             <article className="card border-gold/40 p-6 sm:p-8" data-testid="type-yuheung">
               <p className="eyebrow mb-2">식품위생법 · 유흥주점영업</p>
               <h3 className="h-display text-2xl">대구 유흥주점 예약 문의</h3>
+              <p className="mt-3 text-sm text-mute">유흥종사자를 두거나 유흥시설을 설치할 수 있고, 노래·춤이 허용되는 주점입니다.</p>
               <ul className="mt-4 space-y-2 text-sm text-mute">
-                <li>· 주류를 조리·판매하며, 유흥종사자를 두거나 유흥시설을 설치할 수 있는 업종입니다.</li>
-                <li>· 손님이 노래를 부르거나 춤을 추는 것이 허용됩니다.</li>
-                <li>· 문의하시면 해당 매장이 유흥주점으로 신고된 곳인지와 예약 가능 시간, 요금 기준을 확인해 알려드립니다.</li>
+                <li>· 확인해 드리는 것: 유흥주점 허가 여부, 날짜·시간·인원 가능 여부, 요금 기준(세금·봉사료 포함 여부), 결제 수단</li>
               </ul>
               <div className="mt-6 flex flex-wrap gap-3">
                 <Link href="/reservation/?type=yuheung" className="btn-gold" data-track="click_reservation_intent_yuheung">
@@ -230,10 +270,9 @@ function InfoHome() {
             <article className="card border-gold/40 p-6 sm:p-8" data-testid="type-danran">
               <p className="eyebrow mb-2">식품위생법 · 단란주점영업</p>
               <h3 className="h-display text-2xl">대구 단란주점 예약 문의</h3>
+              <p className="mt-3 text-sm text-mute">유흥종사자 없이 일행끼리 술과 노래를 즐기는 주점입니다. 회식·모임 2차에 많이 찾습니다.</p>
               <ul className="mt-4 space-y-2 text-sm text-mute">
-                <li>· 주류를 조리·판매하며, 손님이 노래를 부르는 것이 허용되는 업종입니다.</li>
-                <li>· 유흥종사자를 둘 수 없으므로 일행끼리 술과 노래를 즐기는 방식입니다.</li>
-                <li>· 문의하시면 해당 매장이 단란주점으로 신고된 곳인지와 예약 가능 시간, 요금 기준을 확인해 알려드립니다.</li>
+                <li>· 확인해 드리는 것: 단란주점 허가 여부, 날짜·시간·인원 수용 여부, 요금·연장 기준, 결제 수단</li>
               </ul>
               <div className="mt-6 flex flex-wrap gap-3">
                 <Link href="/reservation/?type=danran" className="btn-gold" data-track="click_reservation_intent_danran">
@@ -245,44 +284,49 @@ function InfoHome() {
               </div>
             </article>
           </div>
-          <div className="mt-5 grid gap-4 lg:grid-cols-2">
-            <p className="rounded-xl border border-line bg-ink/60 p-5 text-sm text-mute">
-              <strong className="text-ivory">‘가라오케’·‘노래주점’이라는 이름에 대해</strong>
-              <br />
-              {NAME_NOTE}
-            </p>
-            <p className="rounded-xl border border-line bg-ink/60 p-5 text-sm text-mute">
-              <strong className="text-ivory">일반 노래방(노래연습장)·코인노래방을 찾으시나요?</strong>
-              <br />
-              “대구 노래방”으로 검색하면 함께 나오는 노래연습장은 주류를 팔지 않는 다른 업종이며, 이 서비스는 노래연습장 예약을 안내하지 않습니다.
-              두 업종 모두 만 19세 미만은 출입할 수 없습니다.
-            </p>
-          </div>
         </section>
       )}
 
-      <section aria-labelledby="compare" className="wrap py-16 sm:py-20">
-        <SectionHeading eyebrow="Compare" id="compare" title="유흥주점·단란주점·노래연습장 비교">
-          식품위생법 시행령과 음악산업진흥법 기준으로 정리했습니다. 매장의 실제 업종은 영업신고(허가)증으로 확인합니다.
-        </SectionHeading>
-        <VenueCompare />
-        <MoreLink href="/guide/">업종별 법적 영업 범위 자세히 보기</MoreLink>
-      </section>
-
-      <section aria-labelledby="areas" className="border-y border-line bg-ink-2/60 py-16 sm:py-20">
-        <div className="wrap">
-          <SectionHeading eyebrow="Areas" id="areas" title="대구 주요 상권과 가까운 역">
-            제휴 매장은 수성구에 있으며, 대구 다른 상권에서 이동하실 때 참고할 수 있도록 가까운 도시철도역을 정리했습니다.
-          </SectionHeading>
-          <AreasPreview />
-          <MoreLink href="/guide/daegu-areas/">지역별 특징과 귀가 팁 보기</MoreLink>
-        </div>
-      </section>
+      {rsv && <PartnerSection />}
 
       <section aria-labelledby="steps" className="wrap py-16 sm:py-20">
         <SectionHeading eyebrow="Process" id="steps" title="예약부터 이용까지 절차" />
         <VisitSteps />
         <MoreLink href="/guide/first-visit/">요금 확인 체크리스트와 안전한 귀가 방법</MoreLink>
+      </section>
+
+      <section aria-labelledby="compare" className="border-y border-line bg-ink-2/60 py-16 sm:py-20">
+        <div className="wrap">
+          <SectionHeading eyebrow="In short" id="compare" title="업종 차이 핵심 요약" />
+          <ul className="grid gap-4 md:grid-cols-3" data-testid="compare-summary">
+            <li className="card p-5 text-sm text-mute">
+              <Link href="/yuheung-jujeom/" className="font-semibold text-ivory hover:text-gold-2">
+                유흥주점 →
+              </Link>
+              <p className="mt-2">주류 판매. 유흥종사자·유흥시설 가능, 노래·춤 허용. 구청 허가 업종, 만 19세 미만 출입 금지.</p>
+            </li>
+            <li className="card p-5 text-sm text-mute">
+              <Link href="/danran-jujeom/" className="font-semibold text-ivory hover:text-gold-2">
+                단란주점 →
+              </Link>
+              <p className="mt-2">주류 판매. 손님 노래 허용, 유흥종사자 불가. 구청 허가 업종, 만 19세 미만 출입 금지.</p>
+            </li>
+            <li className="card p-5 text-sm text-mute">
+              <span className="font-semibold text-ivory">노래연습장 (일반 노래방·코인노래방)</span>
+              <p className="mt-2">주류 판매 불가, 다른 법(음악산업진흥법) 업종. 이 서비스는 노래연습장 예약을 안내하지 않습니다.</p>
+            </li>
+          </ul>
+          <p className="mt-5 text-sm text-mute">{NAME_NOTE}</p>
+          <MoreLink href="/guide/">법령 근거와 비교표 자세히 보기</MoreLink>
+        </div>
+      </section>
+
+      <section aria-labelledby="areas" className="wrap py-16 sm:py-20">
+        <SectionHeading eyebrow="Areas" id="areas" title="대구 주요 상권과 가까운 역">
+          제휴 매장은 수성구에 있으며, 대구 다른 상권에서 이동하실 때 참고할 수 있도록 가까운 도시철도역을 정리했습니다.
+        </SectionHeading>
+        <AreasPreview />
+        <MoreLink href="/guide/daegu-areas/">지역별 특징과 귀가 팁 보기</MoreLink>
       </section>
 
       <section aria-labelledby="faq" className="wrap py-16 sm:py-20">
