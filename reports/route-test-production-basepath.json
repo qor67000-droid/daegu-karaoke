@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-08T09:55:32.339Z",
+  "generatedAt": "2026-11-09T10:05:48.523Z",
   "basePath": "/daegu-karaoke",
   "note": "로컬 실험실 측정. 실사용자(CrUX) 지표 아님",
   "results": [
@@ -1071,7 +1071,7 @@
     {
       "name": "mobile 빠른 날짜 '내일' 선택",
       "ok": true,
-      "detail": "2026-11-09"
+      "detail": "2026-11-10"
     },
     {
       "name": "mobile 문자 문의 링크 생성",
@@ -1171,6 +1171,21 @@
       "name": "mobile 하단 예약 버튼 클릭 → 예약 페이지 이동",
       "ok": true,
       "detail": "/daegu-karaoke/reservation/"
+    },
+    {
+      "name": "mobile /reservation/ 문단 안 링크 밑줄 (link-in-text-block)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /yuheung-jujeom/ 문단 안 링크 밑줄 (link-in-text-block)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile /danran-jujeom/ 문단 안 링크 밑줄 (link-in-text-block)",
+      "ok": true,
+      "detail": ""
     },
     {
       "name": "mobile /yuheung-jujeom/ 희망 업종 '유흥주점' 사전 선택",
@@ -2193,7 +2208,7 @@
     {
       "name": "desktop 빠른 날짜 '내일' 선택",
       "ok": true,
-      "detail": "2026-11-09"
+      "detail": "2026-11-10"
     },
     {
       "name": "desktop 문자 문의 링크 생성",
@@ -2282,6 +2297,21 @@
     {
       "name": "desktop 하단 바 숨김",
       "ok": true
+    },
+    {
+      "name": "desktop /reservation/ 문단 안 링크 밑줄 (link-in-text-block)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /yuheung-jujeom/ 문단 안 링크 밑줄 (link-in-text-block)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop /danran-jujeom/ 문단 안 링크 밑줄 (link-in-text-block)",
+      "ok": true,
+      "detail": ""
     },
     {
       "name": "desktop /yuheung-jujeom/ 희망 업종 '유흥주점' 사전 선택",
@@ -2699,11 +2729,11 @@
   ],
   "perf": {
     "mobile /": {
-      "lcp": 228,
+      "lcp": 196,
       "cls": 0
     },
     "mobile /guide/": {
-      "lcp": 104,
+      "lcp": 124,
       "cls": 0
     },
     "mobile /guide/first-visit/": {
@@ -2711,168 +2741,168 @@
       "cls": 0
     },
     "mobile /guide/daegu-areas/": {
-      "lcp": 160,
+      "lcp": 128,
       "cls": 0
     },
     "mobile /reservation/": {
-      "lcp": 164,
+      "lcp": 152,
       "cls": 0
     },
     "mobile /yuheung-jujeom/": {
-      "lcp": 136,
+      "lcp": 252,
       "cls": 0
     },
     "mobile /danran-jujeom/": {
-      "lcp": 128,
+      "lcp": 168,
       "cls": 0
     },
     "mobile /about/": {
-      "lcp": 100,
+      "lcp": 108,
       "cls": 0
     },
     "mobile /rooms/": {
-      "lcp": 76,
+      "lcp": 116,
       "cls": 0
     },
     "mobile /price/": {
-      "lcp": 100,
+      "lcp": 88,
       "cls": 0
     },
     "mobile /location/": {
-      "lcp": 80,
-      "cls": 0
-    },
-    "mobile /contact/": {
-      "lcp": 132,
-      "cls": 0
-    },
-    "mobile /ja/": {
-      "lcp": 160,
-      "cls": 0
-    },
-    "mobile /ja/reservation/": {
-      "lcp": 148,
-      "cls": 0
-    },
-    "mobile /en/": {
-      "lcp": 156,
-      "cls": 0
-    },
-    "mobile /en/reservation/": {
-      "lcp": 104,
-      "cls": 0
-    },
-    "mobile /zh-cn/": {
-      "lcp": 180,
-      "cls": 0
-    },
-    "mobile /zh-cn/reservation/": {
-      "lcp": 140,
-      "cls": 0
-    },
-    "mobile /zh-tw/": {
-      "lcp": 136,
-      "cls": 0
-    },
-    "mobile /zh-tw/reservation/": {
-      "lcp": 132,
-      "cls": 0
-    },
-    "mobile /zh-hk/": {
       "lcp": 120,
       "cls": 0
     },
-    "mobile /zh-hk/reservation/": {
-      "lcp": 128,
-      "cls": 0
-    },
-    "desktop /": {
-      "lcp": 176,
-      "cls": 0
-    },
-    "desktop /guide/": {
-      "lcp": 124,
-      "cls": 0
-    },
-    "desktop /guide/first-visit/": {
-      "lcp": 124,
-      "cls": 0
-    },
-    "desktop /guide/daegu-areas/": {
-      "lcp": 136,
-      "cls": 0
-    },
-    "desktop /reservation/": {
-      "lcp": 152,
-      "cls": 0
-    },
-    "desktop /yuheung-jujeom/": {
-      "lcp": 148,
-      "cls": 0
-    },
-    "desktop /danran-jujeom/": {
-      "lcp": 160,
-      "cls": 0
-    },
-    "desktop /about/": {
-      "lcp": 124,
-      "cls": 0
-    },
-    "desktop /rooms/": {
-      "lcp": 132,
-      "cls": 0
-    },
-    "desktop /price/": {
-      "lcp": 144,
-      "cls": 0
-    },
-    "desktop /location/": {
-      "lcp": 124,
-      "cls": 0
-    },
-    "desktop /contact/": {
+    "mobile /contact/": {
       "lcp": 140,
       "cls": 0
     },
+    "mobile /ja/": {
+      "lcp": 168,
+      "cls": 0
+    },
+    "mobile /ja/reservation/": {
+      "lcp": 172,
+      "cls": 0
+    },
+    "mobile /en/": {
+      "lcp": 128,
+      "cls": 0
+    },
+    "mobile /en/reservation/": {
+      "lcp": 140,
+      "cls": 0
+    },
+    "mobile /zh-cn/": {
+      "lcp": 144,
+      "cls": 0
+    },
+    "mobile /zh-cn/reservation/": {
+      "lcp": 180,
+      "cls": 0
+    },
+    "mobile /zh-tw/": {
+      "lcp": 184,
+      "cls": 0
+    },
+    "mobile /zh-tw/reservation/": {
+      "lcp": 128,
+      "cls": 0
+    },
+    "mobile /zh-hk/": {
+      "lcp": 232,
+      "cls": 0
+    },
+    "mobile /zh-hk/reservation/": {
+      "lcp": 160,
+      "cls": 0
+    },
+    "desktop /": {
+      "lcp": 220,
+      "cls": 0
+    },
+    "desktop /guide/": {
+      "lcp": 140,
+      "cls": 0
+    },
+    "desktop /guide/first-visit/": {
+      "lcp": 132,
+      "cls": 0
+    },
+    "desktop /guide/daegu-areas/": {
+      "lcp": 112,
+      "cls": 0
+    },
+    "desktop /reservation/": {
+      "lcp": 180,
+      "cls": 0
+    },
+    "desktop /yuheung-jujeom/": {
+      "lcp": 164,
+      "cls": 0
+    },
+    "desktop /danran-jujeom/": {
+      "lcp": 172,
+      "cls": 0
+    },
+    "desktop /about/": {
+      "lcp": 128,
+      "cls": 0
+    },
+    "desktop /rooms/": {
+      "lcp": 152,
+      "cls": 0
+    },
+    "desktop /price/": {
+      "lcp": 132,
+      "cls": 0
+    },
+    "desktop /location/": {
+      "lcp": 188,
+      "cls": 0
+    },
+    "desktop /contact/": {
+      "lcp": 128,
+      "cls": 0
+    },
     "desktop /ja/": {
-      "lcp": 204,
+      "lcp": 236,
       "cls": 0
     },
     "desktop /ja/reservation/": {
-      "lcp": 152,
-      "cls": 0.004
-    },
-    "desktop /en/": {
       "lcp": 196,
       "cls": 0
     },
+    "desktop /en/": {
+      "lcp": 224,
+      "cls": 0
+    },
     "desktop /en/reservation/": {
-      "lcp": 128,
+      "lcp": 136,
       "cls": 0.003
     },
     "desktop /zh-cn/": {
-      "lcp": 200,
+      "lcp": 244,
       "cls": 0
     },
     "desktop /zh-cn/reservation/": {
-      "lcp": 148,
+      "lcp": 172,
       "cls": 0.004
     },
     "desktop /zh-tw/": {
-      "lcp": 216,
+      "lcp": 208,
       "cls": 0
     },
     "desktop /zh-tw/reservation/": {
-      "lcp": 132,
+      "lcp": 168,
       "cls": 0.004
     },
     "desktop /zh-hk/": {
-      "lcp": 200,
+      "lcp": 176,
       "cls": 0
     },
     "desktop /zh-hk/reservation/": {
-      "lcp": 148,
-      "cls": 0.004
+      "lcp": 124,
+      "cls": 0
     }
   }
 }

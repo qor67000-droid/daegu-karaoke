@@ -288,6 +288,18 @@ async function main() {
         }
         await hp.close();
       }
+      // ── 접근성: 문단 안 링크는 색 외에 밑줄로도 구분 (Lighthouse link-in-text-block) ──
+      for (const path of ["/reservation/", "/yuheung-jujeom/", "/danran-jujeom/"]) {
+        const ap = await ctx.newPage();
+        await ap.goto(root + path, { waitUntil: "domcontentloaded" });
+        const bad = await ap.evaluate(() =>
+          [...document.querySelectorAll("main p a")]
+            .filter((a) => !getComputedStyle(a).textDecorationLine.includes("underline"))
+            .map((a) => a.textContent?.trim()),
+        );
+        check(`${vp.name} ${path} 문단 안 링크 밑줄 (link-in-text-block)`, bad.length === 0, bad.join(", "));
+        await ap.close();
+      }
       // ── 업종 상세 페이지: 희망 업종 사전 선택, 문자 본문, 제휴 매장 업종 '확인 중', 내부 링크 ──
       if (reservationReady()) {
         for (const [path, key, label] of [["/yuheung-jujeom/", "yuheung", "유흥주점"], ["/danran-jujeom/", "danran", "단란주점"]] as const) {

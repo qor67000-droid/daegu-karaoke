@@ -75,11 +75,11 @@ export default function ReservationPage() {
       <section aria-labelledby="model">
         <p className="mb-8 text-sm text-mute" data-testid="type-detail-links">
           업종별 영업 범위와 예약 전 확인할 점:{" "}
-          <Link href="/yuheung-jujeom/" className="text-gold-2 underline-offset-4 hover:underline">
+          <Link href="/yuheung-jujeom/" className="text-gold-2 underline underline-offset-4 hover:text-ivory">
             대구 유흥주점 안내
           </Link>
           {" · "}
-          <Link href="/danran-jujeom/" className="text-gold-2 underline-offset-4 hover:underline">
+          <Link href="/danran-jujeom/" className="text-gold-2 underline underline-offset-4 hover:text-ivory">
             대구 단란주점 안내
           </Link>
         </p>
@@ -153,7 +153,7 @@ export default function ReservationPage() {
           </div>
           <p className="mt-4 text-sm text-mute">
             수성구 일대의 교통과 귀가 방법은{" "}
-            <Link href="/guide/daegu-areas/" className="link-more">
+            <Link href="/guide/daegu-areas/" className="link-more underline">
               대구 지역별 안내
             </Link>
             에서 확인할 수 있습니다.

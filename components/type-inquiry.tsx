@@ -61,7 +61,7 @@ export function TypeInquiry({ type, label }: { type: Exclude<VenueTypeKey, "any"
       </div>
       <p className="mt-4 text-sm text-mute">
         진행 순서와 제휴 매장 위치는{" "}
-        <Link href="/reservation/" className="text-gold-2 underline-offset-4 hover:underline">
+        <Link href="/reservation/" className="text-gold-2 underline underline-offset-4 hover:text-ivory">
           예약 문의 페이지
         </Link>
         에서 확인할 수 있습니다.

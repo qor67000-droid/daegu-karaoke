@@ -145,7 +145,7 @@ export default function Page() {
         </ol>
         <p className="mt-4 text-sm text-mute">
           대구 구별로 어떤 상권에 주점이 모여 있는지는{" "}
-          <Link href="/guide/daegu-areas/" className="text-gold-2 underline-offset-4 hover:underline">
+          <Link href="/guide/daegu-areas/" className="text-gold-2 underline underline-offset-4 hover:text-ivory">
             대구 지역별 안내
           </Link>
           에 정리했습니다.
