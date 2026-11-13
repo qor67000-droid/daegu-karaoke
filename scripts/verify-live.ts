@@ -79,6 +79,9 @@ async function main() {
         Object.keys(alts).join(","),
       );
     hreflangLive.set(r.path, alts);
+    // 파비콘: 모든 언어 페이지에 basePath 포함 DK 아이콘 링크
+    const icons = (html.match(/<link\s[^>]*>/gi) ?? []).filter((t) => /icon/.test(attr(t, "rel") ?? "")).map((t) => new URL(attr(t, "href")!, url).pathname);
+    check(`${r.path} 파비콘 링크(favicon.ico·icon.png·apple-icon.png)`, ["/favicon.ico", "/icon.png", "/apple-icon.png"].every((f) => icons.some((p) => p === `${new URL(absoluteUrl("/")).pathname.replace(/\/$/, "")}${f}`)), icons.join(", "));
     const robots = meta(html, "robots") ?? "";
     check(`${r.path} robots ${isIndexable(r) ? "index" : "noindex"}`, isIndexable(r) ? !robots.includes("noindex") : robots.includes("noindex"), robots);
     if (r.path !== "/") {

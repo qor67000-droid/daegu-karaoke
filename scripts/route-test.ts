@@ -100,7 +100,7 @@ async function main() {
     const res = await fetch(root + encodeURI(p), { redirect: "manual" });
     check(`GET ${p} → 404`, res.status === 404, String(res.status));
   }
-  for (const p of ["/robots.txt", "/sitemap.xml", "/icon.svg", "/og-default.png", "/.nojekyll"]) {
+  for (const p of ["/robots.txt", "/sitemap.xml", "/favicon.ico", "/icon.png", "/apple-icon.png", "/og-default.png", "/.nojekyll"]) {
     const res = await fetch(root + p);
     check(`GET ${p} → 200`, res.status === 200, String(res.status));
   }
@@ -346,6 +346,21 @@ async function main() {
             const bar = await lp.locator("nav.fixed a").evaluateAll((els) => els.map((e) => e.getAttribute("href")));
             check(`mobile ${homeP} 하단 예약·전화·카카오톡`, JSON.stringify(bar) === JSON.stringify([basePath + rsvP, telWant, operator.kakaoUrl]), bar.join(", "));
           }
+          // 파비콘: 브라우저가 실제로 이미지를 해석할 수 있는지 (탭 아이콘 후보 전부)
+          const iconRes = await lp.evaluate(async () =>
+            Promise.all(
+              [...document.querySelectorAll<HTMLLinkElement>('link[rel~="icon"], link[rel="apple-touch-icon"]')].map(
+                (l) =>
+                  new Promise<string>((ok) => {
+                    const img = new Image();
+                    img.onload = () => ok(`${new URL(l.href).pathname} ${img.naturalWidth}x${img.naturalHeight}`);
+                    img.onerror = () => ok(`${new URL(l.href).pathname} ERROR`);
+                    img.src = l.href;
+                  }),
+              ),
+            ),
+          );
+          check(`${vp.name} ${homeP} 파비콘 3종 이미지 로드`, iconRes.length === 3 && iconRes.every((x) => !x.includes("ERROR")), iconRes.join(" | "));
           await lp.close();
 
           // 예약 페이지: 현지어 폼 + 정확한 링크 + 메시지(선택 언어·예약 정보 병기)

@@ -92,8 +92,10 @@ function headTags(m: Metadata, v: Viewport): string {
     if (tw.title) t.push(meta("twitter:title", tw.title));
     if (tw.description) t.push(meta("twitter:description", tw.description));
   }
-  // Next 파일 규칙 app/icon.svg 모의: basePath 포함 아이콘 링크 (실제 Next는 ?해시 쿼리를 붙임)
-  t.push(`<link rel="icon" href="${basePath}/icon.svg" type="image/svg+xml" sizes="any"/>`);
+  // Next 파일 규칙 모의 (app/favicon.ico, app/icon.png, app/apple-icon.png): basePath 포함 아이콘 링크 (실제 Next는 ?해시 쿼리를 붙임)
+  t.push(`<link rel="icon" href="${basePath}/favicon.ico" type="image/x-icon" sizes="48x48"/>`);
+  t.push(`<link rel="icon" href="${basePath}/icon.png" type="image/png" sizes="192x192"/>`);
+  t.push(`<link rel="apple-touch-icon" href="${basePath}/apple-icon.png" type="image/png" sizes="180x180"/>`);
   if (v.themeColor) t.push(meta("theme-color", String(v.themeColor)));
   if (v.colorScheme) t.push(meta("color-scheme", String(v.colorScheme)));
   t.push(`<link rel="stylesheet" href="${CSS_HREF}"/>`);
@@ -143,7 +145,7 @@ function robotsTxt(r: MetadataRoute.Robots) {
 if (existsSync(OUT)) rmSync(OUT, { recursive: true });
 mkdirSync(OUT, { recursive: true });
 cpSync("public", OUT, { recursive: true });
-cpSync("app/icon.svg", join(OUT, "icon.svg"));
+for (const f of ["favicon.ico", "icon.png", "apple-icon.png"]) cpSync(join("app", f), join(OUT, f));
 
 const MODULES: Record<string, { default: () => React.ReactNode; metadata: Metadata }> = {
   "/": Home,

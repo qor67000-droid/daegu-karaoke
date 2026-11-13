@@ -19,7 +19,8 @@ export const metadata: Metadata = {
     ...(site.verification.google ? { google: site.verification.google } : {}),
     ...(site.verification.naver ? { other: { "naver-site-verification": site.verification.naver } } : {}),
   },
-  // 파비콘은 파일 규칙(app/icon.svg)으로 제공 → Next가 basePath를 포함한 <link rel="icon">을 생성
+  // 파비콘은 파일 규칙(app/favicon.ico, app/icon.png, app/apple-icon.png — DK 로고)으로 제공
+  // → Next가 basePath를 포함한 <link rel="icon">·<link rel="apple-touch-icon">을 모든 페이지(모든 언어)에 생성
 };
 
 export const viewport: Viewport = {
